@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
 import { IResourceComponentsProps } from "@refinedev/core";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { RequestCard } from "../../components/request-card";
 import fonts from "../../utility/fonts";
 import dayjs from "../../utility/dayjs";
@@ -26,7 +26,6 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
   const { data: user } = useGetIdentity<IUser>();
 
   const {
-    saveButtonProps,
     refineCore: { formLoading, onFinish },
     register,
     handleSubmit,
@@ -39,7 +38,6 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
   const title = watch("title");
   const address = watch("address");
   const closeDate = watch("close_date");
-  const limit = watch("limit");
   const acceptanceLabel = watch("acceptance_label");
   const rejectionLabel = watch("rejection_label");
   const secondaryColor = watch("secondary_color");
@@ -106,7 +104,6 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
             closeDate={closeDate}
             secondaryColor={secondaryColor}
             primaryColor={primaryColor}
-            limit={limit}
             fontFamily={fontFamily}
             italicize={italicize}
             secondary_gradient={secondary_gradient}
@@ -180,22 +177,7 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               name="rejection_label"
             />
           </Grid>
-          <Grid item xs={6}>
-            <TextField
-              {...register("limit", {
-                required: "This field is required",
-                valueAsNumber: true,
-              })}
-              error={!!(errors as any)?.limit}
-              helperText={(errors as any)?.limit?.message}
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              type="number"
-              label="Limit"
-              name="limit"
-            />
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs>
             <TextField
               {...register("close_date", {
                 required: "This field is required",

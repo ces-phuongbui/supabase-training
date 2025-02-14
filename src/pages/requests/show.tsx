@@ -63,7 +63,9 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
 
   const copyLinkToClipboard = () => {
     if (request) {
-      navigator.clipboard.writeText(`http://localhost:5174/r/${request?.id}`);
+      navigator.clipboard.writeText(
+        `${window.location.origin}/r/${request.id}`
+      );
       open?.({
         type: "success",
         key: "copy-link-success",
@@ -152,7 +154,6 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
       ],
     },
   });
-  console.log("🚀 ~ responseDataGridProps:", responseDataGridProps);
 
   // request drawer
   const questionCreateDrawerFormProps = useModalForm<
@@ -284,7 +285,6 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                 secondaryColor={request.secondary_color}
                 secondary_gradient={request.secondary_gradient}
                 primaryColor={request.primary_color}
-                limit={request.limit}
                 fontFamily={request.font_family}
                 italicize={request.italicize}
                 responses={responseDataGridProps.rows as IResponse[]}
@@ -301,7 +301,7 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                   <Stack gap={2}>
                     <Box ref={qrCodeRef} width="min-content">
                       <QRCode
-                        value={`http://localhost:5174/r/${
+                        value={`${window.location.origin}/r/${
                           request.id as string
                         }`}
                       />
@@ -341,9 +341,7 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                       value={request.rejection_label}
                     />
                   </Grid>
-                  <Grid item xs={12} md={6}>
-                    <ValueDisplay label="Limit" value={request.limit} />
-                  </Grid>
+
                   <Grid item xs={12} md={6}>
                     <ValueDisplay
                       label="Close Date"
@@ -434,9 +432,8 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
           <Divider sx={{ my: 4 }} />
           <Stack gap={2}>
             <Typography fontWeight="bold" fontSize={24}>
-              Responses{" "}
-              {responseDataGridProps.rows.filter((row) => row.accept).length}/
-              {request.limit}
+              Accepted:{" "}
+              {responseDataGridProps.rows.filter((row) => row.accept).length}
             </Typography>
             <DataGrid
               columns={responseColumns}

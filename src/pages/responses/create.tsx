@@ -89,7 +89,6 @@ export const ResponseCreate: React.FC = () => {
         closeDate={data.data.close_date}
         secondaryColor={data.data.secondary_color}
         primaryColor={data.data.primary_color}
-        limit={data.data.limit}
         fontFamily={data.data.font_family}
         italicize={data.data.italicize}
         requestId={id}

@@ -46,7 +46,6 @@ interface RequestCardProps {
   secondaryColor: string;
   primaryColor: string;
   fontFamily: string;
-  limit: number;
   backgroundColor: string;
   italicize: boolean;
   secondary_gradient?: boolean;
@@ -61,7 +60,6 @@ export const RequestCard: React.FC<RequestCardProps> = ({
   title,
   address,
   fontFamily,
-  limit,
   rejectionLabel,
   acceptanceLabel,
   closeDate,
@@ -76,13 +74,9 @@ export const RequestCard: React.FC<RequestCardProps> = ({
   style = "DEFAULT",
 }) => {
   const {
-    saveButtonProps,
-    refineCore: { formLoading, onFinish },
     register,
-    setValue,
     watch,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm<IResponse>();
 
@@ -90,7 +84,6 @@ export const RequestCard: React.FC<RequestCardProps> = ({
     register: surveyRegister,
     handleSubmit: handleSurveySubmit,
     getValues: getSurveyValues,
-    formState: { errors: surveyErrors },
   } = useForm<SurveyAnswer[]>();
 
   const { mutate } = useCreate<IResponse>();
@@ -197,15 +190,7 @@ export const RequestCard: React.FC<RequestCardProps> = ({
     },
   });
 
-  const confirmedAttendees = useMemo(
-    () => responses?.filter((res) => res.accept)?.length || 0,
-    [responses]
-  );
-
-  const closed = useMemo(
-    () => dayjs().isAfter(dayjs(closeDate)) || confirmedAttendees >= limit,
-    [closeDate, confirmedAttendees, limit]
-  );
+  const closed = useMemo(() => dayjs().isAfter(dayjs(closeDate)), [closeDate]);
 
   const secondaryGradientColor = useMemo(
     () =>
@@ -251,11 +236,6 @@ export const RequestCard: React.FC<RequestCardProps> = ({
                 : secondaryColor,
           }}
         >
-          <Box display="flex" justifyContent="flex-end">
-            <Typography color={primaryColor} fontWeight="bold">
-              {confirmedAttendees} / {limit ? limit : 0}
-            </Typography>
-          </Box>
           <Typography
             fontSize={36}
             textAlign="center"

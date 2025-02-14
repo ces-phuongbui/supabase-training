@@ -16,7 +16,6 @@ export interface IRequest {
   close_date: string;
   secondary_color: string;
   primary_color: string;
-  limit: number;
   font_family: string;
   italicize: boolean;
   background_gradient: boolean;

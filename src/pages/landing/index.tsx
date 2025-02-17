@@ -93,7 +93,11 @@ export default function LandingPage() {
                 </Box>
                 <Box bgcolor="primary.main">
                     <Box px={{ xs: 2, md: 10 }} maxWidth={1280} mx="auto">
-                        <img src="/hero.png" style={{ width: "100%", marginTop: "-20%" }} />
+                        <img
+                            src="/hero.png"
+                            alt="Hero illustration showing RSVP dashboard"
+                            style={{ width: "100%", marginTop: "-20%" }}
+                        />
                     </Box>
                     <Box pb={20} pt={10} color="white" px={4} maxWidth={1280} mx="auto">
                         <Box display="flex" gap={4} justifyContent="center" flexWrap="wrap">
@@ -118,9 +122,9 @@ export default function LandingPage() {
             </Box>
             <Box component="footer" bgcolor="primary.main" p={4}>
                 <Box display="flex" gap={4} justifyContent="center" alignItems="center" flexWrap="wrap">
-                    <img src="/refine-logo.svg" width={100} />
-                    <img src="/supabase-logo.svg" width={150} />
-                    <img src="/material-ui-logo.svg" width={44} />
+                    <img src="/refine-logo.svg" alt="Refine Framework Logo" width={100} />
+                    <img src="/supabase-logo.svg" alt="Supabase Logo" width={150} />
+                    <img src="/material-ui-logo.svg" alt="Material UI Logo" width={44} />
                 </Box>
             </Box>
         </Stack>

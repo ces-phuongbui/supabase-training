@@ -84,7 +84,6 @@ export const ResponseCreate: React.FC = () => {
                 fontFamily={data.data.font_family}
                 italicize={data.data.italicize}
                 requestId={id}
-                responses={responseTableQueryResult.data.data}
                 secondary_gradient={data.data.secondary_gradient}
                 style={data.data.style}
                 surveys={questions?.map((q) => ({

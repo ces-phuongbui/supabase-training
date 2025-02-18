@@ -1,6 +1,5 @@
 import { Button, MenuItem, Select } from "@mui/material";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
@@ -46,7 +45,6 @@ interface RequestCardProps {
     secondary_gradient?: boolean;
     background_gradient?: boolean;
     requestId?: string;
-    responses?: IResponse[];
     surveys?: Survey[];
     style?: string;
 }
@@ -56,6 +54,9 @@ interface IResponseForm {
     num_attendees: number;
     accept: boolean;
 }
+
+const ATTENDEE_COUNT_OPTIONS = [1, 2, 3, 4, 5] as const;
+const DEFAULT_ATTENDEE_COUNT = ATTENDEE_COUNT_OPTIONS[0];
 
 export const RequestCard = ({
     title,
@@ -69,13 +70,13 @@ export const RequestCard = ({
     secondary_gradient = false,
     requestId,
     italicize,
-    responses,
     surveys,
     style = "DEFAULT",
 }: RequestCardProps) => {
     const {
         register,
         watch,
+        setValue,
         handleSubmit,
         formState: { errors },
     } = useForm<IResponseForm>({
@@ -98,6 +99,10 @@ export const RequestCard = ({
 
     const responseAnswer = watch("accept");
     const accept = responseAnswer === "true";
+
+    useMemo(() => {
+        setValue("num_attendees", accept ? DEFAULT_ATTENDEE_COUNT : 0);
+    }, [accept, setValue]);
 
     const onSubmit = async (data: FieldValues) => {
         if (requestId) {
@@ -124,7 +129,7 @@ export const RequestCard = ({
                     },
                 },
                 {
-                    onSuccess: (data, variables) => {
+                    onSuccess: () => {
                         if (accept) {
                             handleSurveySubmit(
                                 async (values) => {
@@ -186,14 +191,19 @@ export const RequestCard = ({
         },
     });
 
-    const confirmedAttendees = useMemo(() => responses?.filter((res) => res.accept)?.length ?? 0, [responses]);
-
     const closed = useMemo(() => dayjs().isAfter(dayjs(closeDate)), [closeDate]);
 
     const secondaryGradientColor = useMemo(
         () => `linear-gradient(${tc(secondaryColor).analogous().slice(1).reverse().toString()})`,
         [secondaryColor],
     );
+
+    const getBackgroundStyle = (isDefault: boolean) => {
+        if (!isDefault) {
+            return "";
+        }
+        return secondary_gradient ? secondaryGradientColor : secondaryColor;
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -203,8 +213,7 @@ export const RequestCard = ({
                     overflow: "hidden",
                     fontFamily: fontFamily,
                     fontStyle: italicize ? "italic" : "normal",
-                    background:
-                        style === "DEFAULT" ? (secondary_gradient ? secondaryGradientColor : secondaryColor) : "",
+                    background: getBackgroundStyle(style === "DEFAULT"),
                 }}
                 color={defaultTextColor}
                 width={800}
@@ -217,11 +226,16 @@ export const RequestCard = ({
                     pt={4}
                     pb={style === "DEFAULT" ? 0 : 8}
                     sx={{
-                        background:
-                            style === "DEFAULT" ? "" : secondary_gradient ? secondaryGradientColor : secondaryColor,
+                        background: getBackgroundStyle(style !== "DEFAULT"),
                     }}
                 >
-                    <Typography fontSize={36} textAlign="center" fontWeight="bold" color={primaryColor}>
+                    <Typography
+                        fontSize={36}
+                        textAlign="center"
+                        textTransform={"capitalize"}
+                        fontWeight="bold"
+                        color={primaryColor}
+                    >
                         {title || "Please Join Us!"}
                     </Typography>
                     <Typography textAlign="center" color={primaryColor}>
@@ -281,47 +295,43 @@ export const RequestCard = ({
                             </RadioGroup>
                         </FormControl>
                         {accept && (
-                            <>
-                                <Divider sx={{ my: 4, color: "red" }} />
-
-                                <Stack gap={2}>
-                                    <Typography fontSize={24} fontWeight="bold" color="primary.main" textAlign="center">
-                                        Questions
-                                    </Typography>
-                                    <Box display="flex" flexWrap="wrap" gap={4} justifyContent="center">
-                                        <Box border={2} borderRadius={1} borderColor="primary.main" padding={2}>
-                                            <FormControl fullWidth>
-                                                <FormLabel
-                                                    id="num-attendees-label"
-                                                    sx={{
-                                                        textAlign: "left",
-                                                        color: primaryColor,
-                                                    }}
-                                                >
-                                                    {"How many people will join with you?"}
-                                                </FormLabel>
-                                                <Select
-                                                    labelId="num-attendees-label"
-                                                    id={`select-num-attendees`}
-                                                    {...register("num_attendees", {
-                                                        required: "This field is required",
-                                                    })}
-                                                    defaultValue={1}
-                                                >
-                                                    <MenuItem value="">
-                                                        <em>Select a value</em>
+                            <Stack gap={2}>
+                                <Typography fontSize={24} fontWeight="bold" color="primary.main" textAlign="center">
+                                    Questions
+                                </Typography>
+                                <Box display="flex" flexWrap="wrap" gap={4} justifyContent="center">
+                                    <Box border={2} borderRadius={1} borderColor="primary.main" padding={2}>
+                                        <FormControl fullWidth>
+                                            <FormLabel
+                                                id="num-attendees-label"
+                                                sx={{
+                                                    textAlign: "left",
+                                                    color: primaryColor,
+                                                }}
+                                            >
+                                                {"How many people will join with you?"}
+                                            </FormLabel>
+                                            <Select
+                                                labelId="num-attendees-label"
+                                                id={`select-num-attendees`}
+                                                {...register("num_attendees", {
+                                                    required: "This field is required",
+                                                })}
+                                                defaultValue={ATTENDEE_COUNT_OPTIONS[0]}
+                                            >
+                                                <MenuItem value="">
+                                                    <em>Select a value</em>
+                                                </MenuItem>
+                                                {ATTENDEE_COUNT_OPTIONS.map((value) => (
+                                                    <MenuItem key={value} value={value}>
+                                                        {value}
                                                     </MenuItem>
-                                                    {[1, 2, 3, 4, 5].map((value) => (
-                                                        <MenuItem key={value} value={value}>
-                                                            {value}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select>
-                                            </FormControl>
-                                        </Box>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
                                     </Box>
-                                </Stack>
-                            </>
+                                </Box>
+                            </Stack>
                         )}
                     </Box>
                     <Box mt={4} textAlign="center">

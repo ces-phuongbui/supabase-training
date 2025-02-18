@@ -11,7 +11,8 @@ import { RequestCard } from "../../components/request-card";
 import Background from "../../components/request-card/background";
 import { IRequest, IResponse } from "./list";
 
-const QRCodeSection = ({ requestId, onCopy }: { requestId: string; onCopy: () => void }) => {
+type QRCodeSectionProps = { requestId: string; onCopy: () => void };
+const QRCodeSection = ({ requestId, onCopy }: QRCodeSectionProps) => {
     const qrCodeRef = useRef<HTMLDivElement>(null);
     const qrValue = `${window.location.origin}/r/${requestId}`;
 
@@ -34,7 +35,8 @@ const QRCodeSection = ({ requestId, onCopy }: { requestId: string; onCopy: () =>
     );
 };
 
-const TotalGuestsSection = ({ responses }: { responses: IResponse[] }) => {
+type TotalGuestsSectionProps = { responses: IResponse[] };
+const TotalGuestsSection = ({ responses }: TotalGuestsSectionProps) => {
     const totalGuests = useMemo(() => responses.reduce((sum, item) => sum + item.num_attendees, 0), [responses]);
 
     if (!responses.length) {
@@ -54,6 +56,21 @@ const TotalGuestsSection = ({ responses }: { responses: IResponse[] }) => {
         </Box>
     );
 };
+
+type HeaderButtonsProps = {
+    defaultButtons: React.ReactNode;
+    requestId: string;
+    onCopyLink: (id: string) => void;
+};
+
+const HeaderButtons = ({ defaultButtons, requestId, onCopyLink }: HeaderButtonsProps) => (
+    <>
+        <Button onClick={() => onCopyLink(requestId)} variant="contained">
+            Share RSVP Link
+        </Button>
+        {defaultButtons}
+    </>
+);
 
 export const RequestShow: React.FC<IResourceComponentsProps> = () => {
     const { open } = useNotification();
@@ -156,12 +173,11 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
             isLoading={isLoading}
             canEdit={false}
             headerButtons={({ defaultButtons }) => (
-                <>
-                    <Button onClick={() => copyLinkToClipboard(request.id)} variant="contained">
-                        Share RSVP Link
-                    </Button>
-                    {defaultButtons}
-                </>
+                <HeaderButtons
+                    defaultButtons={defaultButtons}
+                    requestId={request.id}
+                    onCopyLink={copyLinkToClipboard}
+                />
             )}
         >
             <Stack spacing={4}>
@@ -181,7 +197,7 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                         primaryColor={request.primary_color}
                         fontFamily={request.font_family}
                         italicize={request.italicize}
-                        responses={responseDataGridProps.rows as IResponse[]}
+                        style={request.style}
                     />
                 </Background>
 
@@ -213,7 +229,9 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                 <Divider />
 
                 <Stack spacing={2}>
-                    <Typography fontSize={24}>Total Guests</Typography>
+                    <Typography fontWeight="bold" fontSize={24}>
+                        Total Guests
+                    </Typography>
                     <TotalGuestsSection responses={responseDataGridProps.rows as IResponse[]} />
                 </Stack>
 
@@ -221,8 +239,7 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
 
                 <Stack spacing={2}>
                     <Typography fontWeight="bold" fontSize={24}>
-                        Accepted:
-                        {responseDataGridProps.rows.filter((row) => row.accept).length}
+                        Accepted: {responseDataGridProps.rows.filter((row) => row.accept).length}
                     </Typography>
                     <DataGrid columns={responseColumns} {...responseDataGridProps} autoHeight />
                 </Stack>

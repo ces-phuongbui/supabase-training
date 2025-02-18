@@ -30,9 +30,39 @@ export interface IResponse {
     accept: boolean;
 }
 
+const EmptyBox: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+    <Box
+        padding={2}
+        bgcolor="action.hover"
+        borderRadius={2}
+        minHeight={200}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+    >
+        {children}
+    </Box>
+);
+
+const NoRequests: React.FC = () => (
+    <Stack gap={4} alignItems="center">
+        <Typography color="palette.text.primary">
+            No RSVP requests. You can start creating one by pushing the "Create" button.
+        </Typography>
+        <CreateButton />
+    </Stack>
+);
+
+const RequestGrid: React.FC<{ requests: IRequest[] }> = ({ requests }) => (
+    <Box display="flex" flexWrap="wrap" gap={2}>
+        {requests.map((req) => (
+            <RequestListCard key={req.id} request={req} />
+        ))}
+    </Box>
+);
+
 export const RequestList: React.FC<IResourceComponentsProps> = () => {
     const { data: user } = useGetIdentity<IUser>();
-
     const { data } = useList<IRequest>({
         resource: "requests",
         queryOptions: {
@@ -49,46 +79,25 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
 
     const requests = data?.data;
 
-    return (
-        <List>
-            {requests ? (
-                requests.length > 0 ? (
-                    <Box display="flex" flexWrap="wrap" gap={2}>
-                        {requests.map((req) => (
-                            <RequestListCard key={req.id} request={req} />
-                        ))}
-                    </Box>
-                ) : (
-                    <Box
-                        padding={2}
-                        bgcolor="action.hover"
-                        borderRadius={2}
-                        minHeight={200}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <Stack gap={4} alignItems="center">
-                            <Typography color="palette.text.primary">
-                                No RSVP requests. You can start creating one by pushing the "Create" button.
-                            </Typography>
-                            <CreateButton />
-                        </Stack>
-                    </Box>
-                )
-            ) : (
-                <Box
-                    padding={2}
-                    bgcolor="action.hover"
-                    borderRadius={2}
-                    minHeight={200}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                >
+    const renderContent = () => {
+        if (!requests) {
+            return (
+                <EmptyBox>
                     <CircularProgress />
-                </Box>
-            )}
-        </List>
-    );
+                </EmptyBox>
+            );
+        }
+
+        if (requests.length > 0) {
+            return <RequestGrid requests={requests} />;
+        }
+
+        return (
+            <EmptyBox>
+                <NoRequests />
+            </EmptyBox>
+        );
+    };
+
+    return <List>{renderContent()}</List>;
 };

@@ -37,7 +37,6 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
     const title = watch("title");
     const address = watch("address");
     const closeDate = watch("close_date");
-    const limit = watch("limit");
     const acceptanceLabel = watch("acceptance_label");
     const rejectionLabel = watch("rejection_label");
     const secondaryColor = watch("secondary_color");

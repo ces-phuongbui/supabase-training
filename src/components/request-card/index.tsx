@@ -214,6 +214,7 @@ export const RequestCard = ({
         <ThemeProvider theme={theme}>
             <Box
                 sx={{
+                    width: { xs: "100%", sm: "800px" },
                     borderRadius: 2,
                     overflow: "hidden",
                     fontFamily: fontFamily,
@@ -225,7 +226,6 @@ export const RequestCard = ({
                         : getBackgroundStyle(style === "DEFAULT"),
                 }}
                 color={defaultTextColor}
-                width={800}
                 maxWidth="md"
                 component={Paper}
                 elevation={4}

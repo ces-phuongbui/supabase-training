@@ -18,6 +18,7 @@ export interface IRequest {
     font_family: string;
     italicize: boolean;
     background_gradient: boolean;
+    background_image: string;
     secondary_gradient: boolean;
     style: string;
 }

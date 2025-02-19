@@ -14,14 +14,40 @@ import {
 import { IResourceComponentsProps, useGetIdentity } from "@refinedev/core";
 import { Create } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { IUser } from "../../components/header";
 import { RequestCard } from "../../components/request-card";
 import Background from "../../components/request-card/background";
+import { supabaseClient } from "../../utility";
 import dayjs from "../../utility/dayjs";
 import fonts from "../../utility/fonts";
 
 export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
+    const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
+    const [userId, setUserId] = useState("");
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const getUser = async () => {
+        try {
+            const {
+                data: { user },
+            } = await supabaseClient.auth.getUser();
+            if (user !== null) {
+                setUserId(user.id);
+            } else {
+                setUserId("");
+            }
+        } catch (e) {
+            console.error("error get user: ", e);
+        }
+    };
+
+    useEffect(() => {
+        getUser();
+    }, [userId]);
+
     const { data: user } = useGetIdentity<IUser>();
 
     const {
@@ -62,6 +88,20 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
         setValue("style", "DEFAULT");
     }, [setValue]);
 
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        setBackgroundImage(file);
+    };
+
+    const handleDeleteImage = async () => {
+        setBackgroundImage(null);
+
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
     return (
         <Create
             isLoading={formLoading}
@@ -73,7 +113,26 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                         if (user) {
                             clearErrors();
                             handleSubmit(async (values) => {
-                                await onFinish({ ...values, user_id: user.id });
+                                let imageUrl = "";
+                                if (backgroundImage) {
+                                    // Upload to Supabase storage
+                                    const { data, error } = await supabaseClient.storage
+                                        .from("training")
+                                        .upload(userId + "/" + uuidv4(), backgroundImage);
+
+                                    if (error) {
+                                        console.error("Error uploading image:", error);
+                                        return;
+                                    }
+
+                                    // Get the public URL
+                                    const {
+                                        data: { publicUrl },
+                                    } = supabaseClient.storage.from("training").getPublicUrl(data.path);
+
+                                    imageUrl = publicUrl;
+                                }
+                                await onFinish({ ...values, background_image: imageUrl, user_id: user.id });
                             })();
                         }
                     }}
@@ -88,7 +147,11 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                         Preview
                     </Typography>
                 </Box>
-                <Background backgroundColor={backgroundColor} background_gradient={background_gradient}>
+                <Background
+                    backgroundImage={backgroundImage ? URL.createObjectURL(backgroundImage) : ""}
+                    backgroundColor={backgroundColor}
+                    background_gradient={background_gradient}
+                >
                     <RequestCard
                         backgroundColor={backgroundColor}
                         title={title}
@@ -103,6 +166,7 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                         secondary_gradient={secondary_gradient}
                         background_gradient={background_gradient}
                         style={style}
+                        isHaveBackGroundImage={!!backgroundImage}
                     />
                 </Background>
             </Box>
@@ -175,6 +239,9 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                         <TextField
                             {...register("close_date", {
                                 required: "This field is required",
+                                validate: (value) =>
+                                    dayjs(value).isAfter(dayjs().subtract(1, "day")) ||
+                                    "Close date cannot be in the past",
                             })}
                             error={!!(errors as any)?.close_date}
                             helperText={(errors as any)?.close_date?.message}
@@ -184,6 +251,29 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                             label="Close Date"
                             name="close_date"
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box display="flex" gap={2} alignItems="center">
+                            <TextField
+                                fullWidth
+                                InputLabelProps={{ shrink: true }}
+                                type="file"
+                                onChange={handleImageUpload}
+                                inputProps={{
+                                    accept: "image/*",
+                                    multiple: false,
+                                    ref: fileInputRef,
+                                }}
+                                InputProps={{
+                                    endAdornment: backgroundImage && (
+                                        <Button variant="text" color="error" onClick={handleDeleteImage} sx={{ ml: 1 }}>
+                                            Delete
+                                        </Button>
+                                    ),
+                                }}
+                                label="Background Image"
+                            />
+                        </Box>
                     </Grid>
                 </Grid>
                 <Grid container item xs={12} md={6} spacing={2} alignContent="flex-start">
@@ -211,6 +301,7 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                             {...register("secondary_color", {
                                 required: "This field is required",
                             })}
+                            disabled={!!backgroundImage}
                             error={!!(errors as any)?.secondary_color}
                             helperText={(errors as any)?.secondary_color?.message}
                             fullWidth
@@ -222,7 +313,11 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                     </Grid>
 
                     <Grid item xs={4} display="flex" alignItems="center">
-                        <FormControlLabel control={<Switch {...register("secondary_gradient")} />} label="Gradient" />
+                        <FormControlLabel
+                            control={<Switch {...register("secondary_gradient")} />}
+                            label="Gradient"
+                            disabled={!!backgroundImage}
+                        />
                     </Grid>
 
                     <Grid item xs={8}>
@@ -230,6 +325,7 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                             {...register("background_color", {
                                 required: "This field is required",
                             })}
+                            disabled={!!backgroundImage}
                             error={!!(errors as any)?.background_color}
                             helperText={(errors as any)?.background_color?.message}
                             fullWidth
@@ -240,7 +336,11 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                         />
                     </Grid>
                     <Grid item xs={4} display="flex" alignItems="center">
-                        <FormControlLabel control={<Switch {...register("background_gradient")} />} label="Gradient" />
+                        <FormControlLabel
+                            control={<Switch {...register("background_gradient")} />}
+                            label="Gradient"
+                            disabled={!!backgroundImage}
+                        />
                     </Grid>
 
                     <Grid item xs={8}>

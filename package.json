@@ -16,7 +16,7 @@
     "@mui/x-data-grid": "^6.6.0",
     "@mui/x-date-pickers": "^6.9.2",
     "@refinedev/cli": "^2.5.1",
-    "@refinedev/core": "^4.5.8",
+    "@refinedev/core": "^4.57.5",
     "@refinedev/inferencer": "^4.0.0",
     "@refinedev/kbar": "^1.1.0",
     "@refinedev/mui": "^5.0.0",

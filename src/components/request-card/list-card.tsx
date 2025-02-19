@@ -1,16 +1,14 @@
-import React from "react";
-import Tooltip from "@mui/material/Tooltip";
-import Card from "@mui/material/Card";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { IRequest } from "../../pages/requests/list";
-import ValueDisplay from "../common/valueDisplay";
-import { Link } from "react-router-dom";
-import { DeleteButton, EditButton, ShowButton } from "@refinedev/mui";
 import RsvpIcon from "@mui/icons-material/Rsvp";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import IconButton from "@mui/material/IconButton";
 import MuiLink from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { DeleteButton, ShowButton } from "@refinedev/mui";
+import { Link } from "react-router-dom";
+import { IRequest } from "../../pages/requests/list";
 
 interface Props {
   request: IRequest;
@@ -32,13 +30,7 @@ export default function RequestListCard({ request }: Props) {
             </Typography>
           </MuiLink>
         </Box>
-        <Box
-          padding={2}
-          display="flex"
-          flexDirection="column"
-          height="100%"
-          justifyContent="flex-end"
-        >
+        <Box padding={2} display="flex" flexDirection="column" height="100%" justifyContent="flex-end">
           <Stack>
             <Typography fontWeight="bold" fontSize={12}>
               Close Date
@@ -48,15 +40,10 @@ export default function RequestListCard({ request }: Props) {
           <Stack mt={2}>
             <Typography fontWeight="bold">Actions</Typography>
             <Stack gap={2} direction="row" alignItems="center">
-              {/* <EditButton hideText recordItemId={request.id} /> */}
               <ShowButton hideText recordItemId={request.id} />
               <DeleteButton hideText recordItemId={request.id} />
               <Tooltip title="See how your guests will see your invite.">
-                <IconButton
-                  component={Link}
-                  to={`/r/${request.id}`}
-                  color="primary"
-                >
+                <IconButton component={Link} to={`/r/${request.id}`} color="primary">
                   <RsvpIcon />
                 </IconButton>
               </Tooltip>

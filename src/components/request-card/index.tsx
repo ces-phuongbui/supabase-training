@@ -47,6 +47,7 @@ interface RequestCardProps {
     requestId?: string;
     surveys?: Survey[];
     style?: string;
+    isHaveBackGroundImage?: boolean;
 }
 
 interface IResponseForm {
@@ -72,6 +73,7 @@ export const RequestCard = ({
     italicize,
     surveys,
     style = "DEFAULT",
+    isHaveBackGroundImage = false,
 }: RequestCardProps) => {
     const {
         register,
@@ -199,7 +201,10 @@ export const RequestCard = ({
     );
 
     const getBackgroundStyle = (isDefault: boolean) => {
-        if (!isDefault) {
+        if (isHaveBackGroundImage) {
+            return "rgba(255, 255, 255, 0.5)";
+        }
+        if (!isDefault || isHaveBackGroundImage) {
             return "";
         }
         return secondary_gradient ? secondaryGradientColor : secondaryColor;
@@ -214,6 +219,10 @@ export const RequestCard = ({
                     fontFamily: fontFamily,
                     fontStyle: italicize ? "italic" : "normal",
                     background: getBackgroundStyle(style === "DEFAULT"),
+                    backdropFilter: isHaveBackGroundImage ? "blur(10px)" : "none",
+                    backgroundColor: isHaveBackGroundImage
+                        ? "rgba(255, 255, 255, 0.5)"
+                        : getBackgroundStyle(style === "DEFAULT"),
                 }}
                 color={defaultTextColor}
                 width={800}
@@ -259,7 +268,12 @@ export const RequestCard = ({
                                 })}
                                 error={!!(errors as any)?.responder_name}
                                 helperText={(errors as any)?.responder_name?.message}
-                                InputLabelProps={{ shrink: true }}
+                                InputLabelProps={{
+                                    shrink: true,
+                                    sx: {
+                                        color: isHaveBackGroundImage ? "black" : primaryColor,
+                                    },
+                                }}
                                 type="text"
                                 label="Your Name"
                                 name="responder_name"
@@ -280,16 +294,34 @@ export const RequestCard = ({
                                         {...register("accept", {
                                             required: "This field is required",
                                         })}
-                                        control={<Radio />}
+                                        control={
+                                            <Radio
+                                                sx={{
+                                                    color: isHaveBackGroundImage ? "black" : primaryColor,
+                                                }}
+                                            />
+                                        }
                                         label={rejectionLabel}
+                                        sx={{
+                                            color: isHaveBackGroundImage ? "black" : primaryColor,
+                                        }}
                                     />
                                     <FormControlLabel
                                         value={true}
                                         {...register("accept", {
                                             required: "This field is required",
                                         })}
-                                        control={<Radio />}
+                                        control={
+                                            <Radio
+                                                sx={{
+                                                    color: isHaveBackGroundImage ? "black" : primaryColor,
+                                                }}
+                                            />
+                                        }
                                         label={acceptanceLabel}
+                                        sx={{
+                                            color: isHaveBackGroundImage ? "black" : primaryColor,
+                                        }}
                                     />
                                 </Box>
                             </RadioGroup>

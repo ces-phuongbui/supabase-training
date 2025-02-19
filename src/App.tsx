@@ -11,7 +11,7 @@ import {
   RefineSnackbarProvider,
   ThemedLayoutV2,
 } from "@refinedev/mui";
-
+import GoogleIcon from "@mui/icons-material/Google";
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import routerBindings, {
@@ -117,6 +117,13 @@ function App() {
                               password: "refine-supabase",
                             },
                           }}
+                          providers={[
+                            {
+                              name: "google",
+                              label: "Sign in with Google",
+                              icon: <GoogleIcon />,
+                            },
+                          ]}
                         />
                       }
                     />

@@ -1,6 +1,19 @@
-import { Box, Button, Divider, Grid, ListItem, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  ListItem,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { IResourceComponentsProps, useNotification, useShow } from "@refinedev/core";
+import {
+  IResourceComponentsProps,
+  useNotification,
+  useShow,
+} from "@refinedev/core";
 import { DateField, Show, useDataGrid } from "@refinedev/mui";
 import html2canvas from "html2canvas";
 import { useCallback, useMemo, useRef } from "react";
@@ -10,6 +23,7 @@ import ValueDisplay from "../../components/common/valueDisplay";
 import { RequestCard } from "../../components/request-card";
 import Background from "../../components/request-card/background";
 import { IRequest, IResponse } from "./list";
+import Map from "./map";
 
 const QRCodeSection = ({ requestId }: { requestId: string }) => {
   const qrCodeRef = useRef<HTMLDivElement>(null);
@@ -53,19 +67,31 @@ const QRCodeSection = ({ requestId }: { requestId: string }) => {
 type TotalGuestsSectionProps = { responses: IResponse[] };
 
 const TotalGuestsSection = ({ responses }: TotalGuestsSectionProps) => {
-  const totalGuests = useMemo(() => responses.reduce((sum, item) => sum + item.num_attendees, 0), [responses]);
+  const totalGuests = useMemo(
+    () => responses.reduce((sum, item) => sum + item.num_attendees, 0),
+    [responses],
+  );
 
   if (!responses.length) {
-    return <EmptyResourceMessage message="No guests want to attend your event!" />;
+    return (
+      <EmptyResourceMessage message="No guests want to attend your event!" />
+    );
   }
 
   if (!responses.length) {
-    return <EmptyResourceMessage message="No guests want to attend your event!" />;
+    return (
+      <EmptyResourceMessage message="No guests want to attend your event!" />
+    );
   }
 
   return (
     <Box bgcolor="action.hover" p={2} borderRadius={2}>
-      <Stack direction="row" gap={2} alignItems="center" justifyContent="space-between">
+      <Stack
+        direction="row"
+        gap={2}
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <Typography fontSize={20} textTransform="capitalize" fontStyle="italic">
           Invitations: {responses.length}
         </Typography>
@@ -83,7 +109,11 @@ type HeaderButtonsProps = {
   onCopyLink: (id: string) => void;
 };
 
-const HeaderButtons = ({ defaultButtons, requestId, onCopyLink }: HeaderButtonsProps) => (
+const HeaderButtons = ({
+  defaultButtons,
+  requestId,
+  onCopyLink,
+}: HeaderButtonsProps) => (
   <>
     <Button onClick={() => onCopyLink(requestId)} variant="contained">
       Share RSVP Link
@@ -91,6 +121,8 @@ const HeaderButtons = ({ defaultButtons, requestId, onCopyLink }: HeaderButtonsP
     {defaultButtons}
   </>
 );
+
+const EXCLUDE_FIELDS = ["position", "background_image"];
 
 export const RequestShow: React.FC<IResourceComponentsProps> = () => {
   const { open } = useNotification();
@@ -102,7 +134,8 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
         type: "success",
         key: "copy-link-success",
         description: "Link copied to clipboard",
-        message: "Your RSVP link has been copied to your clipboard. Share it with your guests.",
+        message:
+          "Your RSVP link has been copied to your clipboard. Share it with your guests.",
       });
     },
     [open],
@@ -134,7 +167,9 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
   const mid = Math.ceil(Object.entries(request).length / 2);
 
   const leftColumn = Object.entries(request).slice(0, mid);
-  const rightColumn = Object.entries(request).slice(mid);
+  const rightColumn = Object.entries(request)
+    .slice(mid)
+    .filter((value) => !EXCLUDE_FIELDS.includes(value[0]));
 
   const {
     id,
@@ -152,13 +187,19 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
     font_family,
     italicize,
     style,
+    position,
   } = request;
+  
   return (
     <Show
       isLoading={isLoading}
       canEdit={false}
       headerButtons={({ defaultButtons }) => (
-        <HeaderButtons defaultButtons={defaultButtons} requestId={request.id} onCopyLink={copyLinkToClipboard} />
+        <HeaderButtons
+          defaultButtons={defaultButtons}
+          requestId={request.id}
+          onCopyLink={copyLinkToClipboard}
+        />
       )}
     >
       <Stack spacing={4}>
@@ -186,7 +227,10 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
 
         <Grid container spacing={2}>
           <Grid item xs={12} lg={6}>
-            <QRCodeSection requestId={id} />
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <QRCodeSection requestId={id} />
+              <Map position={position} address={address} />
+            </Box>
           </Grid>
           <Grid item xs={12} lg={6}>
             <Stack spacing={2}>
@@ -195,13 +239,17 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
               </Typography>
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                  >
                     {leftColumn.map((item) => (
                       <ValueDisplay
                         key={item[0]}
                         label={item[0].replace(/_/g, " ")}
                         value={item[1]}
-                        isDate={item[0] === "close_date" || item[0] === "created_at"}
+                        isDate={
+                          item[0] === "close_date" || item[0] === "created_at"
+                        }
                         isColor={item[0].includes("color")}
                         isImage={item[0] === "background_image"}
                       />
@@ -209,13 +257,17 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                  >
                     {rightColumn.map((item) => (
                       <ValueDisplay
                         key={item[0]}
                         label={item[0].replace(/_/g, " ")}
                         value={item[1]}
-                        isDate={item[0] === "close_date" || item[0] === "created_at"}
+                        isDate={
+                          item[0] === "close_date" || item[0] === "created_at"
+                        }
                         isColor={item[0].includes("color")}
                         isImage={item[0] === "background_image"}
                       />
@@ -233,16 +285,23 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
           <Typography fontWeight="bold" fontSize={24}>
             Total Guests
           </Typography>
-          <TotalGuestsSection responses={responseDataGridProps.rows as IResponse[]} />
+          <TotalGuestsSection
+            responses={responseDataGridProps.rows as IResponse[]}
+          />
         </Stack>
 
         <Divider />
 
         <Stack spacing={2}>
           <Typography fontWeight="bold" fontSize={24}>
-            Accepted: {responseDataGridProps.rows.filter((row) => row.accept).length}
+            Accepted:{" "}
+            {responseDataGridProps.rows.filter((row) => row.accept).length}
           </Typography>
-          <DataGrid columns={responseColumns} {...responseDataGridProps} autoHeight />
+          <DataGrid
+            columns={responseColumns}
+            {...responseDataGridProps}
+            autoHeight
+          />
         </Stack>
       </Stack>
     </Show>

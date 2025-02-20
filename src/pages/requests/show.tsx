@@ -6,6 +6,8 @@ import {
   ListItem,
   Paper,
   Stack,
+  Tab,
+  Tabs,
   Typography,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -16,7 +18,7 @@ import {
 } from "@refinedev/core";
 import { DateField, Show, useDataGrid } from "@refinedev/mui";
 import html2canvas from "html2canvas";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import QRCode from "react-qr-code";
 import EmptyResourceMessage from "../../components/common/empty-resource-message";
 import ValueDisplay from "../../components/common/valueDisplay";
@@ -126,6 +128,11 @@ const EXCLUDE_FIELDS = ["position", "background_image"];
 
 export const RequestShow: React.FC<IResourceComponentsProps> = () => {
   const { open } = useNotification();
+  const [value, setValue] = useState<number>(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
 
   const copyLinkToClipboard = useCallback(
     (id: string) => {
@@ -189,20 +196,20 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
     style,
     position,
   } = request;
-  
+
   return (
-    <Show
-      isLoading={isLoading}
-      canEdit={false}
-      headerButtons={({ defaultButtons }) => (
-        <HeaderButtons
-          defaultButtons={defaultButtons}
-          requestId={request.id}
-          onCopyLink={copyLinkToClipboard}
-        />
-      )}
-    >
-      <Stack spacing={4}>
+    <>
+      <Show
+        isLoading={isLoading}
+        canEdit={false}
+        headerButtons={({ defaultButtons }) => (
+          <HeaderButtons
+            defaultButtons={defaultButtons}
+            requestId={request.id}
+            onCopyLink={copyLinkToClipboard}
+          />
+        )}
+      >
         <Background
           backgroundImage={background_image}
           backgroundColor={background_color}
@@ -224,89 +231,133 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
             isHaveBackGroundImage={!!background_image}
           />
         </Background>
-
-        <Grid container spacing={2}>
-          <Grid item xs={12} lg={6}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <QRCodeSection requestId={id} />
-              <Map position={position} address={address} />
-            </Box>
-          </Grid>
-          <Grid item xs={12} lg={6}>
+        <Box sx={{ borderBottom: 1, marginTop: 2, borderColor: "divider" }}>
+          <Tabs value={value} onChange={handleChange}>
+            <Tab label="Information" {...a11yProps(0)} />
+            <Tab label="Settings" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <Stack spacing={4}>
             <Stack spacing={2}>
-              <Typography fontWeight={600} fontSize={24} ml={3}>
-                Info
+              <Typography fontWeight="bold" fontSize={24}>
+                Total Guests
               </Typography>
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-                  >
-                    {leftColumn.map((item) => (
-                      <ValueDisplay
-                        key={item[0]}
-                        label={item[0].replace(/_/g, " ")}
-                        value={item[1]}
-                        isDate={
-                          item[0] === "close_date" || item[0] === "created_at"
-                        }
-                        isColor={item[0].includes("color")}
-                        isImage={item[0] === "background_image"}
-                      />
-                    ))}
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-                  >
-                    {rightColumn.map((item) => (
-                      <ValueDisplay
-                        key={item[0]}
-                        label={item[0].replace(/_/g, " ")}
-                        value={item[1]}
-                        isDate={
-                          item[0] === "close_date" || item[0] === "created_at"
-                        }
-                        isColor={item[0].includes("color")}
-                        isImage={item[0] === "background_image"}
-                      />
-                    ))}
-                  </Box>
-                </Grid>
-              </Grid>
+              <TotalGuestsSection
+                responses={responseDataGridProps.rows as IResponse[]}
+              />
             </Stack>
+            <Divider />
+            <Stack spacing={2}>
+              <Typography fontWeight="bold" fontSize={24}>
+                Accepted:{" "}
+                {responseDataGridProps.rows.filter((row) => row.accept).length}
+              </Typography>
+              <DataGrid
+                columns={responseColumns}
+                {...responseDataGridProps}
+                autoHeight
+              />
+            </Stack>
+            <Divider />
+            <Stack spacing={2}>
+              <QRCodeSection requestId={id} />
+            </Stack>
+          </Stack>
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <Grid container spacing={2} marginTop={"0 !important"}>
+            <Grid item xs={12} lg={6} padding={"0 !important"}>
+              <Stack spacing={2}>
+                <Typography fontWeight={600} fontSize={24} ml={3}>
+                  Info
+                </Typography>
+                <Grid container spacing={3} marginTop={"0 !important"}>
+                  <Grid item xs={12} sm={6}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                      }}
+                    >
+                      {leftColumn.map((item) => (
+                        <ValueDisplay
+                          key={item[0]}
+                          label={item[0].replace(/_/g, " ")}
+                          value={item[1]}
+                          isDate={
+                            item[0] === "close_date" || item[0] === "created_at"
+                          }
+                          isColor={item[0].includes("color")}
+                          isImage={item[0] === "background_image"}
+                        />
+                      ))}
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                      }}
+                    >
+                      {rightColumn.map((item) => (
+                        <ValueDisplay
+                          key={item[0]}
+                          label={item[0].replace(/_/g, " ")}
+                          value={item[1]}
+                          isDate={
+                            item[0] === "close_date" || item[0] === "created_at"
+                          }
+                          isColor={item[0].includes("color")}
+                          isImage={item[0] === "background_image"}
+                        />
+                      ))}
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Stack>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              <Map position={position} address={address} />
+            </Grid>
           </Grid>
-        </Grid>
-
-        <Divider />
-
-        <Stack spacing={2}>
-          <Typography fontWeight="bold" fontSize={24}>
-            Total Guests
-          </Typography>
-          <TotalGuestsSection
-            responses={responseDataGridProps.rows as IResponse[]}
-          />
-        </Stack>
-
-        <Divider />
-
-        <Stack spacing={2}>
-          <Typography fontWeight="bold" fontSize={24}>
-            Accepted:{" "}
-            {responseDataGridProps.rows.filter((row) => row.accept).length}
-          </Typography>
-          <DataGrid
-            columns={responseColumns}
-            {...responseDataGridProps}
-            autoHeight
-          />
-        </Stack>
-      </Stack>
-    </Show>
+        </CustomTabPanel>
+      </Show>
+    </>
   );
 };
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 2 }}>{children}</Box>}
+    </div>
+  );
+}
 
 const RESPONSE_COLUMNS: GridColDef[] = [
   {

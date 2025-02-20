@@ -61,7 +61,9 @@ const NoRequests: React.FC = () => (
   </Stack>
 );
 
-const RequestGrid: React.FC<{ requests: IRequest[] }> = ({ requests }) => (
+const RequestGrid: React.FC<{
+  requests: IRequest[];
+}> = ({ requests }) => (
   <Box display="flex" flexWrap="wrap" gap={2}>
     {requests.map((req) => (
       <RequestListCard key={req.id} request={req} />
@@ -85,6 +87,8 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
     ],
   });
 
+
+
   const requests = data?.data;
 
   const renderContent = () => {
@@ -97,7 +101,11 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
     }
 
     if (requests.length > 0) {
-      return <RequestGrid requests={requests} />;
+      return (
+        <RequestGrid
+          requests={requests}
+        />
+      );
     }
 
     return (

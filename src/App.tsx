@@ -1,7 +1,7 @@
 import RsvpIcon from "@mui/icons-material/Rsvp";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Authenticated, Refine } from "@refinedev/core";
+import { Authenticated, I18nProvider, Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
 import {
@@ -35,7 +35,18 @@ import ThankYouPage from "./pages/responses/thank-you";
 import { supabaseClient } from "./utility";
 import customTitleHandler from "./utility/customTitleHandler";
 
+import "./i18n/index";
+import { useTranslation } from "react-i18next";
+
 function App() {
+  const { i18n } = useTranslation();
+
+  const i18nProvider: I18nProvider = {
+    translate: (key: string, options?: any) => i18n.t(key, options) as string,
+    changeLocale: (lang: string) => i18n.changeLanguage(lang),
+    getLocale: () => i18n.language,
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <BrowserRouter>
@@ -45,6 +56,7 @@ function App() {
             <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
             <RefineSnackbarProvider>
               <Refine
+                i18nProvider={i18nProvider}
                 dataProvider={dataProvider(supabaseClient)}
                 liveProvider={liveProvider(supabaseClient)}
                 authProvider={authProvider}

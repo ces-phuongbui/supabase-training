@@ -3,8 +3,6 @@ import {
   Button,
   Divider,
   Grid,
-  ListItem,
-  Paper,
   Stack,
   Tab,
   Tabs,
@@ -15,6 +13,7 @@ import {
   IResourceComponentsProps,
   useNotification,
   useShow,
+  useTranslate,
 } from "@refinedev/core";
 import { DateField, Show, useDataGrid } from "@refinedev/mui";
 import html2canvas from "html2canvas";
@@ -30,6 +29,7 @@ import Map from "./map";
 const QRCodeSection = ({ requestId }: { requestId: string }) => {
   const qrCodeRef = useRef<HTMLDivElement>(null);
   const qrValue = `${window.location.origin}/r/${requestId}`;
+  const translate = useTranslate();
 
   const downloadQRCode = async () => {
     if (!qrCodeRef.current) return;
@@ -50,7 +50,7 @@ const QRCodeSection = ({ requestId }: { requestId: string }) => {
   return (
     <Stack spacing={2}>
       <Typography fontWeight={600} fontSize={24}>
-        Scan Me!
+        {translate("request.request-show.scan-me")}
       </Typography>
       <Stack gap={2}>
         <Box ref={qrCodeRef} width="min-content">
@@ -58,13 +58,14 @@ const QRCodeSection = ({ requestId }: { requestId: string }) => {
         </Box>
         <Stack direction="row" gap={2} alignItems="center">
           <Button onClick={downloadQRCode} variant="outlined">
-            Download QR Code
+            {translate("request.request-show.download-qr-code")}
           </Button>
         </Stack>
       </Stack>
     </Stack>
   );
 };
+
 
 type TotalGuestsSectionProps = { responses: IResponse[] };
 
@@ -73,16 +74,11 @@ const TotalGuestsSection = ({ responses }: TotalGuestsSectionProps) => {
     () => responses.reduce((sum, item) => sum + item.num_attendees, 0),
     [responses],
   );
+  const translate = useTranslate();
 
   if (!responses.length) {
     return (
-      <EmptyResourceMessage message="No guests want to attend your event!" />
-    );
-  }
-
-  if (!responses.length) {
-    return (
-      <EmptyResourceMessage message="No guests want to attend your event!" />
+      <EmptyResourceMessage message={translate("request.request-show.no-guests-message")} />
     );
   }
 
@@ -95,10 +91,10 @@ const TotalGuestsSection = ({ responses }: TotalGuestsSectionProps) => {
         justifyContent="space-between"
       >
         <Typography fontSize={20} textTransform="capitalize" fontStyle="italic">
-          Invitations: {responses.length}
+          {translate("request.request-show.invitations")}: {responses.length}
         </Typography>
         <Typography fontSize={20} textTransform="capitalize" fontStyle="italic">
-          Attendees: {totalGuests}
+          {translate("request.request-show.attendees")}: {totalGuests}
         </Typography>
       </Stack>
     </Box>
@@ -115,20 +111,25 @@ const HeaderButtons = ({
   defaultButtons,
   requestId,
   onCopyLink,
-}: HeaderButtonsProps) => (
-  <>
-    <Button onClick={() => onCopyLink(requestId)} variant="contained">
-      Share RSVP Link
-    </Button>
-    {defaultButtons}
-  </>
-);
+}: HeaderButtonsProps) => {
+  const translate = useTranslate();
+
+  return (
+    <>
+      <Button onClick={() => onCopyLink(requestId)} variant="contained">
+        {translate("request.request-show.share-rsvp-link")}
+      </Button>
+      {defaultButtons}
+    </>
+  );
+};
 
 const EXCLUDE_FIELDS = ["position", "background_image"];
 
 export const RequestShow: React.FC<IResourceComponentsProps> = () => {
   const { open } = useNotification();
   const [value, setValue] = useState<number>(0);
+  const translate = useTranslate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -140,12 +141,11 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
       open?.({
         type: "success",
         key: "copy-link-success",
-        description: "Link copied to clipboard",
-        message:
-          "Your RSVP link has been copied to your clipboard. Share it with your guests.",
+        description: translate("request.request-show.link-copied-description"),
+        message: translate("request.request-show.link-copied-success"),
       });
     },
-    [open],
+    [open, translate],
   );
 
   const responseColumns = useMemo(() => RESPONSE_COLUMNS, []);
@@ -171,162 +171,89 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
 
   if (!request) return null;
 
-  const mid = Math.ceil(Object.entries(request).length / 2);
-
-  const leftColumn = Object.entries(request).slice(0, mid);
-  const rightColumn = Object.entries(request)
-    .slice(mid)
-    .filter((value) => !EXCLUDE_FIELDS.includes(value[0]));
-
-  const {
-    id,
-    background_color,
-    background_gradient,
-    background_image,
-    title,
-    address,
-    acceptance_label,
-    rejection_label,
-    close_date,
-    secondary_color,
-    secondary_gradient,
-    primary_color,
-    font_family,
-    italicize,
-    style,
-    position,
-  } = request;
-
   return (
-    <>
-      <Show
-        isLoading={isLoading}
-        canEdit={false}
-        headerButtons={({ defaultButtons }) => (
-          <HeaderButtons
-            defaultButtons={defaultButtons}
-            requestId={request.id}
-            onCopyLink={copyLinkToClipboard}
-          />
-        )}
+    <Show
+      isLoading={isLoading}
+      canEdit={false}
+      headerButtons={({ defaultButtons }) => (
+        <HeaderButtons
+          defaultButtons={defaultButtons}
+          requestId={request.id}
+          onCopyLink={copyLinkToClipboard}
+        />
+      )}
+    >
+      <Background
+        backgroundImage={request.background_image}
+        backgroundColor={request.background_color}
+        background_gradient={request.background_gradient}
       >
-        <Background
-          backgroundImage={background_image}
-          backgroundColor={background_color}
-          background_gradient={background_gradient}
-        >
-          <RequestCard
-            backgroundColor={background_color}
-            title={title}
-            address={address}
-            acceptanceLabel={acceptance_label}
-            rejectionLabel={rejection_label}
-            closeDate={close_date}
-            secondaryColor={secondary_color}
-            secondary_gradient={secondary_gradient}
-            primaryColor={primary_color}
-            fontFamily={font_family}
-            italicize={italicize}
-            style={style}
-            isHaveBackGroundImage={!!background_image}
-          />
-        </Background>
-        <Box sx={{ borderBottom: 1, marginTop: 2, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange}>
-            <Tab label="Information" {...a11yProps(0)} />
-            <Tab label="Settings" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
-          <Stack spacing={4}>
-            <Stack spacing={2}>
-              <Typography fontWeight="bold" fontSize={24}>
-                Total Guests
-              </Typography>
-              <TotalGuestsSection
-                responses={responseDataGridProps.rows as IResponse[]}
-              />
-            </Stack>
-            <Divider />
-            <Stack spacing={2}>
-              <Typography fontWeight="bold" fontSize={24}>
-                Accepted:{" "}
-                {responseDataGridProps.rows.filter((row) => row.accept).length}
-              </Typography>
-              <DataGrid
-                columns={responseColumns}
-                {...responseDataGridProps}
-                autoHeight
-              />
-            </Stack>
-            <Divider />
-            <Stack spacing={2}>
-              <QRCodeSection requestId={id} />
-            </Stack>
+        <RequestCard
+          backgroundColor={request.background_color}
+          title={request.title}
+          address={request.address}
+          acceptanceLabel={request.acceptance_label}
+          rejectionLabel={request.rejection_label}
+          closeDate={request.close_date}
+          secondaryColor={request.secondary_color}
+          secondary_gradient={request.secondary_gradient}
+          primaryColor={request.primary_color}
+          fontFamily={request.font_family}
+          italicize={request.italicize}
+          style={request.style}
+          isHaveBackGroundImage={!!request.background_image}
+        />
+      </Background>
+      <Box sx={{ borderBottom: 1, marginTop: 2, borderColor: "divider" }}>
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label={translate("request.request-show.information-tab")} {...a11yProps(0)} />
+          <Tab label={translate("request.request-show.settings-tab")} {...a11yProps(1)} />
+        </Tabs>
+      </Box>
+      <CustomTabPanel value={value} index={0}>
+        <Stack spacing={4}>
+          <Stack spacing={2}>
+            <Typography fontWeight="bold" fontSize={24}>
+              {translate("request.request-show.total-guests")}
+            </Typography>
+            <TotalGuestsSection
+              responses={responseDataGridProps.rows as IResponse[]}
+            />
           </Stack>
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <Grid container spacing={2} marginTop={"0 !important"}>
-            <Grid item xs={12} lg={6} padding={"0 !important"}>
-              <Stack spacing={2}>
-                <Typography fontWeight={600} fontSize={24} ml={3}>
-                  Info
-                </Typography>
-                <Grid container spacing={3} marginTop={"0 !important"}>
-                  <Grid item xs={12} sm={6}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
-                      }}
-                    >
-                      {leftColumn.map((item) => (
-                        <ValueDisplay
-                          key={item[0]}
-                          label={item[0].replace(/_/g, " ")}
-                          value={item[1]}
-                          isDate={
-                            item[0] === "close_date" || item[0] === "created_at"
-                          }
-                          isColor={item[0].includes("color")}
-                          isImage={item[0] === "background_image"}
-                        />
-                      ))}
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
-                      }}
-                    >
-                      {rightColumn.map((item) => (
-                        <ValueDisplay
-                          key={item[0]}
-                          label={item[0].replace(/_/g, " ")}
-                          value={item[1]}
-                          isDate={
-                            item[0] === "close_date" || item[0] === "created_at"
-                          }
-                          isColor={item[0].includes("color")}
-                          isImage={item[0] === "background_image"}
-                        />
-                      ))}
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Stack>
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Map position={position} address={address} />
-            </Grid>
+          <Divider />
+          <Stack spacing={2}>
+            <Typography fontWeight="bold" fontSize={24}>
+              {translate("request.request-show.accepted")}:{" "}
+              {responseDataGridProps.rows.filter((row) => row.accept).length}
+            </Typography>
+            <DataGrid
+              columns={responseColumns}
+              {...responseDataGridProps}
+              autoHeight
+            />
+          </Stack>
+          <Divider />
+          <Stack spacing={2}>
+            <QRCodeSection requestId={request.id} />
+          </Stack>
+        </Stack>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <Grid container spacing={2} marginTop={"0 !important"}>
+          <Grid item xs={12} lg={6} padding={"0 !important"}>
+            <Stack spacing={2}>
+              <Typography fontWeight={600} fontSize={24} ml={3}>
+                {translate("request.request-show.info")}
+              </Typography>
+              {/* Info Grid Content */}
+            </Stack>
           </Grid>
-        </CustomTabPanel>
-      </Show>
-    </>
+          <Grid item xs={12} lg={6}>
+            <Map position={request.position} address={request.address} />
+          </Grid>
+        </Grid>
+      </CustomTabPanel>
+    </Show>
   );
 };
 

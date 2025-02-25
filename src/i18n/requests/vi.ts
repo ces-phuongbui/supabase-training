@@ -1,0 +1,50 @@
+const vi = {
+  translation: {
+    "request": {
+      "create": {
+        "preview": "Xem trước",
+        "general-information": "Thông tin chung",
+        "title": "Tiêu đề",
+        "address": "Địa chỉ",
+        "acceptance-label": "Nhãn chấp nhận",
+        "rejection-label": "Nhãn từ chối",
+        "close-date": "Ngày đóng",
+        "background-image": "Hình nền",
+        "delete": "Xóa",
+        "visual": "Giao diện",
+        "primary-color": "Màu chính",
+        "secondary-color": "Màu phụ",
+        "gradient": "Gradient",
+        "background-color": "Màu nền",
+        "font": "Phông chữ",
+        "italicize": "In nghiêng",
+        "style": "Kiểu",
+        "default": "MẶC ĐỊNH",
+        "fancy": "SANG TRỌNG",
+        "create-request": "Tạo yêu cầu",
+        "field-required": "Trường này là bắt buộc",
+        "close-date-past-error": "Ngày đóng không thể trong quá khứ",
+      },
+      "list": {
+        "no-request": `Không có yêu cầu RSVP. Bạn có thể bắt đầu tạo một cái bằng cách nhấn nút "Tạo"`,
+      },
+      "request-show": {
+        "scan-me": "Quét tôi!",
+        "download-qr-code": "Tải xuống mã QR",
+        "no-guests-message": "Không có khách nào muốn tham dự sự kiện của bạn!",
+        "invitations": "Lời mời",
+        "attendees": "Người tham dự",
+        "share-rsvp-link": "Chia sẻ liên kết RSVP",
+        "information-tab": "Thông tin",
+        "settings-tab": "Cài đặt",
+        "total-guests": "Tổng số khách",
+        "accepted": "Đã chấp nhận",
+        "info": "Thông tin",
+        "link-copied-success": "Đã sao chép liên kết vào clipboard",
+        "link-copied-description": "Liên kết RSVP của bạn đã được sao chép vào clipboard. Hãy chia sẻ nó với khách của bạn.",
+    },
+    },
+  },
+};
+
+export default vi;

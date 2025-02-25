@@ -8,10 +8,8 @@ import { IChoice, IQuestion } from "../../utility/types";
 import {
   Box,
   Card,
-  CardContent,
   CircularProgress,
   IconButton,
-  Typography,
 } from "@mui/material";
 import Map, { DEFAULT_POSITION } from "../requests/map";
 import { useState } from "react";

@@ -1,5 +1,10 @@
 import { Stack, Typography } from "@mui/material";
-import { BooleanField, DateField, NumberField, TextFieldComponent as TextField } from "@refinedev/mui";
+import {
+  BooleanField,
+  DateField,
+  NumberField,
+  TextFieldComponent as TextField,
+} from "@refinedev/mui";
 import React from "react";
 import Box from "@mui/material/Box";
 
@@ -72,7 +77,11 @@ export default function ValueDisplay({
 
   return (
     <Stack spacing={2}>
-      <Typography variant="body1" textTransform={"capitalize"} fontWeight="bold">
+      <Typography
+        variant="body1"
+        textTransform={"capitalize"}
+        fontWeight="bold"
+      >
         {label}
       </Typography>
       {valueDisplay}

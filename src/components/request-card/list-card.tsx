@@ -10,6 +10,7 @@ import { DeleteButton, ShowButton, useDataGrid } from "@refinedev/mui";
 import { Link } from "react-router-dom";
 import { IRequest, IResponse } from "../../pages/requests/list";
 import { useMemo } from "react";
+import { useTranslate } from "@refinedev/core";
 
 interface Props {
   request: IRequest;
@@ -31,6 +32,8 @@ export default function RequestListCard({ request }: Props) {
       ],
     },
   });
+
+  const translate = useTranslate();
 
   const totalGuests = useMemo(
     () => responseData.rows.reduce((sum, item) => sum + item.num_attendees, 0),
@@ -65,25 +68,34 @@ export default function RequestListCard({ request }: Props) {
             height="100%"
             justifyContent="space-between"
           >
-            <Stack>
-              <Typography fontWeight="bold" fontSize={12}>
-                Total Attendees
-              </Typography>
-              <Typography>{totalGuests}</Typography>
-            </Stack>
-            <Stack>
-              <Typography fontWeight="bold" fontSize={12}>
-                Close Date
-              </Typography>
-              <Typography>{request.close_date}</Typography>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              width="100%"
+            >
+              <Stack>
+                <Typography fontWeight="bold" fontSize={12}>
+                  {translate("request-card.list-card.attendees")}
+                </Typography>
+                <Typography>{totalGuests}</Typography>
+              </Stack>
+              <Stack>
+                <Typography fontWeight="bold" fontSize={12}>
+                  {translate("request-card.list-card.close-date")}
+                </Typography>
+                <Typography>{request.close_date}</Typography>
+              </Stack>
             </Stack>
           </Box>
           <Stack mt={2}>
-            <Typography fontWeight="bold">Actions</Typography>
+            <Typography fontWeight="bold">
+              {translate("request-card.list-card.actions")}
+            </Typography>
             <Stack gap={2} direction="row" alignItems="center">
               <ShowButton hideText recordItemId={request.id} />
               <DeleteButton hideText recordItemId={request.id} />
-              <Tooltip title="See how your guests will see your invite.">
+              <Tooltip title={translate("request-card.list-card.preview")}>
                 <IconButton
                   component={Link}
                   to={`/r/${request.id}`}

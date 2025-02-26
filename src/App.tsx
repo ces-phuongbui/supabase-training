@@ -64,6 +64,7 @@ function App() {
                   },
                 ]}
                 options={{
+                  liveMode: "auto",
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
                 }}

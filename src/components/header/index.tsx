@@ -1,15 +1,11 @@
-import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
-import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
-import AppBar from "@mui/material/AppBar";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetIdentity } from "@refinedev/core";
 import { HamburgerMenu, RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
 import React, { useContext } from "react";
-import { ColorModeContext } from "../../contexts/color-mode";
+import { useTheme } from "next-themes";
+import { ColorModeContext } from "@/contexts/color-mode";
 
 export type IUser = {
   id: number;
@@ -20,61 +16,51 @@ export type IUser = {
 export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   sticky = true,
 }) => {
-  const { mode, setMode } = useContext(ColorModeContext);
-
   const { data: user } = useGetIdentity<IUser>();
+  const { mode, setMode } = useContext(ColorModeContext);
+  const { theme, setTheme } = useTheme();
 
   return (
-    <AppBar position={sticky ? "sticky" : "relative"}>
-      <Toolbar>
-        <Stack
-          direction="row"
-          width="100%"
-          justifyContent="flex-end"
-          alignItems="center"
-        >
-          <HamburgerMenu />
-          <Stack
-            direction="row"
-            width="100%"
-            justifyContent="flex-end"
-            alignItems="center"
+    <div
+      className={`${
+        sticky ? "sticky top-0" : "relative"
+      } bg-lightMain dark:bg-background-dark z-10 shadow-sm`}
+    >
+      <div className="flex h-16 items-center px-6">
+        <div className="flex w-full justify-end items-center gap-6">
+          <div className="mr-auto">
+            <HamburgerMenu />
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              setTheme(theme === "dark" ? "light" : "dark");
+              setMode()
+            }}
           >
-            <IconButton
-              color="inherit"
-              onClick={() => {
-                setMode();
-              }}
-            >
-              {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
-            </IconButton>
-
-            {(user?.avatar || user?.name) && (
-              <Stack
-                direction="row"
-                gap="16px"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {user?.name && (
-                  <Typography
-                    sx={{
-                      display: {
-                        xs: "none",
-                        sm: "inline-block",
-                      },
-                    }}
-                    variant="subtitle2"
-                  >
-                    {user?.name}
-                  </Typography>
-                )}
-                <Avatar src={user?.avatar} alt={user?.name} />
-              </Stack>
+            {theme === "light" ? (
+              <Moon className="h-5 w-5" />
+            ) : (
+              <Sun className="h-5 w-5" />
             )}
-          </Stack>
-        </Stack>
-      </Toolbar>
-    </AppBar>
+          </Button>
+
+          {(user?.avatar || user?.name) && (
+            <div className="flex items-center gap-3">
+              {user?.name && (
+                <p className="sm:block text-sm font-medium ">{user?.name}</p>
+              )}
+              <Avatar className="h-8 w-8 ">
+                <AvatarImage src={user?.avatar} alt={user?.name} />
+                <AvatarFallback className="text-sm bg-darkMain dark:bg-lightMain z-10 shadow-sm">
+                  {user?.name?.charAt(0) || "U"}
+                </AvatarFallback>
+              </Avatar>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };

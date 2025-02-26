@@ -7,6 +7,7 @@ import "@fontsource/roboto/700.css";
 import "@fontsource/rochester";
 import "@fontsource-variable/merienda";
 import "@fontsource/kaushan-script";
+import "./index.css";
 
 import App from "./App";
 
@@ -16,5 +17,5 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 );

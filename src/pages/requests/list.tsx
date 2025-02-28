@@ -87,8 +87,6 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
     ],
   });
 
-
-
   const requests = data?.data;
 
   const renderContent = () => {
@@ -101,11 +99,7 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
     }
 
     if (requests.length > 0) {
-      return (
-        <RequestGrid
-          requests={requests}
-        />
-      );
+      return <RequestGrid requests={requests} />;
     }
 
     return (

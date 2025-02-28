@@ -1,21 +1,23 @@
-import RsvpIcon from "@mui/icons-material/Rsvp";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import IconButton from "@mui/material/IconButton";
-import MuiLink from "@mui/material/Link";
-import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { DeleteButton, ShowButton, useDataGrid } from "@refinedev/mui";
-import { Link } from "react-router-dom";
-import { IRequest, IResponse } from "../../pages/requests/list";
+import { Mail } from "lucide-react";
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 
-interface Props {
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { DeleteButton, ShowButton, useDataGrid } from "@refinedev/mui";
+import { IRequest, IResponse } from "../../pages/requests/list";
+
+interface RequestListCardProps {
   request: IRequest;
 }
 
-export default function RequestListCard({ request }: Props) {
+export default function RequestListCard({ request }: RequestListCardProps) {
   const { dataGridProps: responseData } = useDataGrid<IResponse>({
     resource: "responses",
     queryOptions: {
@@ -39,64 +41,62 @@ export default function RequestListCard({ request }: Props) {
   );
 
   return (
-    <Card elevation={3} sx={{ flex: 1, minWidth: 250 }}>
-      <Stack justifyContent="space-between" height="100%">
-        <Box padding={2} bgcolor={request.secondary_color}>
-          <MuiLink
-            component={Link}
-            to={`/requests/show/${request.id}`}
-            underline="hover"
-            sx={{ textDecorationColor: `${request.primary_color} !important` }}
-          >
-            <Typography color={request.primary_color} fontWeight="bold">
-              {request.title}
-            </Typography>
-          </MuiLink>
-        </Box>
-        <Box
-          padding={2}
-          display="flex"
-          flexDirection="column"
-          height="100%"
-          justifyContent="flex-end"
+    <Card className="min-w-[250px] flex-1">
+      <CardHeader
+        className="p-0 rounded-t-lg"
+        style={{ backgroundColor: request.secondary_color }}
+      >
+        <Link
+          to={`/requests/show/${request.id}`}
+          className="block p-4 hover:opacity-80 transition-opacity"
+          style={{ color: request.primary_color }}
         >
-          <Box
-            paddingRight={10}
-            display="flex"
-            height="100%"
-            justifyContent="space-between"
-          >
-            <Stack>
-              <Typography fontWeight="bold" fontSize={12}>
-                Total Attendees
-              </Typography>
-              <Typography>{totalGuests}</Typography>
-            </Stack>
-            <Stack>
-              <Typography fontWeight="bold" fontSize={12}>
-                Close Date
-              </Typography>
-              <Typography>{request.close_date}</Typography>
-            </Stack>
-          </Box>
-          <Stack mt={2}>
-            <Typography fontWeight="bold">Actions</Typography>
-            <Stack gap={2} direction="row" alignItems="center">
-              <ShowButton hideText recordItemId={request.id} />
-              <DeleteButton hideText recordItemId={request.id} />
-              <Tooltip title="See how your guests will see your invite.">
-                <IconButton
-                  component={Link}
-                  to={`/r/${request.id}`}
-                  color="primary"
+          <h3 className="font-bold">{request.title}</h3>
+        </Link>
+      </CardHeader>
+
+      <CardContent className="p-4 h-full">
+        <div className="flex justify-between pr-10">
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-muted-foreground">
+              Total Attendees
+            </p>
+            <p className="text-sm">{totalGuests}</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-xs font-bold text-muted-foreground">
+              Close Date
+            </p>
+            <p className="text-sm">{request.close_date}</p>
+          </div>
+        </div>
+
+        <div className="space-y-2 pt-6">
+          <h4 className="font-bold">Actions</h4>
+          <div className="flex items-center gap-2">
+            <ShowButton hideText recordItemId={request.id} />
+            <DeleteButton hideText recordItemId={request.id} />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" asChild>
+                    <Link to={`/r/${request.id}`}>
+                      <Mail className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  align="center"
+                  className="bg-gray-800 text-white px-3 py-2 rounded-md shadow-md"
                 >
-                  <RsvpIcon />
-                </IconButton>
+                  <p>See how your guests will see your invite</p>
+                </TooltipContent>
               </Tooltip>
-            </Stack>
-          </Stack>
-        </Box>
-      </Stack>
+            </TooltipProvider>
+          </div>
+        </div>
+      </CardContent>
     </Card>
   );
 }

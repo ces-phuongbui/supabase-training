@@ -30,6 +30,7 @@ export default function RequestListCard({ request }: Props) {
         },
       ],
     },
+    liveMode: "auto",
   });
 
   const totalGuests = useMemo(

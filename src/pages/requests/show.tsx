@@ -167,6 +167,7 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
         },
       ],
     },
+    liveMode: "auto",
   });
 
   if (!request) return null;

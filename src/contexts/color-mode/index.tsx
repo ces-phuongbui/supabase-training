@@ -1,6 +1,12 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { RefineThemes } from "@refinedev/mui";
-import React, { PropsWithChildren, createContext, useEffect, useState } from "react";
+import React, {
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 const LIGHT_MODE = "light";
 const DARK_MODE = "dark";
@@ -10,14 +16,22 @@ type ColorModeContextType = {
   setMode: () => void;
 };
 
-export const ColorModeContext = createContext<ColorModeContextType>({} as ColorModeContextType);
+export const ColorModeContext = createContext<ColorModeContextType>(
+  {} as ColorModeContextType,
+);
 
-export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
   const colorModeFromLocalStorage = localStorage.getItem("colorMode");
-  const isSystemPreferenceDark = window?.matchMedia("(prefers-color-scheme: dark)").matches;
+  const isSystemPreferenceDark = window?.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches;
 
   const systemPreference = isSystemPreferenceDark ? DARK_MODE : LIGHT_MODE;
-  const [mode, setMode] = useState(colorModeFromLocalStorage ?? systemPreference);
+  const [mode, setMode] = useState(
+    colorModeFromLocalStorage ?? systemPreference,
+  );
 
   useEffect(() => {
     window.localStorage.setItem("colorMode", mode);
@@ -26,7 +40,9 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({ children
   const contextValue = React.useMemo(
     () => ({
       setMode: () => {
-        setMode((prevMode) => (prevMode === LIGHT_MODE ? DARK_MODE : LIGHT_MODE));
+        setMode((prevMode) =>
+          prevMode === LIGHT_MODE ? DARK_MODE : LIGHT_MODE,
+        );
       },
       mode,
     }),
@@ -35,8 +51,17 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({ children
 
   return (
     <ColorModeContext.Provider value={contextValue}>
-      <ThemeProvider theme={mode === LIGHT_MODE ? RefineThemes.Orange : RefineThemes.OrangeDark}>
-        {children}
+      <ThemeProvider
+        theme={
+          mode === LIGHT_MODE ? RefineThemes.Orange : RefineThemes.OrangeDark
+        }
+      >
+        <NextThemesProvider
+          attribute="class"
+          defaultTheme="system"
+        >
+          {children}
+        </NextThemesProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

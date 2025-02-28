@@ -5,11 +5,15 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useGetIdentity } from "@refinedev/core";
+import { useGetIdentity, useTranslate, useTranslation } from "@refinedev/core";
 import React from "react";
 import { Link } from "react-router-dom";
 import { AppIcon } from "../../components/app-icon";
 import { IUser } from "../../components/header";
+import { Avatar } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import ukFlagIcon from "../../assets/united-kingdom.png";
+import vnFlagIcon from "../../assets/vietnam.png";
 
 const Feature = ({
   title,
@@ -42,6 +46,13 @@ const Feature = ({
 
 export default function LandingPage() {
   const { data: user } = useGetIdentity<IUser>();
+  const translate = useTranslate();
+
+  const { getLocale, changeLocale } = useTranslation();
+
+  const onChangeLang = () => {
+    changeLocale(getLocale() === "en" ? "vi" : "en");
+  };
 
   return (
     <Stack>
@@ -61,17 +72,34 @@ export default function LandingPage() {
               to="/requests"
               size="small"
             >
-              Dashboard
+              {translate("landing-page.dashboard")}
             </Button>
           ) : (
             <>
+              <IconButton color="inherit" onClick={onChangeLang}>
+                {getLocale() === "en" ? (
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={ukFlagIcon}
+                    sx={{ width: 24, height: 24 }}
+                    variant="square"
+                  />
+                ) : (
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={vnFlagIcon}
+                    sx={{ width: 24, height: 24 }}
+                    variant="square"
+                  />
+                )}
+              </IconButton>
               <Button
                 variant="outlined"
                 component={Link}
                 to="/login"
                 size="small"
               >
-                Login
+                {translate("landing-page.login")}
               </Button>
               <Button
                 variant="contained"
@@ -79,7 +107,7 @@ export default function LandingPage() {
                 to="/register"
                 size="small"
               >
-                Create Account
+                {translate("landing-page.create-account")}
               </Button>
             </>
           )}
@@ -99,7 +127,7 @@ export default function LandingPage() {
                 md: "3.75rem",
               }}
             >
-              Quick Online RSVP Creation and Management
+              {translate("landing-page.hero-title")}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -109,17 +137,16 @@ export default function LandingPage() {
                 md: "1.25rem",
               }}
             >
-              Create customizable RSVP quickly and send them online. No more
-              manually counting cards. Easily determine number of attendees.
+              {translate("landing-page.hero-subtitle")}
             </Typography>
             <Box display="flex" justifyContent="center" mt={4}>
               {user ? (
                 <Button variant="contained" component={Link} to="/requests">
-                  Dashboard
+                  {translate("landing-page.dashboard")}
                 </Button>
               ) : (
                 <Button variant="contained" component={Link} to="/requests">
-                  Start Creating
+                  {translate("landing-page.start-creating")}
                 </Button>
               )}
             </Box>
@@ -136,18 +163,22 @@ export default function LandingPage() {
           <Box pb={20} pt={10} color="white" px={4} maxWidth={1280} mx="auto">
             <Box display="flex" gap={4} justifyContent="center" flexWrap="wrap">
               <Feature
-                title="Customizable RSVP Cards"
-                description="Simple customizable options to quickly create RSVP cards and still make it unique."
+                title={translate("landing-page.customizable-rsvp-cards")}
+                description={translate(
+                  "landing-page.customizable-rsvp-description",
+                )}
                 icon={<DashboardCustomizeIcon fontSize="inherit" />}
               />
               <Feature
-                title="Track Guests, Plan Smart"
-                description="Attendees confirm participation and specify guest count, enabling organizers to optimize seating and plan efficiently."
+                title={translate("landing-page.track-guests")}
+                description={translate("landing-page.track-guests-description")}
                 icon={<QuestionMarkIcon fontSize="inherit" />}
               />
               <Feature
-                title="Invitations Via QR Codes"
-                description="Spread your invitations through portable QR Codes. Copy them as images and send."
+                title={translate("landing-page.qr-invitations")}
+                description={translate(
+                  "landing-page.qr-invitations-description",
+                )}
                 icon={<QrCode2Icon fontSize="inherit" />}
               />
             </Box>

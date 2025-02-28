@@ -4,6 +4,7 @@ import {
   IResourceComponentsProps,
   useList,
   useGetIdentity,
+  useTranslate,
 } from "@refinedev/core";
 import { Box, Typography, Stack, CircularProgress } from "@mui/material";
 import RequestListCard from "../../components/request-card/list-card";
@@ -51,16 +52,6 @@ const EmptyBox: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </Box>
 );
 
-const NoRequests: React.FC = () => (
-  <Stack gap={4} alignItems="center">
-    <Typography color="palette.text.primary">
-      No RSVP requests. You can start creating one by pushing the "Create"
-      button.
-    </Typography>
-    <CreateButton />
-  </Stack>
-);
-
 const RequestGrid: React.FC<{
   requests: IRequest[];
 }> = ({ requests }) => (
@@ -87,7 +78,7 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
     ],
   });
 
-
+  const translate = useTranslate();
 
   const requests = data?.data;
 
@@ -101,16 +92,17 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
     }
 
     if (requests.length > 0) {
-      return (
-        <RequestGrid
-          requests={requests}
-        />
-      );
+      return <RequestGrid requests={requests} />;
     }
 
     return (
       <EmptyBox>
-        <NoRequests />
+        <Stack gap={4} alignItems="center">
+          <Typography color="palette.text.primary">
+            {translate("request.list.no-request")}
+          </Typography>
+          <CreateButton />
+        </Stack>
       </EmptyBox>
     );
   };

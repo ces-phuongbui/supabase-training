@@ -36,7 +36,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
             size="icon"
             onClick={() => {
               setTheme(theme === "dark" ? "light" : "dark");
-              setMode()
+              setMode();
             }}
           >
             {theme === "light" ? (

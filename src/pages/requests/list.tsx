@@ -1,14 +1,14 @@
-import React from "react";
-import { CreateButton, List } from "@refinedev/mui";
+import { Button } from "@/components/ui/button";
+import { Box, CircularProgress } from "@mui/material";
 import {
   IResourceComponentsProps,
-  useList,
   useGetIdentity,
+  useList,
 } from "@refinedev/core";
-import { Box, Typography, Stack, CircularProgress } from "@mui/material";
-import RequestListCard from "../../components/request-card/list-card";
-import { IUser } from "../../components/header";
 import { LatLngExpression } from "leaflet";
+import React from "react";
+import { IUser } from "../../components/header";
+import RequestListCard from "../../components/request-card/list-card";
 
 export interface IRequest {
   id: string;
@@ -37,36 +37,18 @@ export interface IResponse {
   accept: boolean;
 }
 
-const EmptyBox: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <Box
-    padding={2}
-    bgcolor="action.hover"
-    borderRadius={2}
-    minHeight={200}
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-  >
-    {children}
-  </Box>
-);
-
-const NoRequests: React.FC = () => (
-  <Stack gap={4} alignItems="center">
-    <Typography color="palette.text.primary">
-      No RSVP requests. You can start creating one by pushing the "Create"
-      button.
-    </Typography>
-    <CreateButton />
-  </Stack>
-);
-
 const RequestGrid: React.FC<{
   requests: IRequest[];
 }> = ({ requests }) => (
-  <Box display="flex" flexWrap="wrap" gap={2}>
+  <Box
+    display="grid"
+    gridTemplateColumns="repeat(2, 1fr)"
+    gap={4}
+    width="100%"
+    data-oid="5cl6q42"
+  >
     {requests.map((req) => (
-      <RequestListCard key={req.id} request={req} />
+      <RequestListCard key={req.id} request={req} data-oid="qi_a41e" />
     ))}
   </Box>
 );
@@ -89,25 +71,31 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
 
   const requests = data?.data;
 
-  const renderContent = () => {
-    if (!requests) {
-      return (
-        <EmptyBox>
-          <CircularProgress />
-        </EmptyBox>
-      );
-    }
-
-    if (requests.length > 0) {
-      return <RequestGrid requests={requests} />;
-    }
-
-    return (
-      <EmptyBox>
-        <NoRequests />
-      </EmptyBox>
-    );
-  };
-
-  return <List>{renderContent()}</List>;
+  return (
+    <div data-oid="rw:7wxd">
+      <div
+        className="flex justify-between items-center mb-6"
+        data-oid="ui0xp5k"
+      >
+        <h1 className="text-2xl font-semibold" data-oid="4kimmww">
+          Your Events
+        </h1>
+        <Button
+          variant="default"
+          className="bg-amber-600 hover:bg-amber-700 text-white"
+          onClick={() => (window.location.href = "/requests/create")}
+          data-oid="8htfvwi"
+        >
+          Add New Event
+        </Button>
+      </div>
+      {requests ? (
+        <RequestGrid requests={requests} data-oid="rf_5qb9" />
+      ) : (
+        <div data-oid="bnw4io6">
+          <CircularProgress data-oid=".t2h3.d" />
+        </div>
+      )}
+    </div>
+  );
 };

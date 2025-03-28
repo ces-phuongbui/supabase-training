@@ -198,14 +198,16 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               })();
             }
           }}
+          data-oid="pr7maaz"
         >
           Create Request
         </Button>
       )}
+      data-oid="wtqp983"
     >
-      <Box marginBottom={4}>
-        <Box mb={2}>
-          <Typography component="h2" fontSize={24}>
+      <Box marginBottom={4} data-oid="b0w2t31">
+        <Box mb={2} data-oid="pyp3ya3">
+          <Typography component="h2" fontSize={24} data-oid="g5h:kch">
             Preview
           </Typography>
         </Box>
@@ -215,6 +217,7 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
           }
           backgroundColor={backgroundColor}
           background_gradient={background_gradient}
+          data-oid=".0len6q"
         >
           <RequestCard
             backgroundColor={backgroundColor}
@@ -231,17 +234,32 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
             background_gradient={background_gradient}
             style={style}
             isHaveBackGroundImage={!!backgroundImage}
+            data-oid="ugmsaad"
           />
         </Background>
       </Box>
-      <Grid component="form" autoComplete="off" container spacing={2}>
-        <Grid container item xs={12} md={6} spacing={2} flex={1}>
-          <Grid item xs={12}>
-            <Typography fontSize={24} fontWeight="semibold">
+      <Grid
+        component="form"
+        autoComplete="off"
+        container
+        spacing={2}
+        data-oid="h_ri2r5"
+      >
+        <Grid
+          container
+          item
+          xs={12}
+          md={6}
+          spacing={2}
+          flex={1}
+          data-oid="npeugf."
+        >
+          <Grid item xs={12} data-oid="g-xbuwy">
+            <Typography fontSize={24} fontWeight="semibold" data-oid="pvcsjtm">
               General Information
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} data-oid="_yzb.3-">
             <TextField
               {...register("title", {
                 required: "This field is required",
@@ -253,9 +271,10 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               type="text"
               label="Title"
               name="title"
+              data-oid="ny.0nez"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} data-oid="eovfsea">
             <Autocomplete
               {...register("address", {
                 required: "This field is required",
@@ -285,17 +304,23 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                     endAdornment: (
                       <React.Fragment>
                         {addressLoading ? (
-                          <CircularProgress color="inherit" size={20} />
+                          <CircularProgress
+                            color="inherit"
+                            size={20}
+                            data-oid="6jq1mr1"
+                          />
                         ) : null}
                         {params.InputProps.endAdornment}
                       </React.Fragment>
                     ),
                   }}
+                  data-oid="i:q.x.q"
                 />
               )}
+              data-oid="7kss1fr"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} data-oid="xaa5apn">
             <TextField
               {...register("acceptance_label", {
                 required: "This field is required",
@@ -307,9 +332,10 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               type="text"
               label="Acceptance Label"
               name="acceptance_label"
+              data-oid="sxpg.d8"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} data-oid="ze79p2g">
             <TextField
               {...register("rejection_label", {
                 required: "This field is required",
@@ -321,9 +347,10 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               type="text"
               label="Rejection Label"
               name="rejection_label"
+              data-oid="lnmhyow"
             />
           </Grid>
-          <Grid item xs>
+          <Grid item xs data-oid="92rt9an">
             <TextField
               {...register("close_date", {
                 required: "This field is required",
@@ -338,10 +365,11 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               type="date"
               label="Close Date"
               name="close_date"
+              data-oid="t_30ora"
             />
           </Grid>
-          <Grid item xs={12}>
-            <Box display="flex" gap={2} alignItems="center">
+          <Grid item xs={12} data-oid="rlbb9n.">
+            <Box display="flex" gap={2} alignItems="center" data-oid="e-55xkn">
               <TextField
                 fullWidth
                 InputLabelProps={{ shrink: true }}
@@ -359,12 +387,14 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                       color="error"
                       onClick={handleDeleteImage}
                       sx={{ ml: 1 }}
+                      data-oid="iimjkht"
                     >
                       Delete
                     </Button>
                   ),
                 }}
                 label="Background Image"
+                data-oid="g9qmb0e"
               />
             </Box>
           </Grid>
@@ -376,13 +406,14 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
           md={6}
           spacing={2}
           alignContent="flex-start"
+          data-oid="ied9ibd"
         >
-          <Grid item xs={12}>
-            <Typography fontSize={24} fontWeight="semibold">
+          <Grid item xs={12} data-oid="2zsf00v">
+            <Typography fontSize={24} fontWeight="semibold" data-oid="65hv06v">
               Visual
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} data-oid="an5f1g5">
             <TextField
               {...register("primary_color", {
                 required: "This field is required",
@@ -394,9 +425,10 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               type="color"
               label="Primary Color"
               name="primary_color"
+              data-oid="klswv07"
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={8} data-oid="ym1185x">
             <TextField
               {...register("secondary_color", {
                 required: "This field is required",
@@ -409,18 +441,31 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               type="color"
               label="Secondary Color"
               name="secondary_color"
+              data-oid="f4mtfac"
             />
           </Grid>
 
-          <Grid item xs={4} display="flex" alignItems="center">
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            alignItems="center"
+            data-oid="49el7n1"
+          >
             <FormControlLabel
-              control={<Switch {...register("secondary_gradient")} />}
+              control={
+                <Switch
+                  {...register("secondary_gradient")}
+                  data-oid="y3th315"
+                />
+              }
               label="Gradient"
               disabled={!!backgroundImage}
+              data-oid="3cayne_"
             />
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={8} data-oid=":jljvf:">
             <TextField
               {...register("background_color", {
                 required: "This field is required",
@@ -433,19 +478,34 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
               type="color"
               label="Background Color"
               name="background_color"
+              data-oid="ye1-4du"
             />
           </Grid>
-          <Grid item xs={4} display="flex" alignItems="center">
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            alignItems="center"
+            data-oid="m_rr06h"
+          >
             <FormControlLabel
-              control={<Switch {...register("background_gradient")} />}
+              control={
+                <Switch
+                  {...register("background_gradient")}
+                  data-oid="z92_2dc"
+                />
+              }
               label="Gradient"
               disabled={!!backgroundImage}
+              data-oid="hvnfg.7"
             />
           </Grid>
 
-          <Grid item xs={8}>
-            <FormControl fullWidth>
-              <InputLabel id="font_family">Font</InputLabel>
+          <Grid item xs={8} data-oid="xp-kdw7">
+            <FormControl fullWidth data-oid="yq-865w">
+              <InputLabel id="font_family" data-oid="56gbo5g">
+                Font
+              </InputLabel>
               <Select
                 labelId="font_family"
                 label="Age"
@@ -454,24 +514,34 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                   required: "This field is required",
                 })}
                 defaultValue={fonts[0]}
+                data-oid="pzl-9n9"
               >
                 {fonts.map((font) => (
-                  <MenuItem value={font} key={font}>
+                  <MenuItem value={font} key={font} data-oid="5_-.l0b">
                     {font}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={4} display="flex" alignItems="center">
+          <Grid
+            item
+            xs={4}
+            display="flex"
+            alignItems="center"
+            data-oid="i_jgogw"
+          >
             <FormControlLabel
-              control={<Switch {...register("italicize")} />}
+              control={<Switch {...register("italicize")} data-oid="s2roefq" />}
               label="Italicize"
+              data-oid="gyv3:5:"
             />
           </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel id="style">Style</InputLabel>
+          <Grid item xs={12} data-oid="g0x::r4">
+            <FormControl fullWidth data-oid="2zyh0v2">
+              <InputLabel id="style" data-oid="d-5q5hs">
+                Style
+              </InputLabel>
               <Select
                 labelId="style"
                 label="Style"
@@ -480,16 +550,21 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
                   required: "This field is required",
                 })}
                 defaultValue="DEFAULT"
+                data-oid=".gfwux9"
               >
-                <MenuItem value="DEFAULT">DEFAULT</MenuItem>
-                <MenuItem value="FANCY">FANCY</MenuItem>
+                <MenuItem value="DEFAULT" data-oid="juxv5-d">
+                  DEFAULT
+                </MenuItem>
+                <MenuItem value="FANCY" data-oid="m_bej22">
+                  FANCY
+                </MenuItem>
               </Select>
             </FormControl>
           </Grid>
         </Grid>
       </Grid>
-      <Grid sx={{ marginTop: "20px" }}>
-        <Map position={position} address={address} />
+      <Grid sx={{ marginTop: "20px" }} data-oid="rop6.09">
+        <Map position={position} address={address} data-oid="ap33d43" />
       </Grid>
     </Create>
   );

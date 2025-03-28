@@ -1,5 +1,10 @@
 import { Stack, Typography } from "@mui/material";
-import { BooleanField, DateField, NumberField, TextFieldComponent as TextField } from "@refinedev/mui";
+import {
+  BooleanField,
+  DateField,
+  NumberField,
+  TextFieldComponent as TextField,
+} from "@refinedev/mui";
 import React from "react";
 import Box from "@mui/material/Box";
 
@@ -30,11 +35,13 @@ export default function ValueDisplay({
 
   const renderStringValue = (val: string) => {
     if (isDate) {
-      return <DateField value={val} />;
+      return <DateField value={val} data-oid="8hu2er8" />;
     }
 
     if (isColor) {
-      return <Box bgcolor={val} width={50} height={50}></Box>;
+      return (
+        <Box bgcolor={val} width={50} height={50} data-oid="tyah_b8"></Box>
+      );
     }
 
     if (isImage) {
@@ -49,11 +56,12 @@ export default function ValueDisplay({
             borderRadius: 2,
             border: "1px solid #ddd",
           }}
+          data-oid="ht::nn1"
         />
       );
     }
 
-    return <TextField value={val} />;
+    return <TextField value={val} data-oid="7lduage" />;
   };
 
   switch (typeof value) {
@@ -61,18 +69,23 @@ export default function ValueDisplay({
       valueDisplay = renderStringValue(value);
       break;
     case "number":
-      valueDisplay = <NumberField value={value} />;
+      valueDisplay = <NumberField value={value} data-oid="0sa_2xy" />;
       break;
     case "boolean":
-      valueDisplay = <BooleanField value={value} />;
+      valueDisplay = <BooleanField value={value} data-oid="lqca32a" />;
       break;
     default:
       break;
   }
 
   return (
-    <Stack spacing={2}>
-      <Typography variant="body1" textTransform={"capitalize"} fontWeight="bold">
+    <Stack spacing={2} data-oid="djqlu:-">
+      <Typography
+        variant="body1"
+        textTransform={"capitalize"}
+        fontWeight="bold"
+        data-oid="aay_vqp"
+      >
         {label}
       </Typography>
       {valueDisplay}

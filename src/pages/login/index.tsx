@@ -1,38 +1,35 @@
-import * as React from "react";
-import {
-  type LoginPageProps,
-  type LoginFormTypes,
-  useActiveAuthProvider,
-  RegisterFormTypes,
-} from "@refinedev/core";
-import { useForm } from "@refinedev/react-hook-form";
-import { FormProvider, UseFormProps } from "react-hook-form";
-
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Divider from "@mui/material/Divider";
-import MuiLink from "@mui/material/Link";
-import Stack from "@mui/material/Stack";
-
-import type { BoxProps } from "@mui/material/Box";
-import type { CardContentProps } from "@mui/material/CardContent";
-
 import {
   type BaseRecord,
   type HttpError,
+  type LoginFormTypes,
+  type LoginPageProps,
+  RegisterFormTypes,
+  useActiveAuthProvider,
+  useLink,
   useLogin,
-  useTranslate,
   useRouterContext,
   useRouterType,
-  useLink,
+  useTranslate,
 } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import * as React from "react";
+import { FormProvider, UseFormProps } from "react-hook-form";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import MuiLink from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+
+import type { BoxProps } from "@mui/material/Box";
+import type { CardContentProps } from "@mui/material/CardContent";
 
 export interface FormPropsType extends UseFormProps {
   onSubmit?: (values: RegisterFormTypes) => void;
@@ -80,7 +77,7 @@ export const LoginPage: React.FC<LoginProps> = ({
     if (providers && providers.length > 0) {
       return (
         <>
-          <Stack spacing={1}>
+          <Stack spacing={1} data-oid="0la3iuc">
             {providers.map((provider: any) => {
               return (
                 <Button
@@ -96,6 +93,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                     login({ ...mutationVariables, providerName: provider.name })
                   }
                   startIcon={provider.icon}
+                  data-oid="jqys25r"
                 >
                   {provider.label}
                 </Button>
@@ -108,6 +106,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                 fontSize: "12px",
                 marginY: "16px",
               }}
+              data-oid="qkut::u"
             >
               {translate("pages.login.divider", "or")}
             </Divider>
@@ -119,8 +118,11 @@ export const LoginPage: React.FC<LoginProps> = ({
   };
 
   const Content = (
-    <Card {...(contentProps ?? {})}>
-      <CardContent sx={{ p: "32px", "&:last-child": { pb: "32px" } }}>
+    <Card {...(contentProps ?? {})} data-oid="d:09on2">
+      <CardContent
+        sx={{ p: "32px", "&:last-child": { pb: "32px" } }}
+        data-oid="880upy3"
+      >
         <Typography
           component="h1"
           variant="h5"
@@ -128,6 +130,7 @@ export const LoginPage: React.FC<LoginProps> = ({
           color="primary"
           fontWeight={700}
           mb={3}
+          data-oid="w:qzcay"
         >
           {translate("pages.login.title", "Sign in to your account")}
         </Typography>
@@ -142,6 +145,7 @@ export const LoginPage: React.FC<LoginProps> = ({
 
               return login({ ...mutationVariables, ...data });
             })}
+            data-oid="irz4en-"
           >
             <TextField
               {...register("email", {
@@ -161,7 +165,9 @@ export const LoginPage: React.FC<LoginProps> = ({
               sx={{
                 mt: 0,
               }}
+              data-oid="6f4yozy"
             />
+
             <TextField
               {...register("password", {
                 required: translate(
@@ -182,7 +188,9 @@ export const LoginPage: React.FC<LoginProps> = ({
               sx={{
                 mb: 0,
               }}
+              data-oid="bsf0:p4"
             />
+
             <Box
               component="div"
               sx={{
@@ -191,6 +199,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
+              data-oid=".6a03id"
             >
               {rememberMe ?? (
                 <FormControlLabel
@@ -206,12 +215,14 @@ export const LoginPage: React.FC<LoginProps> = ({
                       size="small"
                       id="remember"
                       {...register("remember")}
+                      data-oid="x0_d1_j"
                     />
                   }
                   label={translate(
                     "pages.login.buttons.rememberMe",
                     "Remember me",
                   )}
+                  data-oid="xo12ikr"
                 />
               )}
               {forgotPasswordLink ?? (
@@ -222,6 +233,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                   component={ActiveLink}
                   underline="none"
                   to="/forgot-password"
+                  data-oid="n9eo8s-"
                 >
                   {translate(
                     "pages.login.buttons.forgotPassword",
@@ -236,6 +248,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               variant="contained"
               disabled={isLoading}
               sx={{ mt: "24px" }}
+              data-oid="7k_268z"
             >
               {translate("pages.login.signin", "Sign in")}
             </Button>
@@ -249,12 +262,14 @@ export const LoginPage: React.FC<LoginProps> = ({
               justifyContent: "center",
               alignItems: "center",
             }}
+            data-oid="d1fdmd-"
           >
             <Typography
               textAlign="center"
               variant="body2"
               component="span"
               fontSize="12px"
+              data-oid="gvewe1-"
             >
               {translate(
                 "pages.login.buttons.noAccount",
@@ -270,6 +285,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               underline="none"
               to="/register"
               fontWeight="bold"
+              data-oid="0:1uxal"
             >
               {translate("pages.login.signup", "Sign up")}
             </MuiLink>
@@ -280,8 +296,8 @@ export const LoginPage: React.FC<LoginProps> = ({
   );
 
   return (
-    <FormProvider {...methods}>
-      <Box component="div" {...(wrapperProps ?? {})}>
+    <FormProvider {...methods} data-oid="yufouwp">
+      <Box component="div" {...(wrapperProps ?? {})} data-oid="v1sb8a0">
         <Container
           component="main"
           sx={{
@@ -294,6 +310,7 @@ export const LoginPage: React.FC<LoginProps> = ({
             width: "100%",
             maxWidth: "400px",
           }}
+          data-oid="u82c8_s"
         >
           <Box
             sx={{
@@ -303,6 +320,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               flexDirection: "column",
               paddingTop: hideForm ? "15dvh" : 0,
             }}
+            data-oid="k4hruyw"
           >
             <>{Content}</>
           </Box>

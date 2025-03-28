@@ -50,15 +50,17 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
   );
 
   return (
-    <ColorModeContext.Provider value={contextValue}>
+    <ColorModeContext.Provider value={contextValue} data-oid="knf0-pl">
       <ThemeProvider
         theme={
           mode === LIGHT_MODE ? RefineThemes.Orange : RefineThemes.OrangeDark
         }
+        data-oid="j--7i2l"
       >
         <NextThemesProvider
           attribute="class"
           defaultTheme="system"
+          data-oid="tzbkgfz"
         >
           {children}
         </NextThemesProvider>

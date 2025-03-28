@@ -1,14 +1,14 @@
-import React from "react";
-import { CreateButton, List } from "@refinedev/mui";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import {
   IResourceComponentsProps,
-  useList,
   useGetIdentity,
+  useList,
 } from "@refinedev/core";
-import { Box, Typography, Stack, CircularProgress } from "@mui/material";
-import RequestListCard from "../../components/request-card/list-card";
-import { IUser } from "../../components/header";
+import { CreateButton } from "@refinedev/mui";
 import { LatLngExpression } from "leaflet";
+import React from "react";
+import { IUser } from "../../components/header";
+import RequestListCard from "../../components/request-card/list-card";
 
 export interface IRequest {
   id: string;
@@ -46,27 +46,34 @@ const EmptyBox: React.FC<{ children: React.ReactNode }> = ({ children }) => (
     display="flex"
     alignItems="center"
     justifyContent="center"
+    data-oid="nvp9.u3"
   >
     {children}
   </Box>
 );
 
 const NoRequests: React.FC = () => (
-  <Stack gap={4} alignItems="center">
-    <Typography color="palette.text.primary">
+  <Stack gap={4} alignItems="center" data-oid="jwgxv7k">
+    <Typography color="palette.text.primary" data-oid="tfvixm7">
       No RSVP requests. You can start creating one by pushing the "Create"
       button.
     </Typography>
-    <CreateButton />
+    <CreateButton data-oid="js1f17e" />
   </Stack>
 );
 
 const RequestGrid: React.FC<{
   requests: IRequest[];
 }> = ({ requests }) => (
-  <Box display="flex" flexWrap="wrap" gap={2}>
+  <Box
+    display="grid"
+    gridTemplateColumns="repeat(2, 1fr)"
+    gap={4}
+    width="100%"
+    data-oid="5cl6q42"
+  >
     {requests.map((req) => (
-      <RequestListCard key={req.id} request={req} />
+      <RequestListCard key={req.id} request={req} data-oid="qi_a41e" />
     ))}
   </Box>
 );
@@ -89,25 +96,33 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
 
   const requests = data?.data;
 
-  const renderContent = () => {
-    if (!requests) {
-      return (
-        <EmptyBox>
-          <CircularProgress />
-        </EmptyBox>
-      );
-    }
+  // const renderContent = () => {
+  //   if (!requests) {
+  //     return (
+  //       <EmptyBox data-oid="wlr2ej4">
+  //         <CircularProgress data-oid=".t2h3.d" />
+  //       </EmptyBox>
+  //     );
+  //   }
 
-    if (requests.length > 0) {
-      return <RequestGrid requests={requests} />;
-    }
+  //   if (requests.length > 0) {
+  //     return <RequestGrid requests={requests} data-oid="lcxwd91" />;
+  //   }
 
-    return (
-      <EmptyBox>
-        <NoRequests />
-      </EmptyBox>
-    );
-  };
+  //   return (
+  //     <EmptyBox data-oid="2atm3rh">
+  //       <NoRequests data-oid="cvgvurx" />
+  //     </EmptyBox>
+  //   );
+  // };
 
-  return <List>{renderContent()}</List>;
+  return (
+    <div data-oid="rw:7wxd">
+      {requests ? (
+        <RequestGrid requests={requests} data-oid="rf_5qb9" />
+      ) : (
+        <CircularProgress data-oid=".t2h3.d" />
+      )}
+    </div>
+  );
 };

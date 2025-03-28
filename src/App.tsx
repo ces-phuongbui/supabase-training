@@ -5,7 +5,6 @@ import { Authenticated, Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
 import {
-  AuthPage,
   ErrorComponent,
   notificationProvider,
   RefineSnackbarProvider,
@@ -34,6 +33,9 @@ import { ResponseCreate } from "./pages/responses/create";
 import ThankYouPage from "./pages/responses/thank-you";
 import { supabaseClient } from "./utility";
 import customTitleHandler from "./utility/customTitleHandler";
+import { LoginPage } from "./pages/login";
+import { RegisterPage } from "./pages/register";
+import { ForgotPasswordPage } from "./pages/forgot-password";
 
 function App() {
   return (
@@ -109,15 +111,7 @@ function App() {
                     <Route
                       path="/login"
                       element={
-                        <AuthPage
-                          type="login"
-                          title={<AppIcon />}
-                          formProps={{
-                            defaultValues: {
-                              email: "info@refine.dev",
-                              password: "refine-supabase",
-                            },
-                          }}
+                        <LoginPage
                           providers={[
                             {
                               name: "google",
@@ -128,15 +122,10 @@ function App() {
                         />
                       }
                     />
-                    <Route
-                      path="/register"
-                      element={<AuthPage type="register" title={<AppIcon />} />}
-                    />
+                    <Route path="/register" element={<RegisterPage />} />
                     <Route
                       path="/forgot-password"
-                      element={
-                        <AuthPage type="forgotPassword" title={<AppIcon />} />
-                      }
+                      element={<ForgotPasswordPage />}
                     />
                   </Route>
                 </Routes>

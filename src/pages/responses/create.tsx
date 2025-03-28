@@ -1,20 +1,13 @@
+import { Box, Card, CircularProgress, IconButton } from "@mui/material";
 import { HttpError, useOne, useTable } from "@refinedev/core";
+import { useDocumentTitle } from "@refinedev/react-router-v6";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { RequestCard } from "../../components/request-card";
 import Background from "../../components/request-card/background";
-import { useParams } from "react-router-dom";
-import { IRequest, IResponse } from "../requests/list";
-import { useDocumentTitle } from "@refinedev/react-router-v6";
 import { IChoice, IQuestion } from "../../utility/types";
-import {
-  Box,
-  Card,
-  CardContent,
-  CircularProgress,
-  IconButton,
-  Typography,
-} from "@mui/material";
+import { IRequest, IResponse } from "../requests/list";
 import Map, { DEFAULT_POSITION } from "../requests/map";
-import { useState } from "react";
 
 export const ResponseCreate: React.FC = () => {
   const { id } = useParams();

@@ -63,8 +63,11 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
   const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
 
   const Content = (
-    <Card {...(contentProps ?? {})}>
-      <CardContent sx={{ p: "32px", "&:last-child": { pb: "32px" } }}>
+    <Card {...(contentProps ?? {})} data-oid="i1wtsk6">
+      <CardContent
+        sx={{ p: "32px", "&:last-child": { pb: "32px" } }}
+        data-oid="35hndrh"
+      >
         <Typography
           component="h1"
           variant="h5"
@@ -72,6 +75,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
           color="primary"
           fontWeight={700}
           mb={3}
+          data-oid="nnn:fuv"
         >
           {translate("pages.forgotPassword.title", "Forgot your password?")}
         </Typography>
@@ -84,6 +88,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
 
             return mutate({ ...mutationVariables, ...data });
           })}
+          data-oid="f32m39e"
         >
           <TextField
             {...register("email", {
@@ -110,10 +115,17 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
             sx={{
               m: 0,
             }}
+            data-oid="f8njjl7"
           />
+
           {loginLink ?? (
-            <Box textAlign="right" sx={{ mt: "24px" }}>
-              <Typography variant="body2" component="span" fontSize="12px">
+            <Box textAlign="right" sx={{ mt: "24px" }} data-oid="n4rk-jz">
+              <Typography
+                variant="body2"
+                component="span"
+                fontSize="12px"
+                data-oid="a8b6upd"
+              >
                 {translate(
                   "pages.forgotPassword.buttons.haveAccount",
                   translate(
@@ -130,6 +142,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
                 fontWeight="bold"
                 fontSize="12px"
                 color="primary.light"
+                data-oid="chs5-et"
               >
                 {translate(
                   "pages.forgotPassword.signin",
@@ -144,6 +157,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
             variant="contained"
             sx={{ mt: "24px" }}
             disabled={isLoading}
+            data-oid="p:46kbj"
           >
             {translate(
               "pages.forgotPassword.buttons.submit",
@@ -157,7 +171,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
 
   return (
     <>
-      <Box component="div" {...(wrapperProps ?? {})}>
+      <Box component="div" {...(wrapperProps ?? {})} data-oid="0bk:2d9">
         <Container
           component="main"
           maxWidth="xs"
@@ -170,6 +184,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
             width: "100%",
             maxWidth: "400px",
           }}
+          data-oid="jz3-qs8"
         >
           {Content}
         </Container>

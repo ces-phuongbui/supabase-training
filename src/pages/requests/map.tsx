@@ -12,12 +12,23 @@ const RequestCreate: React.FC<{
   const currentPosition = position || DEFAULT_POSITION;
 
   return (
-    <MapContainer center={currentPosition} zoom={15} style={{ height: "30vh",width:"100%" }}>
+    <MapContainer
+      center={currentPosition}
+      zoom={15}
+      style={{ height: "30vh", width: "100%" }}
+      data-oid="6o737aq"
+    >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        data-oid="1_dkw1d"
       />
-      <LocationMarker address={address} currentPosition={currentPosition} />
+
+      <LocationMarker
+        address={address}
+        currentPosition={currentPosition}
+        data-oid="zlr2drz"
+      />
     </MapContainer>
   );
 };
@@ -38,8 +49,10 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({
   }, [map, currentPosition]);
 
   return currentPosition === null ? null : (
-    <Marker position={currentPosition}>
-      <Popup keepInView>{address}</Popup>
+    <Marker position={currentPosition} data-oid="-swmi1b">
+      <Popup keepInView data-oid="tpj9-8c">
+        {address}
+      </Popup>
     </Marker>
   );
 };

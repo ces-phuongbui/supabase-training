@@ -1,16 +1,15 @@
-import { Mail } from "lucide-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { DeleteButton, ShowButton, useDataGrid } from "@refinedev/mui";
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardTitle,
+} from "@/components/ui/card";
+import { useDataGrid } from "@refinedev/mui";
 import { IRequest, IResponse } from "../../pages/requests/list";
 
 interface RequestListCardProps {
@@ -41,62 +40,71 @@ export default function RequestListCard({ request }: RequestListCardProps) {
   );
 
   return (
-    <Card className="min-w-[250px] flex-1">
-      <CardHeader
-        className="p-0 rounded-t-lg"
-        style={{ backgroundColor: request.secondary_color }}
-      >
-        <Link
-          to={`/requests/show/${request.id}`}
-          className="block p-4 hover:opacity-80 transition-opacity"
-          style={{ color: request.primary_color }}
+    <Card
+      className="overflow-hidden border shadow-[0px_0px_1px_#171a1f12,0px_0px_2px_#171a1f1F]"
+      data-oid="7u_859o"
+    >
+      {/* Image at the top */}
+      <div className="w-full pt-4 px-4 overflow-hidden" data-oid="099fhiz">
+        <div
+          className="h-[150px] overflow-hidden rounded-[0.25rem]"
+          data-oid="85rn-.k"
         >
-          <h3 className="font-bold">{request.title}</h3>
-        </Link>
-      </CardHeader>
-
-      <CardContent className="p-4 h-full">
-        <div className="flex justify-between pr-10">
-          <div className="space-y-1">
-            <p className="text-xs font-bold text-muted-foreground">
-              Total Attendees
-            </p>
-            <p className="text-sm">{totalGuests}</p>
-          </div>
-          <div className="space-y-1">
-            <p className="text-xs font-bold text-muted-foreground">
-              Close Date
-            </p>
-            <p className="text-sm">{request.close_date}</p>
-          </div>
+          {request.background_image ? (
+            <img
+              src={request.background_image}
+              alt={request.title}
+              className="w-full h-full object-cover rounded-[0.25rem]"
+              loading="lazy"
+              decoding="async"
+              data-oid="6jpthlg"
+            />
+          ) : (
+            <div
+              className="w-full h-full rounded-[0.25rem] bg-gradient-to-r from-amber-300 to-amber-600 flex items-center justify-center"
+              data-oid="6jpthlg"
+            >
+              <span className="text-white text-xl font-semibold">
+                {request.title}
+              </span>
+            </div>
+          )}
         </div>
+      </div>
 
-        <div className="space-y-2 pt-6">
-          <h4 className="font-bold">Actions</h4>
-          <div className="flex items-center gap-2">
-            <ShowButton hideText recordItemId={request.id} />
-            <DeleteButton hideText recordItemId={request.id} />
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" asChild>
-                    <Link to={`/r/${request.id}`}>
-                      <Mail className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="bg-gray-800 text-white px-3 py-2 rounded-md shadow-md"
-                >
-                  <p>See how your guests will see your invite</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          </div>
+      {/* Content section with name and description */}
+      <CardContent className="p-4" data-oid="6t87cwm">
+        <CardTitle className="text-lg font-semibold" data-oid="ghd.3oi">
+          Seminar Invite
+        </CardTitle>
+        <CardDescription className="mt-1" data-oid="9f9bvct">
+          Seminar - {request.title}
+        </CardDescription>
+
+        <div className="mt-3" data-oid="qd6p04r">
+          <p className="text-sm text-muted-foreground" data-oid="2srfk3u">
+            Date: {request.close_date}
+          </p>
         </div>
       </CardContent>
+
+      {/* Footer with View Details button */}
+      <CardFooter className="p-4 pt-0" data-oid="8vjk1-y">
+        <Button
+          variant="outline"
+          className="w-full border-amber-600 text-amber-600 bg-amber-50"
+          asChild
+          data-oid="fd9ut7_"
+        >
+          <Link
+            to={`/requests/show/${request.id}`}
+            data-oid="_qvucl:"
+            className="rounded-none"
+          >
+            View Details
+          </Link>
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

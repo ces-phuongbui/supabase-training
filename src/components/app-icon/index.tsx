@@ -15,8 +15,13 @@ export const AppIcon: React.FC<{ collapsed?: boolean; size?: number }> = ({
       justifyContent="flex-start"
       component={Link}
       to="/requests"
+      data-oid="otzhooj"
     >
-      <img src={collapsed ? icon : logo} width={collapsed ? 25 : size} />
+      <img
+        src={collapsed ? icon : logo}
+        width={collapsed ? 25 : size}
+        data-oid="jzm1l3_"
+      />
     </Box>
   );
 };

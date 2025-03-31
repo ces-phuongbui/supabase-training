@@ -77,7 +77,7 @@ export const LoginPage: React.FC<LoginProps> = ({
     if (providers && providers.length > 0) {
       return (
         <>
-          <Stack spacing={1} data-oid="0la3iuc">
+          <Stack spacing={1} data-oid="bzv3f9_">
             {providers.map((provider: any) => {
               return (
                 <Button
@@ -93,7 +93,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                     login({ ...mutationVariables, providerName: provider.name })
                   }
                   startIcon={provider.icon}
-                  data-oid="jqys25r"
+                  data-oid="myvjmt_"
                 >
                   {provider.label}
                 </Button>
@@ -106,7 +106,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                 fontSize: "12px",
                 marginY: "16px",
               }}
-              data-oid="qkut::u"
+              data-oid="t1o.-br"
             >
               {translate("pages.login.divider", "or")}
             </Divider>
@@ -118,10 +118,10 @@ export const LoginPage: React.FC<LoginProps> = ({
   };
 
   const Content = (
-    <Card {...(contentProps ?? {})} data-oid="d:09on2">
+    <Card {...(contentProps ?? {})} data-oid="9bp0:cj">
       <CardContent
         sx={{ p: "32px", "&:last-child": { pb: "32px" } }}
-        data-oid="880upy3"
+        data-oid="jmfx7ee"
       >
         <Typography
           component="h1"
@@ -130,7 +130,7 @@ export const LoginPage: React.FC<LoginProps> = ({
           color="primary"
           fontWeight={700}
           mb={3}
-          data-oid="w:qzcay"
+          data-oid="ez:4-q3"
         >
           {translate("pages.login.title", "Sign in to your account")}
         </Typography>
@@ -145,7 +145,7 @@ export const LoginPage: React.FC<LoginProps> = ({
 
               return login({ ...mutationVariables, ...data });
             })}
-            data-oid="irz4en-"
+            data-oid="6snjnto"
           >
             <TextField
               {...register("email", {
@@ -165,7 +165,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               sx={{
                 mt: 0,
               }}
-              data-oid="6f4yozy"
+              data-oid="qo.osuy"
             />
 
             <TextField
@@ -188,7 +188,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               sx={{
                 mb: 0,
               }}
-              data-oid="bsf0:p4"
+              data-oid="v7bcm:y"
             />
 
             <Box
@@ -199,7 +199,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
-              data-oid=".6a03id"
+              data-oid="d3f:bnr"
             >
               {rememberMe ?? (
                 <FormControlLabel
@@ -215,14 +215,14 @@ export const LoginPage: React.FC<LoginProps> = ({
                       size="small"
                       id="remember"
                       {...register("remember")}
-                      data-oid="x0_d1_j"
+                      data-oid="zbl7kcj"
                     />
                   }
                   label={translate(
                     "pages.login.buttons.rememberMe",
                     "Remember me",
                   )}
-                  data-oid="xo12ikr"
+                  data-oid="cqfb_gr"
                 />
               )}
               {forgotPasswordLink ?? (
@@ -233,7 +233,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                   component={ActiveLink}
                   underline="none"
                   to="/forgot-password"
-                  data-oid="n9eo8s-"
+                  data-oid="-gp0nl0"
                 >
                   {translate(
                     "pages.login.buttons.forgotPassword",
@@ -248,7 +248,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               variant="contained"
               disabled={isLoading}
               sx={{ mt: "24px" }}
-              data-oid="7k_268z"
+              data-oid="um7.rh1"
             >
               {translate("pages.login.signin", "Sign in")}
             </Button>
@@ -262,14 +262,14 @@ export const LoginPage: React.FC<LoginProps> = ({
               justifyContent: "center",
               alignItems: "center",
             }}
-            data-oid="d1fdmd-"
+            data-oid="s51old0"
           >
             <Typography
               textAlign="center"
               variant="body2"
               component="span"
               fontSize="12px"
-              data-oid="gvewe1-"
+              data-oid="71c5uja"
             >
               {translate(
                 "pages.login.buttons.noAccount",
@@ -285,7 +285,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               underline="none"
               to="/register"
               fontWeight="bold"
-              data-oid="0:1uxal"
+              data-oid="80y-f9z"
             >
               {translate("pages.login.signup", "Sign up")}
             </MuiLink>
@@ -296,8 +296,8 @@ export const LoginPage: React.FC<LoginProps> = ({
   );
 
   return (
-    <FormProvider {...methods} data-oid="yufouwp">
-      <Box component="div" {...(wrapperProps ?? {})} data-oid="v1sb8a0">
+    <FormProvider {...methods} data-oid="8835_yu">
+      <Box component="div" {...(wrapperProps ?? {})} data-oid="6236evi">
         <Container
           component="main"
           sx={{
@@ -310,7 +310,7 @@ export const LoginPage: React.FC<LoginProps> = ({
             width: "100%",
             maxWidth: "400px",
           }}
-          data-oid="u82c8_s"
+          data-oid="tk.00y0"
         >
           <Box
             sx={{
@@ -320,7 +320,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               flexDirection: "column",
               paddingTop: hideForm ? "15dvh" : 0,
             }}
-            data-oid="k4hruyw"
+            data-oid="3v5.077"
           >
             <>{Content}</>
           </Box>

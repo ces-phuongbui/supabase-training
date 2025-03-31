@@ -74,7 +74,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
     if (providers && providers.length > 0) {
       return (
         <>
-          <Stack spacing={1} data-oid="ylc0:.a">
+          <Stack spacing={1} data-oid="x30fj3.">
             {providers.map((provider: any) => {
               return (
                 <Button
@@ -94,7 +94,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                     })
                   }
                   startIcon={provider.icon}
-                  data-oid="qf.:zfz"
+                  data-oid="ft8w82s"
                 >
                   {provider.label}
                 </Button>
@@ -107,7 +107,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
                 fontSize: "12px",
                 marginY: "16px",
               }}
-              data-oid="6uz7hjg"
+              data-oid="xly.n9y"
             >
               {translate(
                 "pages.register.divider",
@@ -122,10 +122,10 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   };
 
   const Content = (
-    <Card {...(contentProps ?? {})} data-oid="dflu5_l">
+    <Card {...(contentProps ?? {})} data-oid="6-qqxrb">
       <CardContent
         sx={{ p: "32px", "&:last-child": { pb: "32px" } }}
-        data-oid="o0_u2gz"
+        data-oid="jm_.4_."
       >
         <Typography
           component="h1"
@@ -134,7 +134,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
           color="primary"
           fontWeight={700}
           mb={3}
-          data-oid="5x_c014"
+          data-oid="xbwcigu"
         >
           {translate("pages.register.title", "Sign up for your account")}
         </Typography>
@@ -149,7 +149,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
 
               return registerMutate({ ...mutationVariables, ...data });
             })}
-            data-oid="a6sxpwq"
+            data-oid=":937w83"
           >
             <TextField
               {...register("email", {
@@ -176,7 +176,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               sx={{
                 mt: 0,
               }}
-              data-oid="l0fq7hm"
+              data-oid="8vci9n-"
             />
 
             <TextField
@@ -199,7 +199,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               sx={{
                 mb: 0,
               }}
-              data-oid="t4fpnkt"
+              data-oid="buxlhy5"
             />
 
             <Button
@@ -210,7 +210,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               sx={{
                 mt: "24px",
               }}
-              data-oid="lt22epx"
+              data-oid="2xk_9qk"
             >
               {translate("pages.register.signup", "Sign up")}
             </Button>
@@ -227,13 +227,13 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               justifyContent: "center",
               alignItems: "center",
             }}
-            data-oid="yv_e_s_"
+            data-oid="3buss9h"
           >
             <Typography
               variant="body2"
               component="span"
               fontSize="12px"
-              data-oid="i970f1_"
+              data-oid="4jrlb:9"
             >
               {translate(
                 "pages.register.buttons.haveAccount",
@@ -252,7 +252,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
               to="/login"
               fontSize="12px"
               fontWeight="bold"
-              data-oid="p6:1f__"
+              data-oid="xxngb65"
             >
               {translate(
                 "pages.register.signin",
@@ -266,7 +266,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   );
 
   return (
-    <Box component="div" {...(wrapperProps ?? {})} data-oid="z-rmabl">
+    <Box component="div" {...(wrapperProps ?? {})} data-oid="5qms-o2">
       <Container
         component="main"
         sx={{
@@ -279,7 +279,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
           width: "100%",
           maxWidth: "400px",
         }}
-        data-oid="9qpbrb7"
+        data-oid="xvyha::"
       >
         <Box
           sx={{
@@ -289,7 +289,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
             flexDirection: "column",
             paddingTop: hideForm ? "15dvh" : 0,
           }}
-          data-oid="eltj2qz"
+          data-oid="8bx5i:4"
         >
           {Content}
         </Box>

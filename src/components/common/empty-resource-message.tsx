@@ -16,7 +16,7 @@ export default function EmptyResourceMessage({
       display="flex"
       justifyContent="center"
       alignItems="center"
-      data-oid="7hfh_4p"
+      data-oid="86frw49"
     >
       {message}
     </Box>

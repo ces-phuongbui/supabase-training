@@ -48,19 +48,19 @@ const QRCodeSection = ({ requestId }: { requestId: string }) => {
   };
 
   return (
-    <Stack spacing={2} data-oid="xvns8:s">
-      <Typography fontWeight={600} fontSize={24} data-oid="xkekbf3">
+    <Stack spacing={2} data-oid="g:t2da4">
+      <Typography fontWeight={600} fontSize={24} data-oid="0dm.-7n">
         Scan Me!
       </Typography>
-      <Stack gap={2} data-oid="48_gkrn">
-        <Box ref={qrCodeRef} width="min-content" data-oid="pv4:v:b">
-          <QRCode value={qrValue} data-oid="x_d30a6" />
+      <Stack gap={2} data-oid="d8_82uw">
+        <Box ref={qrCodeRef} width="min-content" data-oid="y:h0c42">
+          <QRCode value={qrValue} data-oid="aqlfjyg" />
         </Box>
-        <Stack direction="row" gap={2} alignItems="center" data-oid="lgh5iyi">
+        <Stack direction="row" gap={2} alignItems="center" data-oid="gpiaos3">
           <Button
             onClick={downloadQRCode}
             variant="outlined"
-            data-oid="oy2ovm9"
+            data-oid="gfsyelt"
           >
             Download QR Code
           </Button>
@@ -82,7 +82,7 @@ const TotalGuestsSection = ({ responses }: TotalGuestsSectionProps) => {
     return (
       <EmptyResourceMessage
         message="No guests want to attend your event!"
-        data-oid="d2mt35c"
+        data-oid="rzunid9"
       />
     );
   }
@@ -91,25 +91,25 @@ const TotalGuestsSection = ({ responses }: TotalGuestsSectionProps) => {
     return (
       <EmptyResourceMessage
         message="No guests want to attend your event!"
-        data-oid="v6v-xwt"
+        data-oid="g3t080_"
       />
     );
   }
 
   return (
-    <Box bgcolor="action.hover" p={2} borderRadius={2} data-oid="3wbwepv">
+    <Box bgcolor="action.hover" p={2} borderRadius={2} data-oid="ehu3bjj">
       <Stack
         direction="row"
         gap={2}
         alignItems="center"
         justifyContent="space-between"
-        data-oid="l64vuk7"
+        data-oid="bdgqjoo"
       >
         <Typography
           fontSize={20}
           textTransform="capitalize"
           fontStyle="italic"
-          data-oid="_l:004y"
+          data-oid="1uudx8e"
         >
           Invitations: {responses.length}
         </Typography>
@@ -117,7 +117,7 @@ const TotalGuestsSection = ({ responses }: TotalGuestsSectionProps) => {
           fontSize={20}
           textTransform="capitalize"
           fontStyle="italic"
-          data-oid="gb9j5mu"
+          data-oid="27ot6o5"
         >
           Attendees: {totalGuests}
         </Typography>
@@ -141,7 +141,7 @@ const HeaderButtons = ({
     <Button
       onClick={() => onCopyLink(requestId)}
       variant="contained"
-      data-oid="6bg5rgg"
+      data-oid="g5gokyf"
     >
       Share RSVP Link
     </Button>
@@ -232,16 +232,16 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
           defaultButtons={defaultButtons}
           requestId={request.id}
           onCopyLink={copyLinkToClipboard}
-          data-oid="6to7ptj"
+          data-oid="zoed72y"
         />
       )}
-      data-oid="p4vuxms"
+      data-oid="nqsd7jn"
     >
       <Background
         backgroundImage={background_image}
         backgroundColor={background_color}
         background_gradient={background_gradient}
-        data-oid="h.w-hyz"
+        data-oid="wu-3jjm"
       >
         <RequestCard
           backgroundColor={background_color}
@@ -257,32 +257,32 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
           italicize={italicize}
           style={style}
           isHaveBackGroundImage={!!background_image}
-          data-oid="v:uy8ho"
+          data-oid="2435pfo"
         />
       </Background>
       <Box
         sx={{ borderBottom: 1, marginTop: 2, borderColor: "divider" }}
-        data-oid="g.d9mwp"
+        data-oid="zbo44jd"
       >
-        <Tabs value={value} onChange={handleChange} data-oid="ylweqfy">
-          <Tab label="Information" {...a11yProps(0)} data-oid="et0ey7i" />
-          <Tab label="Settings" {...a11yProps(1)} data-oid="o:-jfnc" />
+        <Tabs value={value} onChange={handleChange} data-oid="dq:s24e">
+          <Tab label="Information" {...a11yProps(0)} data-oid="6-0on9u" />
+          <Tab label="Settings" {...a11yProps(1)} data-oid="j_y1eme" />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0} data-oid="wm_9x9h">
-        <Stack spacing={4} data-oid="5xipcob">
-          <Stack spacing={2} data-oid="00swoft">
-            <Typography fontWeight="bold" fontSize={24} data-oid="9:i2dgw">
+      <CustomTabPanel value={value} index={0} data-oid="rmqhauk">
+        <Stack spacing={4} data-oid="yftnphh">
+          <Stack spacing={2} data-oid="ej4g4pg">
+            <Typography fontWeight="bold" fontSize={24} data-oid="4rrr2hw">
               Total Guests
             </Typography>
             <TotalGuestsSection
               responses={responseDataGridProps.rows as IResponse[]}
-              data-oid="d8::xdg"
+              data-oid="c.zdyw7"
             />
           </Stack>
-          <Divider data-oid="1k7uvjh" />
-          <Stack spacing={2} data-oid="4ms6xg5">
-            <Typography fontWeight="bold" fontSize={24} data-oid="3jprmkw">
+          <Divider data-oid="1c3t67u" />
+          <Stack spacing={2} data-oid="mcjbucl">
+            <Typography fontWeight="bold" fontSize={24} data-oid="jhidbl-">
               Accepted:{" "}
               {responseDataGridProps.rows.filter((row) => row.accept).length}
             </Typography>
@@ -290,29 +290,29 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
               columns={responseColumns}
               {...responseDataGridProps}
               autoHeight
-              data-oid="nx-chkr"
+              data-oid="z-8lp25"
             />
           </Stack>
-          <Divider data-oid="2ik.6ch" />
-          <Stack spacing={2} data-oid="88bc2dv">
-            <QRCodeSection requestId={id} data-oid="395nvd3" />
+          <Divider data-oid="n5bc1sq" />
+          <Stack spacing={2} data-oid="s6ytl5j">
+            <QRCodeSection requestId={id} data-oid="39mzf4m" />
           </Stack>
         </Stack>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1} data-oid=".501cxa">
+      <CustomTabPanel value={value} index={1} data-oid="77p33ck">
         <Grid
           container
           spacing={2}
           marginTop={"0 !important"}
-          data-oid=":_cqjeu"
+          data-oid="s6a2p3e"
         >
-          <Grid item xs={12} lg={6} padding={"0 !important"} data-oid="caq_wze">
-            <Stack spacing={2} data-oid="czqpn55">
+          <Grid item xs={12} lg={6} padding={"0 !important"} data-oid="i9ln-jb">
+            <Stack spacing={2} data-oid="wh9ckue">
               <Typography
                 fontWeight={600}
                 fontSize={24}
                 ml={3}
-                data-oid="yks.owf"
+                data-oid="k_s:pl0"
               >
                 Info
               </Typography>
@@ -320,16 +320,16 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                 container
                 spacing={3}
                 marginTop={"0 !important"}
-                data-oid="b44mgc6"
+                data-oid="w1:uaov"
               >
-                <Grid item xs={12} sm={6} data-oid="73qcmif">
+                <Grid item xs={12} sm={6} data-oid="_yt1b58">
                   <Box
                     sx={{
                       display: "flex",
                       flexDirection: "column",
                       gap: 2,
                     }}
-                    data-oid="dh5yre8"
+                    data-oid="m3miq-m"
                   >
                     {leftColumn.map((item) => (
                       <ValueDisplay
@@ -341,19 +341,19 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                         }
                         isColor={item[0].includes("color")}
                         isImage={item[0] === "background_image"}
-                        data-oid="78hdty0"
+                        data-oid="tq-717e"
                       />
                     ))}
                   </Box>
                 </Grid>
-                <Grid item xs={12} sm={6} data-oid="-_1t-ih">
+                <Grid item xs={12} sm={6} data-oid="srxs6ym">
                   <Box
                     sx={{
                       display: "flex",
                       flexDirection: "column",
                       gap: 2,
                     }}
-                    data-oid="kx3p412"
+                    data-oid="okpelfl"
                   >
                     {rightColumn.map((item) => (
                       <ValueDisplay
@@ -365,7 +365,7 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
                         }
                         isColor={item[0].includes("color")}
                         isImage={item[0] === "background_image"}
-                        data-oid="5161h6u"
+                        data-oid="yol07:o"
                       />
                     ))}
                   </Box>
@@ -373,8 +373,8 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
               </Grid>
             </Stack>
           </Grid>
-          <Grid item xs={12} lg={6} data-oid="09ue353">
-            <Map position={position} address={address} data-oid="081gn55" />
+          <Grid item xs={12} lg={6} data-oid="s2c3aq-">
+            <Map position={position} address={address} data-oid="5bfc436" />
           </Grid>
         </Grid>
       </CustomTabPanel>
@@ -405,10 +405,10 @@ function CustomTabPanel(props: TabPanelProps) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
-      data-oid="kp.htl."
+      data-oid="vovgwc1"
     >
       {value === index && (
-        <Box sx={{ p: 2 }} data-oid="ved10d_">
+        <Box sx={{ p: 2 }} data-oid="uv70uus">
           {children}
         </Box>
       )}
@@ -422,7 +422,7 @@ const RESPONSE_COLUMNS: GridColDef[] = [
     flex: 1,
     headerName: "Accepted At",
     minWidth: 100,
-    renderCell: ({ value }) => <DateField value={value} data-oid="74-bafe" />,
+    renderCell: ({ value }) => <DateField value={value} data-oid="-u1.q9u" />,
   },
   {
     field: "responder_name",

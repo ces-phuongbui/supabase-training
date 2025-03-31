@@ -63,7 +63,7 @@ export default function Background({
       }}
       padding={{ xs: 1, md: 8 }}
       minHeight={responseView ? "100vh" : "100%"}
-      data-oid="25fsfin"
+      data-oid="tx1_ty0"
     >
       {children}
     </Box>

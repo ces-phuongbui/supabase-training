@@ -14,15 +14,15 @@ export default function ThankYouPage() {
       minHeight="100vh"
       border={20}
       borderColor="primary.main"
-      data-oid="c1lfsg_"
+      data-oid="jvrqxlr"
     >
-      <Stack gap={2} alignItems="center" data-oid="e-teqop">
-        <AppIcon size={300} data-oid="w1v6_3f" />
+      <Stack gap={2} alignItems="center" data-oid="3zycj9d">
+        <AppIcon size={300} data-oid="hkpgb9m" />
         <Typography
           fontSize={{ xs: 24, md: 35 }}
           fontWeight="bold"
           textAlign="center"
-          data-oid="mktzcrg"
+          data-oid="zh8.zsu"
         >
           Thank you for responding!
         </Typography>

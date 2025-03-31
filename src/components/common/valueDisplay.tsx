@@ -35,12 +35,12 @@ export default function ValueDisplay({
 
   const renderStringValue = (val: string) => {
     if (isDate) {
-      return <DateField value={val} data-oid="8hu2er8" />;
+      return <DateField value={val} data-oid="0:_irjj" />;
     }
 
     if (isColor) {
       return (
-        <Box bgcolor={val} width={50} height={50} data-oid="tyah_b8"></Box>
+        <Box bgcolor={val} width={50} height={50} data-oid="t.8nyva"></Box>
       );
     }
 
@@ -56,12 +56,12 @@ export default function ValueDisplay({
             borderRadius: 2,
             border: "1px solid #ddd",
           }}
-          data-oid="ht::nn1"
+          data-oid="pcs.vrk"
         />
       );
     }
 
-    return <TextField value={val} data-oid="7lduage" />;
+    return <TextField value={val} data-oid="5-1as9c" />;
   };
 
   switch (typeof value) {
@@ -69,22 +69,22 @@ export default function ValueDisplay({
       valueDisplay = renderStringValue(value);
       break;
     case "number":
-      valueDisplay = <NumberField value={value} data-oid="0sa_2xy" />;
+      valueDisplay = <NumberField value={value} data-oid="3m5l51b" />;
       break;
     case "boolean":
-      valueDisplay = <BooleanField value={value} data-oid="lqca32a" />;
+      valueDisplay = <BooleanField value={value} data-oid="ps-hr_7" />;
       break;
     default:
       break;
   }
 
   return (
-    <Stack spacing={2} data-oid="djqlu:-">
+    <Stack spacing={2} data-oid="6u8dgrz">
       <Typography
         variant="body1"
         textTransform={"capitalize"}
         fontWeight="bold"
-        data-oid="aay_vqp"
+        data-oid="lfesxvl"
       >
         {label}
       </Typography>

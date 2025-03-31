@@ -16,18 +16,18 @@ const RequestCreate: React.FC<{
       center={currentPosition}
       zoom={15}
       style={{ height: "30vh", width: "100%" }}
-      data-oid="6o737aq"
+      data-oid="_4r_70s"
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        data-oid="1_dkw1d"
+        data-oid="vsus3cv"
       />
 
       <LocationMarker
         address={address}
         currentPosition={currentPosition}
-        data-oid="zlr2drz"
+        data-oid="lqrt9oh"
       />
     </MapContainer>
   );
@@ -49,8 +49,8 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({
   }, [map, currentPosition]);
 
   return currentPosition === null ? null : (
-    <Marker position={currentPosition} data-oid="-swmi1b">
-      <Popup keepInView data-oid="tpj9-8c">
+    <Marker position={currentPosition} data-oid="89z:o46">
+      <Popup keepInView data-oid="yl8__ae">
         {address}
       </Popup>
     </Marker>

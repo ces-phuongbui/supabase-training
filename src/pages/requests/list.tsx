@@ -45,10 +45,10 @@ const RequestGrid: React.FC<{
     gridTemplateColumns="repeat(2, 1fr)"
     gap={4}
     width="100%"
-    data-oid="5cl6q42"
+    data-oid="8h1dbe6"
   >
     {requests.map((req) => (
-      <RequestListCard key={req.id} request={req} data-oid="qi_a41e" />
+      <RequestListCard key={req.id} request={req} data-oid="jm793kw" />
     ))}
   </Box>
 );
@@ -72,28 +72,28 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
   const requests = data?.data;
 
   return (
-    <div data-oid="rw:7wxd">
+    <div data-oid="_k-dpa5">
       <div
         className="flex justify-between items-center mb-6"
-        data-oid="ui0xp5k"
+        data-oid="6u7dgr4"
       >
-        <h1 className="text-2xl font-semibold" data-oid="4kimmww">
+        <h1 className="text-2xl font-semibold" data-oid="5s4gpem">
           Your Events
         </h1>
         <Button
           variant="default"
           className="bg-amber-600 hover:bg-amber-700 text-white"
           onClick={() => (window.location.href = "/requests/create")}
-          data-oid="8htfvwi"
+          data-oid="bpbqu6m"
         >
           Add New Event
         </Button>
       </div>
       {requests ? (
-        <RequestGrid requests={requests} data-oid="rf_5qb9" />
+        <RequestGrid requests={requests} data-oid="cir:o8p" />
       ) : (
-        <div data-oid="bnw4io6">
-          <CircularProgress data-oid=".t2h3.d" />
+        <div data-oid="ea4iw-3">
+          <CircularProgress data-oid="t1551-k" />
         </div>
       )}
     </div>

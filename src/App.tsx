@@ -39,17 +39,17 @@ import { ForgotPasswordPage } from "./pages/forgot-password";
 
 function App() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} data-oid="6ad63q3">
-      <BrowserRouter data-oid="k_vbd:o">
-        <RefineKbarProvider data-oid="1jwylkv">
-          <ColorModeContextProvider data-oid="_vr2a4r">
-            <CssBaseline data-oid="stj-yw_" />
+    <LocalizationProvider dateAdapter={AdapterDayjs} data-oid="4tj-_-3">
+      <BrowserRouter data-oid="8y.dly5">
+        <RefineKbarProvider data-oid="60y9aw9">
+          <ColorModeContextProvider data-oid="xnxp4em">
+            <CssBaseline data-oid="m8mspoi" />
             <GlobalStyles
               styles={{ html: { WebkitFontSmoothing: "auto" } }}
-              data-oid="b2cr:::"
+              data-oid="nc0idt2"
             />
 
-            <RefineSnackbarProvider data-oid="dgxzva8">
+            <RefineSnackbarProvider data-oid="zzdus3l">
               <Refine
                 dataProvider={dataProvider(supabaseClient)}
                 liveProvider={liveProvider(supabaseClient)}
@@ -63,7 +63,7 @@ function App() {
                     create: "/requests/create",
                     edit: "/requests/edit/:id",
                     show: "/requests/show/:id",
-                    icon: <RsvpIcon data-oid="ps8li-_" />,
+                    icon: <RsvpIcon data-oid="03nm..." />,
                     meta: {
                       canDelete: true,
                     },
@@ -74,26 +74,26 @@ function App() {
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
                 }}
-                data-oid="4g4hn-v"
+                data-oid="buvd3ox"
               >
-                <Routes data-oid="p6amrs1">
+                <Routes data-oid="u0dwnpv">
                   <Route
                     index
-                    element={<LandingPage data-oid="5qjelgm" />}
-                    data-oid="zabndnr"
+                    element={<LandingPage data-oid="gpuzyto" />}
+                    data-oid="vhtijo9"
                   />
 
-                  <Route path="/r" data-oid="4_sbw3a">
+                  <Route path="/r" data-oid="e_5llip">
                     <Route
                       path=":id"
-                      element={<ResponseCreate data-oid="7c1zafj" />}
-                      data-oid="egu.x5:"
+                      element={<ResponseCreate data-oid="b7twrbn" />}
+                      data-oid="3u7itig"
                     />
                   </Route>
                   <Route
                     path="/thank-you"
-                    element={<ThankYouPage data-oid="hzrs9kj" />}
-                    data-oid="5z_2483"
+                    element={<ThankYouPage data-oid="inhozwk" />}
+                    data-oid="488gaav"
                   />
 
                   <Route
@@ -101,59 +101,59 @@ function App() {
                       <Authenticated
                         key="auth-route"
                         fallback={
-                          <CatchAllNavigate to="/login" data-oid="anmfxj." />
+                          <CatchAllNavigate to="/login" data-oid="40k_7ur" />
                         }
-                        data-oid="_lnufb5"
+                        data-oid="8q:oyl0"
                       >
                         <ThemedLayoutV2
-                          Header={() => <Header sticky data-oid="y4o_d.-" />}
+                          Header={() => <Header sticky data-oid="o9reqqo" />}
                           Title={({ collapsed }) => (
-                            <AppIcon collapsed={collapsed} data-oid="0km2cfl" />
+                            <AppIcon collapsed={collapsed} data-oid="f6d.1yw" />
                           )}
-                          data-oid="1e.u975"
+                          data-oid="dan557-"
                         >
-                          <Outlet data-oid="3w6f3h5" />
+                          <Outlet data-oid="so_k.h3" />
                         </ThemedLayoutV2>
                       </Authenticated>
                     }
-                    data-oid="1_tqwcc"
+                    data-oid="njy.w_e"
                   >
-                    <Route path="/requests" data-oid="irtpuq2">
+                    <Route path="/requests" data-oid="3b94v_o">
                       <Route
                         index
-                        element={<RequestList data-oid=":vyqgig" />}
-                        data-oid="_w9o2.4"
+                        element={<RequestList data-oid="h_lprex" />}
+                        data-oid="0az1yuo"
                       />
 
                       <Route
                         path="create"
-                        element={<RequestCreate data-oid="6qmyxq_" />}
-                        data-oid="bzehm:6"
+                        element={<RequestCreate data-oid="yrp0mw8" />}
+                        data-oid="49l::j5"
                       />
 
                       <Route
                         path="show/:id"
-                        element={<RequestShow data-oid="iantv9-" />}
-                        data-oid="5af-:.a"
+                        element={<RequestShow data-oid="gd:c7_4" />}
+                        data-oid=".23250c"
                       />
                     </Route>
                     <Route
                       path="*"
-                      element={<ErrorComponent data-oid="wbmdd-x" />}
-                      data-oid="zgoh6_a"
+                      element={<ErrorComponent data-oid="u30326j" />}
+                      data-oid="qh3exm5"
                     />
                   </Route>
                   <Route
                     element={
                       <Authenticated
                         key="auth-route"
-                        fallback={<Outlet data-oid="s-1sh3s" />}
-                        data-oid="yrd3c.l"
+                        fallback={<Outlet data-oid="h69v71h" />}
+                        data-oid="x1_s2i1"
                       >
-                        <NavigateToResource data-oid="k19e1a6" />
+                        <NavigateToResource data-oid="a7r9jve" />
                       </Authenticated>
                     }
-                    data-oid="-_artjk"
+                    data-oid="r.gd:is"
                   >
                     <Route
                       path="/login"
@@ -163,34 +163,34 @@ function App() {
                             {
                               name: "google",
                               label: "Sign in with Google",
-                              icon: <GoogleIcon data-oid="vwp8lvy" />,
+                              icon: <GoogleIcon data-oid="8lin483" />,
                             },
                           ]}
-                          data-oid="gr342hj"
+                          data-oid="553cvlx"
                         />
                       }
-                      data-oid=":_epyaq"
+                      data-oid="cgclnl-"
                     />
 
                     <Route
                       path="/register"
-                      element={<RegisterPage data-oid="drczcao" />}
-                      data-oid="4.dkd4h"
+                      element={<RegisterPage data-oid="8y86aq2" />}
+                      data-oid="gejrg53"
                     />
 
                     <Route
                       path="/forgot-password"
-                      element={<ForgotPasswordPage data-oid="3ol14gu" />}
-                      data-oid="zfdn20p"
+                      element={<ForgotPasswordPage data-oid="2g_4u.0" />}
+                      data-oid="qidthx:"
                     />
                   </Route>
                 </Routes>
 
-                <RefineKbar data-oid="n7x2zz9" />
-                <UnsavedChangesNotifier data-oid="fdvfxyu" />
+                <RefineKbar data-oid="n7z9:tk" />
+                <UnsavedChangesNotifier data-oid="rd58hd9" />
                 <DocumentTitleHandler
                   handler={customTitleHandler}
-                  data-oid="dhdu_0p"
+                  data-oid="1v7gknk"
                 />
               </Refine>
             </RefineSnackbarProvider>

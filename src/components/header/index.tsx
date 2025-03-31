@@ -25,15 +25,15 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
       className={`${
         sticky ? "sticky top-0" : "relative"
       } bg-lightMain dark:bg-background-dark z-10 shadow-sm`}
-      data-oid="c52capd"
+      data-oid="28p5nrb"
     >
-      <div className="flex h-16 items-center px-6" data-oid="k8505dg">
+      <div className="flex h-16 items-center px-6" data-oid="ex76u_z">
         <div
           className="flex w-full justify-end items-center gap-6"
-          data-oid="7dk77bz"
+          data-oid="yhdqdw5"
         >
-          <div className="mr-auto" data-oid="jix7nnw">
-            <HamburgerMenu data-oid="zjssjcv" />
+          <div className="mr-auto" data-oid="3a8ezn2">
+            <HamburgerMenu data-oid="bwd1o-k" />
           </div>
           <Button
             variant="ghost"
@@ -42,32 +42,32 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
               setTheme(theme === "dark" ? "light" : "dark");
               setMode();
             }}
-            data-oid="-1740_q"
+            data-oid=":d9f4g:"
           >
             {theme === "light" ? (
-              <Moon className="h-5 w-5" data-oid="6k.b2qf" />
+              <Moon className="h-5 w-5" data-oid="pfe7x8h" />
             ) : (
-              <Sun className="h-5 w-5" data-oid="n25kjxe" />
+              <Sun className="h-5 w-5" data-oid="t0_.ql2" />
             )}
           </Button>
 
           {(user?.avatar || user?.name) && (
-            <div className="flex items-center gap-3" data-oid="mbvs92q">
+            <div className="flex items-center gap-3" data-oid="vqqmdy2">
               {user?.name && (
-                <p className="sm:block text-sm font-medium " data-oid="k3bxgta">
+                <p className="sm:block text-sm font-medium " data-oid="kp-53qv">
                   {user?.name}
                 </p>
               )}
-              <Avatar className="h-8 w-8 " data-oid="3z:qy.f">
+              <Avatar className="h-8 w-8 " data-oid="v_fqqtj">
                 <AvatarImage
                   src={user?.avatar}
                   alt={user?.name}
-                  data-oid="69drkao"
+                  data-oid=":v3orl8"
                 />
 
                 <AvatarFallback
                   className="text-sm bg-darkMain dark:bg-lightMain z-10 shadow-sm"
-                  data-oid="fmvum41"
+                  data-oid="l5-g:xj"
                 >
                   {user?.name?.charAt(0) || "U"}
                 </AvatarFallback>

@@ -108,20 +108,20 @@ export const ResponseCreate: React.FC = () => {
       backgroundColor={backgroundColor ?? ""}
       responseView
       background_gradient={backgroundGradient}
-      data-oid="d_3:0gi"
+      data-oid="qw2goh5"
     >
       <IconButton
         color="primary"
         sx={{ position: "fixed", bottom: "16px", right: 0, zIndex: 2 }}
         onClick={() => setShowMap(!showMap)}
-        data-oid="natlomt"
+        data-oid="vyhmjqw"
       >
         <Box
           component="img"
           src="/map-icon.svg"
           alt="SVG Icon"
           sx={{ width: 60, height: 60 }}
-          data-oid="eq_g233"
+          data-oid="2:nxul1"
         />
       </IconButton>
       <Box
@@ -136,7 +136,7 @@ export const ResponseCreate: React.FC = () => {
           transition: "transform 0.6s",
           transform: showMap ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
-        data-oid="598sfu_"
+        data-oid="75095oh"
       >
         <Card
           sx={{
@@ -148,7 +148,7 @@ export const ResponseCreate: React.FC = () => {
             backgroundColor: "unset",
             backdropFilter: backgroundImage ? "blur(10px)" : "none",
           }}
-          data-oid="mhftgli"
+          data-oid="mdocl:q"
         >
           <RequestCard
             backgroundColor={backgroundColor ?? ""}
@@ -169,7 +169,7 @@ export const ResponseCreate: React.FC = () => {
               choices: choices?.filter((c) => c.question_id === q.id) || [],
             }))}
             isHaveBackGroundImage={!!backgroundImage}
-            data-oid="7zkg1gb"
+            data-oid="o-kmla5"
           />
         </Card>
         <Card
@@ -185,9 +185,9 @@ export const ResponseCreate: React.FC = () => {
             transform: "rotateY(180deg)",
             "& > div": { height: "100% !important" },
           }}
-          data-oid="b8i928a"
+          data-oid="va2-9d4"
         >
-          <Map address={address} position={position} data-oid="c_3-m-i" />
+          <Map address={address} position={position} data-oid="3lr0fq-" />
         </Card>
       </Box>
     </Background>
@@ -195,9 +195,9 @@ export const ResponseCreate: React.FC = () => {
     <Background
       backgroundColor="background.default"
       responseView
-      data-oid="o_aeofy"
+      data-oid="29wk4wz"
     >
-      <CircularProgress data-oid="zpyed6y" />
+      <CircularProgress data-oid="4mo2ic8" />
     </Background>
   );
 };

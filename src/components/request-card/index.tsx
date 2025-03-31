@@ -213,7 +213,7 @@ export const RequestCard = ({
   };
 
   return (
-    <ThemeProvider theme={theme} data-oid="_61hl_h">
+    <ThemeProvider theme={theme} data-oid="tzvl7rg">
       <Box
         sx={{
           width: { xs: "100%", sm: "800px" },
@@ -231,7 +231,7 @@ export const RequestCard = ({
         maxWidth="md"
         component={Paper}
         elevation={4}
-        data-oid="rezo-k1"
+        data-oid="vf4otzp"
       >
         <Box
           px={4}
@@ -240,7 +240,7 @@ export const RequestCard = ({
           sx={{
             background: getBackgroundStyle(style !== "DEFAULT"),
           }}
-          data-oid="ony_qkk"
+          data-oid="7bq9nd_"
         >
           <Typography
             fontSize={36}
@@ -248,24 +248,24 @@ export const RequestCard = ({
             textTransform={"capitalize"}
             fontWeight="bold"
             color={primaryColor}
-            data-oid="q-tqoxv"
+            data-oid="25h.kob"
           >
             {title || "Please Join Us!"}
           </Typography>
           <Typography
             textAlign="center"
             color={primaryColor}
-            data-oid="l3zfm22"
+            data-oid="vnev4dy"
           >
             {address}
           </Typography>
-          <Box mt={4} data-oid="62-07a_">
+          <Box mt={4} data-oid="a4.r9_f">
             <Typography
               fontSize={32}
               fontWeight="bold"
               textAlign="center"
               color={primaryColor}
-              data-oid="29fqd1v"
+              data-oid="-4xrawf"
             >
               RSVP{closed ? " (CLOSED)" : ""}
             </Typography>
@@ -273,7 +273,7 @@ export const RequestCard = ({
               fontSize={24}
               textAlign="center"
               color={primaryColor}
-              data-oid="j3h8wg8"
+              data-oid="uibh53j"
             >
               Kindly Reply Before {dayjs(closeDate).format("Do MMMM YYYY")}
             </Typography>
@@ -284,15 +284,15 @@ export const RequestCard = ({
           onSubmit={handleSubmit(onSubmit, (error) => console.log(error))}
           px={4}
           pb={4}
-          data-oid="od_fsdg"
+          data-oid=".y5a0hg"
         >
           <Box
             display="flex"
             flexDirection="column"
             alignItems="center"
-            data-oid="k7xeka2"
+            data-oid="w0t4z.p"
           >
-            <Box my={2} data-oid="h669::f">
+            <Box my={2} data-oid="kv_10au">
               <TextField
                 {...register("responder_name", {
                   required: "This field is required",
@@ -309,27 +309,27 @@ export const RequestCard = ({
                 label="Your Name"
                 name="responder_name"
                 variant="standard"
-                data-oid="gl5g:7c"
+                data-oid="-yg71ra"
               />
             </Box>
-            <FormControl error={!!(errors as any)?.accept} data-oid="d3y7is2">
+            <FormControl error={!!(errors as any)?.accept} data-oid="0hf04ge">
               <FormLabel
                 id="demo-radio-buttons-group-label"
                 sx={{ textAlign: "center", color: primaryColor }}
-                data-oid="ubc9p:x"
+                data-oid="4fvsf-f"
               >
                 Are you going?
               </FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
-                data-oid="86g7anj"
+                data-oid="4p:nzpp"
               >
                 <Box
                   display="flex"
                   justifyContent="space-between"
                   gap={4}
-                  data-oid="n2gsfmm"
+                  data-oid="hj.1r7v"
                 >
                   <FormControlLabel
                     value={false}
@@ -341,14 +341,14 @@ export const RequestCard = ({
                         sx={{
                           color: isHaveBackGroundImage ? "black" : primaryColor,
                         }}
-                        data-oid="dqevg6t"
+                        data-oid="nszgku2"
                       />
                     }
                     label={rejectionLabel}
                     sx={{
                       color: isHaveBackGroundImage ? "black" : primaryColor,
                     }}
-                    data-oid="ug47frp"
+                    data-oid="ym1lt_h"
                   />
 
                   <FormControlLabel
@@ -361,26 +361,26 @@ export const RequestCard = ({
                         sx={{
                           color: isHaveBackGroundImage ? "black" : primaryColor,
                         }}
-                        data-oid="37_x4vh"
+                        data-oid="_tgikub"
                       />
                     }
                     label={acceptanceLabel}
                     sx={{
                       color: isHaveBackGroundImage ? "black" : primaryColor,
                     }}
-                    data-oid=".ylc-:z"
+                    data-oid="_qae_7y"
                   />
                 </Box>
               </RadioGroup>
             </FormControl>
             {accept && (
-              <Stack gap={2} data-oid="p-7gf30">
+              <Stack gap={2} data-oid="pxygaxq">
                 <Typography
                   fontSize={24}
                   fontWeight="bold"
                   color="primary.main"
                   textAlign="center"
-                  data-oid="b5k36qf"
+                  data-oid="b22d94s"
                 >
                   Questions
                 </Typography>
@@ -389,23 +389,23 @@ export const RequestCard = ({
                   flexWrap="wrap"
                   gap={4}
                   justifyContent="center"
-                  data-oid="s_44kie"
+                  data-oid="341bh9s"
                 >
                   <Box
                     border={2}
                     borderRadius={1}
                     borderColor="primary.main"
                     padding={2}
-                    data-oid="e9.xvkz"
+                    data-oid="_8k1v4f"
                   >
-                    <FormControl fullWidth data-oid="r0ui8:x">
+                    <FormControl fullWidth data-oid="1vjm1sb">
                       <FormLabel
                         id="num-attendees-label"
                         sx={{
                           textAlign: "left",
                           color: primaryColor,
                         }}
-                        data-oid="r0::nw8"
+                        data-oid="g78zerk"
                       >
                         {"How many people will join with you?"}
                       </FormLabel>
@@ -416,16 +416,16 @@ export const RequestCard = ({
                           required: "This field is required",
                         })}
                         defaultValue={ATTENDEE_COUNT_OPTIONS[0]}
-                        data-oid=".mt72c8"
+                        data-oid="zmk8z-e"
                       >
-                        <MenuItem value="" data-oid="qr3.2vi">
-                          <em data-oid="sh.pwi2">Select a value</em>
+                        <MenuItem value="" data-oid="ceul5sd">
+                          <em data-oid="zto478e">Select a value</em>
                         </MenuItem>
                         {ATTENDEE_COUNT_OPTIONS.map((value) => (
                           <MenuItem
                             key={value}
                             value={value}
-                            data-oid="4:g8ea1"
+                            data-oid="wwi5kdz"
                           >
                             {value}
                           </MenuItem>
@@ -437,12 +437,12 @@ export const RequestCard = ({
               </Stack>
             )}
           </Box>
-          <Box mt={4} textAlign="center" data-oid="8w9jcm4">
+          <Box mt={4} textAlign="center" data-oid="03q.uld">
             <Button
               variant="contained"
               type="submit"
               disabled={closed}
-              data-oid="jbof70_"
+              data-oid="zkq6kms"
             >
               Submit Response
             </Button>

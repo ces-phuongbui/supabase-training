@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
@@ -9,46 +8,23 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { useDataGrid } from "@refinedev/mui";
-import { IRequest, IResponse } from "../../pages/requests/list";
+import { IRequest } from "../../pages/requests/list";
 
 interface RequestListCardProps {
   request: IRequest;
 }
 
-export default function RequestListCard({ request }: RequestListCardProps) {
-  const { dataGridProps: responseData } = useDataGrid<IResponse>({
-    resource: "responses",
-    queryOptions: {
-      enabled: !!request,
-    },
-    filters: {
-      permanent: [
-        {
-          field: "request_id",
-          operator: "eq",
-          value: request?.id ?? "",
-        },
-      ],
-    },
-    liveMode: "auto",
-  });
-
-  const totalGuests = useMemo(
-    () => responseData.rows.reduce((sum, item) => sum + item.num_attendees, 0),
-    [responseData],
-  );
-
+const RequestListCard = ({ request }: RequestListCardProps) => {
   return (
     <Card
-      className="overflow-hidden border shadow-[0px_0px_1px_#171a1f12,0px_0px_2px_#171a1f1F]"
-      data-oid="7u_859o"
+      className="overflow-hidden border border-gray-400 shadow-[0px_0px_1px_#171a1f12,0px_0px_2px_#171a1f1F]"
+      data-oid="n26a-s_"
     >
       {/* Image at the top */}
-      <div className="w-full pt-4 px-4 overflow-hidden" data-oid="099fhiz">
+      <div className="w-full pt-4 px-4 overflow-hidden" data-oid=":ivuccs">
         <div
-          className="h-[150px] overflow-hidden rounded-[0.25rem]"
-          data-oid="85rn-.k"
+          className="h-[150px] overflow-hidden rounded-[0.25rem] border border-gray-200"
+          data-oid="5b-wvqj"
         >
           {request.background_image ? (
             <img
@@ -57,14 +33,17 @@ export default function RequestListCard({ request }: RequestListCardProps) {
               className="w-full h-full object-cover rounded-[0.25rem]"
               loading="lazy"
               decoding="async"
-              data-oid="6jpthlg"
+              data-oid="v-rwage"
             />
           ) : (
             <div
               className="w-full h-full rounded-[0.25rem] bg-gradient-to-r from-amber-300 to-amber-600 flex items-center justify-center"
-              data-oid="6jpthlg"
+              data-oid="7pj89fu"
             >
-              <span className="text-white text-xl font-semibold">
+              <span
+                className="text-white text-xl font-semibold"
+                data-oid="2h7fhw4"
+              >
                 {request.title}
               </span>
             </div>
@@ -73,33 +52,36 @@ export default function RequestListCard({ request }: RequestListCardProps) {
       </div>
 
       {/* Content section with name and description */}
-      <CardContent className="p-4" data-oid="6t87cwm">
-        <CardTitle className="text-lg font-semibold" data-oid="ghd.3oi">
-          Seminar Invite
+      <CardContent className="p-4" data-oid="ez1-d4_">
+        <CardTitle className="text-lg font-semibold" data-oid="lxgnz0h">
+          {request.title}
         </CardTitle>
-        <CardDescription className="mt-1" data-oid="9f9bvct">
-          Seminar - {request.title}
+        <CardDescription className="mt-1 text-gray-500" data-oid="q1gkq6a">
+          {request.address}
         </CardDescription>
 
-        <div className="mt-3" data-oid="qd6p04r">
-          <p className="text-sm text-muted-foreground" data-oid="2srfk3u">
+        <div className="mt-3" data-oid="0-2yho_">
+          <p
+            className="text-sm text-muted-foreground text-gray-500"
+            data-oid="fk-kenb"
+          >
             Date: {request.close_date}
           </p>
         </div>
       </CardContent>
 
       {/* Footer with View Details button */}
-      <CardFooter className="p-4 pt-0" data-oid="8vjk1-y">
+      <CardFooter className="p-4 pt-0" data-oid="2:dtg:h">
         <Button
           variant="outline"
-          className="w-full border-amber-600 text-amber-600 bg-amber-50"
+          className="w-full border-amber-600 text-amber-600 bg-amber-50 rounded-sm"
           asChild
-          data-oid="fd9ut7_"
+          data-oid="s9lo7._"
         >
           <Link
             to={`/requests/show/${request.id}`}
-            data-oid="_qvucl:"
             className="rounded-none"
+            data-oid="xj:4n_r"
           >
             View Details
           </Link>
@@ -107,4 +89,6 @@ export default function RequestListCard({ request }: RequestListCardProps) {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default RequestListCard;

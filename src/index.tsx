@@ -15,7 +15,7 @@ const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode data-oid="0ea2hoj">
-    <App data-oid="lh_dcd-" />
+  <React.StrictMode data-oid="2ef:6lu">
+    <App data-oid="wrbx8t7" />
   </React.StrictMode>,
 );

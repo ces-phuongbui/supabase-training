@@ -34,6 +34,7 @@ import customTitleHandler from "./utility/customTitleHandler";
 import { LoginPage } from "./pages/login";
 import { RegisterPage } from "./pages/register";
 import { ForgotPasswordPage } from "./pages/forgot-password";
+import InvitationForm from "./pages/InvitationForm";
 import LandingPage from "./pages/landing";
 import { RequestShow } from "./pages/requests/show";
 
@@ -127,8 +128,8 @@ function App() {
 
                       <Route
                         path="create"
-                        element={<RequestCreate data-oid="yrp0mw8" />}
-                        data-oid="49l::j5"
+                        element={<InvitationForm data-oid="56apve." />}
+                        data-oid="s5bkuas"
                       />
 
                       <Route

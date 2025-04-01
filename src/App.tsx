@@ -25,10 +25,8 @@ import authProvider from "./authProvider";
 import { AppIcon } from "./components/app-icon";
 import { Header } from "./components/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
-import LandingPage from "./pages/landing";
 import { RequestCreate } from "./pages/requests/create";
 import { RequestList } from "./pages/requests/list";
-import { RequestShow } from "./pages/requests/show";
 import { ResponseCreate } from "./pages/responses/create";
 import ThankYouPage from "./pages/responses/thank-you";
 import { supabaseClient } from "./utility";
@@ -36,6 +34,8 @@ import customTitleHandler from "./utility/customTitleHandler";
 import { LoginPage } from "./pages/login";
 import { RegisterPage } from "./pages/register";
 import { ForgotPasswordPage } from "./pages/forgot-password";
+import LandingPage from "./pages/landing";
+import { RequestShow } from "./pages/requests/show";
 
 function App() {
   return (

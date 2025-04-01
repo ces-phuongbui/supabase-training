@@ -6,30 +6,29 @@ import {
 } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import MuiLink from "@mui/material/Link";
-
 import type { BoxProps } from "@mui/material/Box";
 import type { CardContentProps } from "@mui/material/CardContent";
 
 import {
   type BaseRecord,
   type HttpError,
-  useTranslate,
   useRouterContext,
   useRouterType,
   useLink,
   useRegister,
 } from "@refinedev/core";
 import { FormPropsType } from "../login";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/20/solid";
 
 type RegisterProps = RegisterPageProps<
   BoxProps,
@@ -43,19 +42,13 @@ type RegisterProps = RegisterPageProps<
  */
 export const RegisterPage: React.FC<RegisterProps> = ({
   loginLink,
-  wrapperProps,
   contentProps,
-  providers,
   formProps,
   hideForm,
   mutationVariables,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<BaseRecord, HttpError, RegisterFormTypes>({
+  const methods = useForm<BaseRecord, HttpError, RegisterFormTypes>({
     ...useFormProps,
   });
 
@@ -63,237 +56,158 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   const { mutate: registerMutate, isLoading } = useRegister<RegisterFormTypes>({
     v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
   });
-  const translate = useTranslate();
   const routerType = useRouterType();
   const Link = useLink();
   const { Link: LegacyLink } = useRouterContext();
 
   const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
 
-  const renderProviders = () => {
-    if (providers && providers.length > 0) {
-      return (
-        <>
-          <Stack spacing={1} data-oid="x30fj3.">
-            {providers.map((provider: any) => {
-              return (
-                <Button
-                  key={provider.name}
-                  color="secondary"
-                  fullWidth
-                  variant="outlined"
-                  sx={{
-                    color: "primary.light",
-                    borderColor: "primary.light",
-                    textTransform: "none",
-                  }}
-                  onClick={() =>
-                    registerMutate({
-                      ...mutationVariables,
-                      providerName: provider.name,
-                    })
-                  }
-                  startIcon={provider.icon}
-                  data-oid="ft8w82s"
-                >
-                  {provider.label}
-                </Button>
-              );
-            })}
-          </Stack>
-          {!hideForm && (
-            <Divider
-              sx={{
-                fontSize: "12px",
-                marginY: "16px",
-              }}
-              data-oid="xly.n9y"
-            >
-              {translate(
-                "pages.register.divider",
-                translate("pages.login.divider", "or"),
-              )}
-            </Divider>
-          )}
-        </>
-      );
-    }
-    return null;
-  };
-
   const Content = (
-    <Card {...(contentProps ?? {})} data-oid="6-qqxrb">
-      <CardContent
-        sx={{ p: "32px", "&:last-child": { pb: "32px" } }}
-        data-oid="jm_.4_."
-      >
-        <Typography
-          component="h1"
-          variant="h5"
-          align="center"
-          color="primary"
-          fontWeight={700}
-          mb={3}
-          data-oid="xbwcigu"
+    <Card
+      {...(contentProps ?? {})}
+      data-oid="t0:3kq-"
+      className="bg-white rounded-lg shadow-md w-full border-white"
+    >
+      <CardHeader className="py-8" data-oid="rp7lzkk">
+        <CardTitle
+          className="text-center text-2xl font-bold"
+          data-oid="spe3.ov"
         >
-          {translate("pages.register.title", "Sign up for your account")}
-        </Typography>
-        {renderProviders()}
+          Sign up for your account
+        </CardTitle>
+      </CardHeader>
+      <CardContent data-oid="wcdu1b:">
         {!hideForm && (
-          <Box
-            component="form"
-            onSubmit={handleSubmit((data) => {
-              if (onSubmit) {
-                return onSubmit(data);
-              }
-
-              return registerMutate({ ...mutationVariables, ...data });
-            })}
-            data-oid=":937w83"
-          >
-            <TextField
-              {...register("email", {
-                required: translate(
-                  "pages.register.errors.requiredEmail",
-                  "Email is required",
-                ),
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: translate(
-                    "pages.register.errors.validEmail",
-                    "Invalid email address",
-                  ),
-                },
+          <Form {...methods} data-oid="kdk_-lz">
+            <form
+              onSubmit={methods.handleSubmit((data) => {
+                if (onSubmit) {
+                  return onSubmit(data);
+                }
+                return registerMutate({ ...mutationVariables, ...data });
               })}
-              id="email"
-              margin="normal"
-              fullWidth
-              label={translate("pages.register.email", "Email")}
-              error={!!errors.email}
-              helperText={errors["email"] ? errors["email"].message : ""}
-              name="email"
-              autoComplete="email"
-              sx={{
-                mt: 0,
-              }}
-              data-oid="8vci9n-"
-            />
-
-            <TextField
-              {...register("password", {
-                required: translate(
-                  "pages.register.errors.requiredPassword",
-                  "Password is required",
-                ),
-              })}
-              id="password"
-              margin="normal"
-              fullWidth
-              name="password"
-              label={translate("pages.register.fields.password", "Password")}
-              helperText={errors["password"] ? errors["password"].message : ""}
-              error={!!errors.password}
-              type="password"
-              placeholder="●●●●●●●●"
-              autoComplete="current-password"
-              sx={{
-                mb: 0,
-              }}
-              data-oid="buxlhy5"
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={isLoading}
-              sx={{
-                mt: "24px",
-              }}
-              data-oid="2xk_9qk"
+              className="space-y-4"
+              data-oid="f9a6_f4"
             >
-              {translate("pages.register.signup", "Sign up")}
-            </Button>
-          </Box>
+              <FormField
+                control={methods.control}
+                name="email"
+                rules={{
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
+                }}
+                render={({ field }) => (
+                  <FormItem data-oid="lckpz2u">
+                    <FormControl data-oid="cnokbnv">
+                      <div data-oid="jyqspf7" className="relative">
+                        <div
+                          className="absolute inset-y-0 left-0 flex items-center w-7 text-gray-600 pl-3"
+                          data-oid="zt8s:9-"
+                        >
+                          <EnvelopeIcon data-oid="ja6_sjm" />
+                        </div>
+                        <Input
+                          {...field}
+                          type="email"
+                          placeholder="Your email address"
+                          autoComplete="email"
+                          className="pl-10 py-5 bg-gray-100 border-gray-200"
+                          data-oid="ht7nmub"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage
+                      className="text-xs text-red-500 mt-1"
+                      data-oid="gp:.uxo"
+                    />
+                  </FormItem>
+                )}
+                data-oid="61rej_0"
+              />
+
+              <FormField
+                control={methods.control}
+                name="password"
+                rules={{
+                  required: "Password is required",
+                }}
+                render={({ field }) => (
+                  <FormItem data-oid="62bgo2z">
+                    <FormControl data-oid="efjgfvh">
+                      <div data-oid="dfw.bp5" className="relative">
+                        <div
+                          className="absolute inset-y-0 left-0 flex items-center w-7 text-gray-600 pl-3"
+                          data-oid=".po8ztg"
+                        >
+                          <LockClosedIcon data-oid="ai_06jh" />
+                        </div>
+                        <Input
+                          {...field}
+                          type="password"
+                          placeholder="Enter your password"
+                          autoComplete="new-password"
+                          className="pl-10 py-5 bg-gray-100 border-gray-200"
+                          data-oid="z1s-zuf"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage
+                      className="text-xs text-red-500 mt-1"
+                      data-oid="oeo9iuu"
+                    />
+                  </FormItem>
+                )}
+                data-oid="b9itwwf"
+              />
+
+              <Button
+                type="submit"
+                className="w-full bg-amber-500 hover:bg-amber-600 py-6 text-base font-medium"
+                disabled={isLoading}
+                data-oid="ue8ib.c"
+              >
+                Sign Up
+              </Button>
+            </form>
+          </Form>
         )}
         {loginLink ?? (
-          <Box
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="center"
-            sx={{
-              mt: "24px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            data-oid="3buss9h"
+          <div
+            className="mt-6 flex items-center justify-center space-x-1 text-sm"
+            data-oid="qoqymqf"
           >
-            <Typography
-              variant="body2"
-              component="span"
-              fontSize="12px"
-              data-oid="4jrlb:9"
-            >
-              {translate(
-                "pages.register.buttons.haveAccount",
-                translate(
-                  "pages.login.buttons.haveAccount",
-                  "Have an account?",
-                ),
-              )}
-            </Typography>
-            <MuiLink
-              ml="4px"
-              variant="body2"
-              color="primary"
-              component={ActiveLink}
-              underline="none"
+            <span className="text-gray-600" data-oid="s3g5zv4">
+              Have an account?
+            </span>
+            <ActiveLink
               to="/login"
-              fontSize="12px"
-              fontWeight="bold"
-              data-oid="xxngb65"
+              className="font-medium text-amber-500 hover:underline"
+              data-oid="thoc8pj"
             >
-              {translate(
-                "pages.register.signin",
-                translate("pages.login.signin", "Sign in"),
-              )}
-            </MuiLink>
-          </Box>
+              Sign in
+            </ActiveLink>
+          </div>
         )}
       </CardContent>
     </Card>
   );
 
   return (
-    <Box component="div" {...(wrapperProps ?? {})} data-oid="5qms-o2">
-      <Container
-        component="main"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: hideForm ? "flex-start" : "center",
-          alignItems: "center",
-          minHeight: "100dvh",
-          padding: "16px",
-          width: "100%",
-          maxWidth: "400px",
-        }}
-        data-oid="xvyha::"
+    <div
+      className="bg-[url('/bg-auth-page.png')] bg-cover bg-center"
+      data-oid="3-6t2yx"
+    >
+      <div
+        className="container flex min-h-screen flex-col items-center justify-center"
+        data-oid="dh_hep1"
       >
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: "400px",
-            display: "flex",
-            flexDirection: "column",
-            paddingTop: hideForm ? "15dvh" : 0,
-          }}
-          data-oid="8bx5i:4"
-        >
+        <div className="w-full max-w-[450px]" data-oid="uq68-_.">
           {Content}
-        </Box>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 };

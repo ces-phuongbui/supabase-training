@@ -9,27 +9,22 @@ import {
   useLogin,
   useRouterContext,
   useRouterType,
-  useTranslate,
 } from "@refinedev/core";
 import { useForm } from "@refinedev/react-hook-form";
 import * as React from "react";
 import { FormProvider, UseFormProps } from "react-hook-form";
-
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Checkbox from "@mui/material/Checkbox";
-import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import MuiLink from "@mui/material/Link";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-
-import type { BoxProps } from "@mui/material/Box";
-import type { CardContentProps } from "@mui/material/CardContent";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/20/solid";
+import { BoxProps, CardContentProps } from "@mui/material";
 
 export interface FormPropsType extends UseFormProps {
   onSubmit?: (values: RegisterFormTypes) => void;
@@ -45,9 +40,7 @@ export const LoginPage: React.FC<LoginProps> = ({
   providers,
   registerLink,
   forgotPasswordLink,
-  rememberMe,
   contentProps,
-  wrapperProps,
   formProps,
   hideForm,
   mutationVariables,
@@ -56,17 +49,11 @@ export const LoginPage: React.FC<LoginProps> = ({
   const methods = useForm<BaseRecord, HttpError, LoginFormTypes>({
     ...useFormProps,
   });
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = methods;
 
   const authProvider = useActiveAuthProvider();
   const { mutate: login, isLoading } = useLogin<LoginFormTypes>({
     v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
   });
-  const translate = useTranslate();
   const routerType = useRouterType();
   const Link = useLink();
   const { Link: LegacyLink } = useRouterContext();
@@ -77,40 +64,33 @@ export const LoginPage: React.FC<LoginProps> = ({
     if (providers && providers.length > 0) {
       return (
         <>
-          <Stack spacing={1} data-oid="bzv3f9_">
+          {!hideForm && (
+            <div className="flex items-center my-7" data-oid="g3c0xrz">
+              <Separator className="flex-1 bg-gray-400" data-oid="cb2y9ac" />
+              <span className="text-gray-600 text-sm" data-oid="11arv50">
+                or
+              </span>
+              <Separator className="flex-1 bg-gray-400" data-oid="x-g7.ui" />
+            </div>
+          )}
+          <div className="space-y-2" data-oid="9x0v5no">
             {providers.map((provider: any) => {
               return (
                 <Button
                   key={provider.name}
-                  variant="outlined"
-                  fullWidth
-                  sx={{
-                    color: "primary.light",
-                    borderColor: "primary.light",
-                    textTransform: "none",
-                  }}
+                  variant="outline"
+                  className="w-full py-5 border border-gray-200 bg-red-50 text-gray-700 hover:bg-red-100"
                   onClick={() =>
                     login({ ...mutationVariables, providerName: provider.name })
                   }
-                  startIcon={provider.icon}
-                  data-oid="myvjmt_"
+                  data-oid="jb915l6"
                 >
+                  {provider.icon}
                   {provider.label}
                 </Button>
               );
             })}
-          </Stack>
-          {!hideForm && (
-            <Divider
-              sx={{
-                fontSize: "12px",
-                marginY: "16px",
-              }}
-              data-oid="t1o.-br"
-            >
-              {translate("pages.login.divider", "or")}
-            </Divider>
-          )}
+          </div>
         </>
       );
     }
@@ -118,214 +98,169 @@ export const LoginPage: React.FC<LoginProps> = ({
   };
 
   const Content = (
-    <Card {...(contentProps ?? {})} data-oid="9bp0:cj">
-      <CardContent
-        sx={{ p: "32px", "&:last-child": { pb: "32px" } }}
-        data-oid="jmfx7ee"
-      >
-        <Typography
-          component="h1"
-          variant="h5"
-          align="center"
-          color="primary"
-          fontWeight={700}
-          mb={3}
-          data-oid="ez:4-q3"
+    <Card
+      {...(contentProps ?? {})}
+      className="bg-white rounded-lg shadow-md w-full py-10 border-white"
+      data-oid="t4-x26r"
+    >
+      <CardHeader data-oid="oud08b-">
+        <CardTitle
+          className="text-center text-2xl font-bold text-primary"
+          data-oid="yafq.uw"
         >
-          {translate("pages.login.title", "Sign in to your account")}
-        </Typography>
-        {renderProviders()}
+          Access Account
+        </CardTitle>
+        <p
+          className="text-center text-gray-600 text-sm mt-1"
+          data-oid=":kw:n0s"
+        >
+          Log in to manage your events effortlessly.
+        </p>
+      </CardHeader>
+      <CardContent data-oid="kz.wdhz">
         {!hideForm && (
-          <Box
-            component="form"
-            onSubmit={handleSubmit((data) => {
+          <form
+            onSubmit={methods.handleSubmit((data) => {
               if (onSubmit) {
                 return onSubmit(data);
               }
-
               return login({ ...mutationVariables, ...data });
             })}
-            data-oid="6snjnto"
+            className="space-y-4"
+            data-oid="yeinhx8"
           >
-            <TextField
-              {...register("email", {
-                required: translate(
-                  "pages.login.errors.requiredEmail",
-                  "Email is required",
-                ),
-              })}
-              id="email"
-              margin="normal"
-              fullWidth
-              label={translate("pages.login.fields.email", "Email")}
-              error={!!errors.email}
+            <FormField
+              control={methods.control}
               name="email"
-              type="email"
-              autoComplete="email"
-              sx={{
-                mt: 0,
+              rules={{
+                required: "Email is required",
               }}
-              data-oid="qo.osuy"
+              render={({ field }) => (
+                <FormItem data-oid="fr7.ny6">
+                  <FormControl data-oid="_n12hzm">
+                    <div className="relative" data-oid="ewhj34j">
+                      <div
+                        className="absolute inset-y-0 left-0 flex items-center w-7 text-gray-600 pl-3"
+                        data-oid="zt8s:9-"
+                      >
+                        <EnvelopeIcon data-oid="ja6_sjm" />
+                      </div>
+                      <Input
+                        {...field}
+                        type="email"
+                        placeholder="Your email address"
+                        autoComplete="email"
+                        data-oid="omrxvaw"
+                        className="pl-10 py-5 bg-gray-100 border-gray-200"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage
+                    data-oid="s8kne.k"
+                    className="text-xs text-red-500 mt-1"
+                  />
+                </FormItem>
+              )}
+              data-oid="ei4qzd5"
             />
 
-            <TextField
-              {...register("password", {
-                required: translate(
-                  "pages.login.errors.requiredPassword",
-                  "Password is required",
-                ),
-              })}
-              id="password"
-              margin="normal"
-              fullWidth
+            <FormField
+              control={methods.control}
               name="password"
-              label={translate("pages.login.fields.password", "Password")}
-              helperText={errors?.password?.message}
-              error={!!errors.password}
-              type="password"
-              placeholder="●●●●●●●●"
-              autoComplete="current-password"
-              sx={{
-                mb: 0,
+              rules={{
+                required: "Password is required",
               }}
-              data-oid="v7bcm:y"
+              render={({ field }) => (
+                <FormItem data-oid="-58yc-e">
+                  <FormControl data-oid="xf_pnld">
+                    <div className="relative" data-oid="3ffy05u">
+                      <div
+                        className="absolute inset-y-0 left-0 flex items-center w-7 text-gray-600 pl-3"
+                        data-oid=".po8ztg"
+                      >
+                        <LockClosedIcon data-oid="ai_06jh" />
+                      </div>
+                      <Input
+                        {...field}
+                        type="password"
+                        placeholder="Enter your password"
+                        autoComplete="current-password"
+                        data-oid="ssej2eo"
+                        className="pl-10 py-5 bg-gray-100 border-gray-200"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage
+                    data-oid="ih-_fmp"
+                    className="text-xs text-red-500 mt-1"
+                  />
+                </FormItem>
+              )}
+              data-oid="wdegr66"
             />
 
-            <Box
-              component="div"
-              sx={{
-                mt: "24px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-              data-oid="d3f:bnr"
+            <div
+              className="flex items-center justify-between float-right"
+              data-oid="qmfj1.z"
             >
-              {rememberMe ?? (
-                <FormControlLabel
-                  sx={{
-                    span: {
-                      fontSize: "14px",
-                      color: "text.secondary",
-                    },
-                  }}
-                  color="secondary"
-                  control={
-                    <Checkbox
-                      size="small"
-                      id="remember"
-                      {...register("remember")}
-                      data-oid="zbl7kcj"
-                    />
-                  }
-                  label={translate(
-                    "pages.login.buttons.rememberMe",
-                    "Remember me",
-                  )}
-                  data-oid="cqfb_gr"
-                />
-              )}
               {forgotPasswordLink ?? (
-                <MuiLink
-                  variant="body2"
-                  color="primary"
-                  fontSize="12px"
-                  component={ActiveLink}
-                  underline="none"
+                <ActiveLink
                   to="/forgot-password"
-                  data-oid="-gp0nl0"
+                  className="text-sm text-amber-500 hover:underline"
+                  data-oid="-l7uhjg"
                 >
-                  {translate(
-                    "pages.login.buttons.forgotPassword",
-                    "Forgot password?",
-                  )}
-                </MuiLink>
+                  Forgot your password?
+                </ActiveLink>
               )}
-            </Box>
+            </div>
+
             <Button
               type="submit"
-              fullWidth
-              variant="contained"
+              className="w-full bg-amber-500 hover:bg-amber-600 py-6 text-base font-medium"
               disabled={isLoading}
-              sx={{ mt: "24px" }}
-              data-oid="um7.rh1"
+              data-oid=":fjww7d"
             >
-              {translate("pages.login.signin", "Sign in")}
+              Sign In
             </Button>
-          </Box>
+          </form>
         )}
+        {renderProviders()}
         {registerLink ?? (
-          <Box
-            sx={{
-              mt: "24px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            data-oid="s51old0"
+          <div
+            className="mt-6 flex items-center justify-center space-x-1 text-sm"
+            data-oid="t:6l9j7"
           >
-            <Typography
-              textAlign="center"
-              variant="body2"
-              component="span"
-              fontSize="12px"
-              data-oid="71c5uja"
-            >
-              {translate(
-                "pages.login.buttons.noAccount",
-                "Don’t have an account?",
-              )}
-            </Typography>
-            <MuiLink
-              ml="4px"
-              fontSize="12px"
-              variant="body2"
-              color="primary"
-              component={ActiveLink}
-              underline="none"
+            <span className="text-gray-600" data-oid="f:u0-qr">
+              Need to create an account?
+            </span>
+            <ActiveLink
               to="/register"
-              fontWeight="bold"
-              data-oid="80y-f9z"
+              className="font-medium text-amber-500 hover:underline"
+              data-oid="tmi-wcv"
             >
-              {translate("pages.login.signup", "Sign up")}
-            </MuiLink>
-          </Box>
+              Sign Up
+            </ActiveLink>
+          </div>
         )}
       </CardContent>
     </Card>
   );
 
   return (
-    <FormProvider {...methods} data-oid="8835_yu">
-      <Box component="div" {...(wrapperProps ?? {})} data-oid="6236evi">
-        <Container
-          component="main"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: hideForm ? "flex-start" : "center",
-            alignItems: "center",
-            minHeight: "100dvh",
-            padding: "16px",
-            width: "100%",
-            maxWidth: "400px",
-          }}
-          data-oid="tk.00y0"
+    <FormProvider {...methods} data-oid="43c:zce">
+      <div
+        className="bg-[url('/bg-auth-page.png')] bg-cover bg-center"
+        data-oid="b-4-__z"
+      >
+        <div
+          className="container flex min-h-screen flex-col items-center justify-center "
+          data-oid="q3w88vx"
         >
-          <Box
-            sx={{
-              width: "100%",
-              maxWidth: "400px",
-              display: "flex",
-              flexDirection: "column",
-              paddingTop: hideForm ? "15dvh" : 0,
-            }}
-            data-oid="3v5.077"
-          >
-            <>{Content}</>
-          </Box>
-        </Container>
-      </Box>
+          <div className="w-full max-w-[500px]" data-oid="1i.emkt">
+            {Content}
+          </div>
+        </div>
+      </div>
     </FormProvider>
   );
 };

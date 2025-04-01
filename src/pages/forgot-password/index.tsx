@@ -2,9 +2,6 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import MuiLink from "@mui/material/Link";
 
 import type { BoxProps } from "@mui/material/Box";
@@ -27,6 +24,15 @@ import {
   useTranslate,
 } from "@refinedev/core";
 import { FormPropsType } from "../login";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 type ForgotPasswordProps = ForgotPasswordPageProps<
   BoxProps,
@@ -40,22 +46,16 @@ type ForgotPasswordProps = ForgotPasswordPageProps<
  */
 export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
   loginLink,
-  wrapperProps,
   contentProps,
   formProps,
   mutationVariables,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<BaseRecord, HttpError, ForgotPasswordFormTypes>({
+  const methods = useForm<BaseRecord, HttpError, ForgotPasswordFormTypes>({
     ...useFormProps,
   });
 
   const { mutate, isLoading } = useForgotPassword<ForgotPasswordFormTypes>();
-  const translate = useTranslate();
   const routerType = useRouterType();
   const Link = useLink();
   const { Link: LegacyLink } = useRouterContext();
@@ -63,132 +63,129 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
   const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
 
   const Content = (
-    <Card {...(contentProps ?? {})} data-oid="8:o2h.1">
-      <CardContent
-        sx={{ p: "32px", "&:last-child": { pb: "32px" } }}
-        data-oid="0ygzmce"
-      >
-        <Typography
-          component="h1"
-          variant="h5"
-          align="center"
-          color="primary"
-          fontWeight={700}
-          mb={3}
-          data-oid=":9pld-d"
+    <Card
+      {...(contentProps ?? {})}
+      data-oid=":1ratme"
+      className="bg-white rounded-lg shadow-md w-full py-10 border-white"
+    >
+      <CardHeader className="pb-7" data-oid="tuwhnl_">
+        <CardTitle
+          className="text-center text-2xl font-bold text-primary"
+          data-oid="mpd908i"
         >
-          {translate("pages.forgotPassword.title", "Forgot your password?")}
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit((data) => {
-            if (onSubmit) {
-              return onSubmit(data);
-            }
-
-            return mutate({ ...mutationVariables, ...data });
-          })}
-          data-oid="of9aa-6"
-        >
-          <TextField
-            {...register("email", {
-              required: translate(
-                "pages.forgotPassword.errors.requiredEmail",
-                "Email is required",
-              ),
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: translate(
-                  "pages.register.errors.validEmail",
-                  "Invalid email address",
-                ),
-              },
+          Forgot your password?
+        </CardTitle>
+      </CardHeader>
+      <CardContent data-oid="bgfcu6h">
+        <Form {...methods} data-oid="w6:-t.e">
+          <form
+            onSubmit={methods.handleSubmit((data) => {
+              if (onSubmit) {
+                return onSubmit(data);
+              }
+              return mutate({ ...mutationVariables, ...data });
             })}
-            id="email"
-            margin="normal"
-            fullWidth
-            label={translate("pages.forgotPassword.fields.email", "Email")}
-            name="email"
-            type="email"
-            error={!!errors.email}
-            autoComplete="email"
-            sx={{
-              m: 0,
-            }}
-            data-oid="oj15f1i"
-          />
-
-          {loginLink ?? (
-            <Box textAlign="right" sx={{ mt: "24px" }} data-oid="vaaq6h8">
-              <Typography
-                variant="body2"
-                component="span"
-                fontSize="12px"
-                data-oid="dyr2gld"
-              >
-                {translate(
-                  "pages.forgotPassword.buttons.haveAccount",
-                  translate(
-                    "pages.register.buttons.haveAccount",
-                    "Have an account? ",
-                  ),
-                )}
-              </Typography>{" "}
-              <MuiLink
-                variant="body2"
-                component={ActiveLink}
-                underline="none"
-                to="/login"
-                fontWeight="bold"
-                fontSize="12px"
-                color="primary.light"
-                data-oid="x9o82vs"
-              >
-                {translate(
-                  "pages.forgotPassword.signin",
-                  translate("pages.login.signin", "Sign in"),
-                )}
-              </MuiLink>
-            </Box>
-          )}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: "24px" }}
-            disabled={isLoading}
-            data-oid="yvhal3t"
+            className="space-y-4"
+            data-oid="_:oi9te"
           >
-            {translate(
-              "pages.forgotPassword.buttons.submit",
-              "Send reset instructions",
+            <FormField
+              control={methods.control}
+              name="email"
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              }}
+              render={({ field }) => (
+                <FormItem data-oid="1xzvpm3">
+                  <FormControl data-oid="wisfbie">
+                    <div className="relative" data-oid="basrl_n">
+                      <div
+                        className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                        data-oid="q9hbyd8"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5 text-gray-400"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          data-oid="sgrwkyi"
+                        >
+                          <path
+                            d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+                            data-oid="p9gbb_c"
+                          />
+
+                          <path
+                            d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+                            data-oid="t86slax"
+                          />
+                        </svg>
+                      </div>
+                      <Input
+                        {...field}
+                        type="email"
+                        placeholder="Your email address"
+                        autoComplete="email"
+                        className="pl-10 py-5 bg-gray-100 border-gray-200"
+                        data-oid="5savshp"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage
+                    className="text-xs text-red-500 mt-1"
+                    data-oid="4npf4v."
+                  />
+                </FormItem>
+              )}
+              data-oid="azrvvmc"
+            />
+
+            {loginLink ?? (
+              <div className="flex justify-end py-2" data-oid="o5:gm4z">
+                <span className="text-sm text-gray-600" data-oid="vw-s0v9">
+                  Have an account?
+                </span>
+                <ActiveLink
+                  to="/login"
+                  className="text-sm font-medium text-amber-500 hover:underline ml-1"
+                  data-oid="120_stz"
+                >
+                  Sign in
+                </ActiveLink>
+              </div>
             )}
-          </Button>
-        </Box>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: "24px" }}
+              disabled={isLoading}
+              data-oid="rsjr370"
+            >
+              Send reset instructions
+            </Button>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
 
   return (
-    <>
-      <Box component="div" {...(wrapperProps ?? {})} data-oid="ok1ey5o">
-        <Container
-          component="main"
-          maxWidth="xs"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            minHeight: "100dvh",
-            padding: "16px",
-            width: "100%",
-            maxWidth: "400px",
-          }}
-          data-oid="z8fuc3n"
-        >
+    <div
+      className="bg-[url('/bg-auth-page.png')] bg-cover bg-center"
+      data-oid=":.fvnpl"
+    >
+      <div
+        className="container flex min-h-screen flex-col items-center justify-center"
+        data-oid="7pkzm8b"
+      >
+        <div className="w-full max-w-[450px]" data-oid="oeehims">
           {Content}
-        </Container>
-      </Box>
-    </>
+        </div>
+      </div>
+    </div>
   );
 };

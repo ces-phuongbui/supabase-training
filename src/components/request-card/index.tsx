@@ -198,7 +198,11 @@ export const RequestCard = ({
 
   const secondaryGradientColor = useMemo(
     () =>
-      `linear-gradient(${tc(secondaryColor).analogous().slice(1).reverse().toString()})`,
+      `linear-gradient(${tc(secondaryColor)
+        .analogous()
+        .slice(1)
+        .reverse()
+        .toString()})`,
     [secondaryColor],
   );
 

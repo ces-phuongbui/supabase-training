@@ -1,29 +1,21 @@
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import MuiLink from "@mui/material/Link";
 
 import type { BoxProps } from "@mui/material/Box";
 import type { CardContentProps } from "@mui/material/CardContent";
 
-import type {
+import {
   ForgotPasswordFormTypes,
   ForgotPasswordPageProps,
-} from "@refinedev/core";
-import { useForm } from "@refinedev/react-hook-form";
-import * as React from "react";
-
-import {
-  type BaseRecord,
-  type HttpError,
   useForgotPassword,
   useLink,
   useRouterContext,
   useRouterType,
-  useTranslate,
+  type BaseRecord,
+  type HttpError,
 } from "@refinedev/core";
-import { FormPropsType } from "../login";
+import { useForm } from "@refinedev/react-hook-form";
+import * as React from "react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
@@ -33,6 +25,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
+import { FormPropsType } from "../login";
 
 type ForgotPasswordProps = ForgotPasswordPageProps<
   BoxProps,

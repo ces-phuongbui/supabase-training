@@ -187,7 +187,12 @@ export const ResponseCreate: React.FC = () => {
           }}
           data-oid="va2-9d4"
         >
-          <Map address={address} position={position} data-oid="3lr0fq-" />
+          <Map
+            address={address}
+            position={position}
+            data-oid="3lr0fq-"
+            height="30vh"
+          />
         </Card>
       </Box>
     </Background>

@@ -173,224 +173,275 @@ export const InvitationForm = () => {
   };
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full relative" data-oid="fzwgm4v">
       <Button
         variant="ghost"
         className="absolute top-4 left-4 flex items-center justify-center z-10"
         onClick={() => navigate("/requests")}
+        data-oid="_pkbvhi"
       >
-        <ArrowLeft size={40} />
+        <ArrowLeft size={40} data-oid="e6sh3wi" />
         Back
       </Button>
 
-      <div className="container max-w-6xl mx-auto py-8">
-        <h1 className="text-4xl font-bold mb-6 text-center pt-8">
+      <div className="container max-w-6xl mx-auto py-8" data-oid="z2awn17">
+        <h1
+          className="text-4xl font-bold mb-6 text-center pt-8"
+          data-oid="7j-ffeo"
+        >
           Create New Event
         </h1>
 
-        <Form {...form}>
-          <h4 className="text-lg font-bold mb-2">Event Details</h4>
-          <h5 className="text-sm text-gray-400">
+        <Form {...form} data-oid="hmnx6tg">
+          <h4 className="text-lg font-bold mb-2" data-oid="tppuwtz">
+            Event Details
+          </h4>
+          <h5 className="text-sm text-gray-400" data-oid="rsn29uq">
             Provide the details of the event to create an invitation
           </h5>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <CardContent className="p-2 space-y-6">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8"
+            data-oid="7gkqdkp"
+          >
+            <CardContent className="p-2 space-y-6" data-oid="j7fm52_">
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Event Title</FormLabel>
-                    <FormControl>
+                  <FormItem data-oid="kfnvc.2">
+                    <FormLabel data-oid="odh:8hg">Event Title</FormLabel>
+                    <FormControl data-oid="ajp.ydr">
                       <Input
                         placeholder="Enter the title of your event"
                         {...field}
                         className="placeholder:text-gray-300"
+                        data-oid="c6hrfsc"
                       />
                     </FormControl>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage className="text-red-500" data-oid="vpfk0s9" />
                   </FormItem>
                 )}
+                data-oid="7ei6gp6"
               />
 
               <FormField
                 control={form.control}
                 name="address"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Event Location</FormLabel>
-                    <FormControl>
+                  <FormItem data-oid="f8g1:v8">
+                    <FormLabel data-oid="wcj03j2">Event Location</FormLabel>
+                    <FormControl data-oid="397mw4n">
                       <Textarea
                         placeholder="Enter the address or location"
                         {...field}
                         className="placeholder:text-gray-300"
+                        data-oid="0_g8fo4"
                       />
                     </FormControl>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage className="text-red-500" data-oid="k94-x0z" />
                   </FormItem>
                 )}
+                data-oid="te.3nh7"
               />
 
               <FormField
                 control={form.control}
                 name="activity_date"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Event Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
+                  <FormItem className="flex flex-col" data-oid="oo4:n72">
+                    <FormLabel data-oid="-iw_n1s">Event Date</FormLabel>
+                    <Popover data-oid="kxzk32d">
+                      <PopoverTrigger asChild data-oid="zawd624">
+                        <FormControl data-oid="uo4uefc">
                           <Button
                             variant={"outline"}
                             className={cn(
                               "w-full pl-3 text-left font-normal",
                               !field.value && "text-muted-foreground",
                             )}
+                            data-oid="optor14"
                           >
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span data-oid="8v8asok">Pick a date</span>
                             )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            <CalendarIcon
+                              className="ml-auto h-4 w-4 opacity-50"
+                              data-oid="p7z14j-"
+                            />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent
                         className="w-auto p-0 bg-white"
                         align="start"
+                        data-oid="9tqx93r"
                       >
                         <Calendar
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
                           initialFocus
+                          data-oid="s83uive"
                         />
                       </PopoverContent>
                     </Popover>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage className="text-red-500" data-oid="p-jh3ku" />
                   </FormItem>
                 )}
+                data-oid="eis20ph"
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                data-oid="9m_vq2n"
+              >
                 <FormField
                   control={form.control}
                   name="acceptance_label"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Accept Button Text</FormLabel>
-                      <FormControl>
+                    <FormItem data-oid="bwuvqma">
+                      <FormLabel data-oid="0tgorvz">
+                        Accept Button Text
+                      </FormLabel>
+                      <FormControl data-oid=":il_8e0">
                         <Input
                           placeholder="Accept"
                           {...field}
                           className="placeholder:text-gray-300"
+                          data-oid="q8x:2_4"
                         />
                       </FormControl>
-                      <FormMessage className="text-red-500" />
+                      <FormMessage
+                        className="text-red-500"
+                        data-oid="rfzcp5x"
+                      />
                     </FormItem>
                   )}
+                  data-oid="el0ub6z"
                 />
 
                 <FormField
                   control={form.control}
                   name="rejection_label"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Decline Button Text</FormLabel>
-                      <FormControl>
+                    <FormItem data-oid="b-gv77_">
+                      <FormLabel data-oid="gniih2r">
+                        Decline Button Text
+                      </FormLabel>
+                      <FormControl data-oid="4g9y7uu">
                         <Input
                           placeholder="Decline"
                           {...field}
                           className="placeholder:text-gray-300"
+                          data-oid="dd5d8ac"
                         />
                       </FormControl>
-                      <FormMessage className="text-red-500" />
+                      <FormMessage
+                        className="text-red-500"
+                        data-oid=".ipfunl"
+                      />
                     </FormItem>
                   )}
+                  data-oid="1:1p99k"
                 />
               </div>
               <FormField
                 control={form.control}
                 name="close_date"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Deadline</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
+                  <FormItem className="flex flex-col" data-oid="5:kq3l4">
+                    <FormLabel data-oid="qecwgqa">Deadline</FormLabel>
+                    <Popover data-oid="vdxut2:">
+                      <PopoverTrigger asChild data-oid="_d3itv2">
+                        <FormControl data-oid="84n:xfk">
                           <Button
                             variant={"outline"}
                             className={cn(
                               "w-full pl-3 text-left font-normal",
                               !field.value && "text-muted-foreground",
                             )}
+                            data-oid="8b2-e41"
                           >
                             {field.value ? (
                               format(field.value, "PPP")
                             ) : (
-                              <span>Pick a date</span>
+                              <span data-oid="kav6pds">Pick a date</span>
                             )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            <CalendarIcon
+                              className="ml-auto h-4 w-4 opacity-50"
+                              data-oid="bn.wk0t"
+                            />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent
                         className="w-auto p-0 bg-white"
                         align="start"
+                        data-oid="gh.en.7"
                       >
                         <Calendar
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
                           initialFocus
+                          data-oid="cnyxusk"
                         />
                       </PopoverContent>
                     </Popover>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage className="text-red-500" data-oid="zt:6vb:" />
                   </FormItem>
                 )}
+                data-oid="6t8z:ag"
               />
 
               <FormField
                 control={form.control}
                 name="style"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Event Type</FormLabel>
+                  <FormItem className="flex flex-col" data-oid="6x5gdt-">
+                    <FormLabel data-oid="cmd2dnj">Event Type</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      data-oid="5797wj."
                     >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select an event type" />
+                      <FormControl data-oid="w377n_0">
+                        <SelectTrigger data-oid="nw-dk_q">
+                          <SelectValue
+                            placeholder="Select an event type"
+                            data-oid="m9xdllg"
+                          />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-white">
+                      <SelectContent className="bg-white" data-oid="w75oj8g">
                         {STYLE_OPTIONS.map((style) => (
                           <SelectItem
                             key={style.value}
                             value={style.value}
                             className="cursor-pointer"
+                            data-oid="hugv3sv"
                           >
                             {style.label}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage className="text-red-500" data-oid="locfx9w" />
                   </FormItem>
                 )}
+                data-oid="vhfvt8s"
               />
 
               <FormField
                 control={form.control}
                 name="background_image"
                 render={({ field: { onChange, value, ...field } }) => (
-                  <FormItem>
-                    <FormLabel>Background Image</FormLabel>
-                    <FormControl>
+                  <FormItem data-oid="w:065da">
+                    <FormLabel data-oid=":fqb25w">Background Image</FormLabel>
+                    <FormControl data-oid="v:-.jrd">
                       <Input
                         type="file"
                         accept="image/*"
@@ -401,177 +452,250 @@ export const InvitationForm = () => {
                           }
                         }}
                         {...field}
+                        data-oid="0f43vxz"
                       />
                     </FormControl>
-                    <FormMessage className="text-red-500" />
+                    <FormMessage className="text-red-500" data-oid="04slgau" />
                   </FormItem>
                 )}
+                data-oid="z2-xw84"
               />
 
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="colors">
-                  <AccordionTrigger>Colors</AccordionTrigger>
-                  <AccordionContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Accordion
+                type="single"
+                collapsible
+                className="w-full"
+                data-oid="gb5n59l"
+              >
+                <AccordionItem value="colors" data-oid="cef3h-j">
+                  <AccordionTrigger data-oid="n_iq1c_">Colors</AccordionTrigger>
+                  <AccordionContent className="space-y-6" data-oid="m73a.8e">
+                    <div
+                      className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                      data-oid="zi6_3w:"
+                    >
                       <FormField
                         control={form.control}
                         name="primary_color"
                         render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Primary Text Color</FormLabel>
-                            <div className="mt-2">
+                          <FormItem data-oid="0:.fpje">
+                            <FormLabel data-oid="nl6bma9">
+                              Primary Text Color
+                            </FormLabel>
+                            <div className="mt-2" data-oid="1ibn9fb">
                               <HexColorPicker
                                 color={field.value}
                                 onChange={field.onChange}
+                                data-oid="sr7dtz4"
                               />
 
                               <Input
                                 className="mt-2"
                                 value={field.value}
                                 onChange={field.onChange}
+                                data-oid="myog-2v"
                               />
                             </div>
-                            <FormMessage className="text-red-500" />
+                            <FormMessage
+                              className="text-red-500"
+                              data-oid="w7sn:gr"
+                            />
                           </FormItem>
                         )}
+                        data-oid="-0buyws"
                       />
 
                       <FormField
                         control={form.control}
                         name="background_color"
                         render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Background Color</FormLabel>
-                            <div className="mt-2">
+                          <FormItem data-oid="1spr495">
+                            <FormLabel data-oid="3bt84ei">
+                              Background Color
+                            </FormLabel>
+                            <div className="mt-2" data-oid="vq-vjfr">
                               <HexColorPicker
                                 color={field.value}
                                 onChange={field.onChange}
+                                data-oid=".9zha5m"
                               />
 
                               <Input
                                 className="mt-2"
                                 value={field.value}
                                 onChange={field.onChange}
+                                data-oid="w5t-ua7"
                               />
                             </div>
-                            <FormMessage className="text-red-500" />
+                            <FormMessage
+                              className="text-red-500"
+                              data-oid="hskokvp"
+                            />
                           </FormItem>
                         )}
+                        data-oid="x.e:yqi"
                       />
 
                       <FormField
                         control={form.control}
                         name="secondary_color"
                         render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Secondary Color</FormLabel>
-                            <div className="mt-2">
+                          <FormItem data-oid="urdww9e">
+                            <FormLabel data-oid="k9ve:37">
+                              Secondary Color
+                            </FormLabel>
+                            <div className="mt-2" data-oid="l26y90r">
                               <HexColorPicker
                                 color={field.value}
                                 onChange={field.onChange}
+                                data-oid="v99p4b."
                               />
 
                               <Input
                                 className="mt-2"
                                 value={field.value}
                                 onChange={field.onChange}
+                                data-oid="ob9l-7x"
                               />
                             </div>
-                            <FormMessage className="text-red-500" />
+                            <FormMessage
+                              className="text-red-500"
+                              data-oid="u.86gbv"
+                            />
                           </FormItem>
                         )}
+                        data-oid="tpuixop"
                       />
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div
+                      className="flex items-center space-x-2"
+                      data-oid="xzex770"
+                    >
                       <FormField
                         control={form.control}
                         name="background_gradient"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-center space-x-2">
-                            <FormControl>
+                          <FormItem
+                            className="flex flex-row items-center space-x-2"
+                            data-oid="bk2mrs_"
+                          >
+                            <FormControl data-oid="1esi0yw">
                               <Switch
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                data-oid="d6:qvuc"
                               />
                             </FormControl>
-                            <FormLabel>Use gradient for background</FormLabel>
+                            <FormLabel data-oid="-:gqpng">
+                              Use gradient for background
+                            </FormLabel>
                           </FormItem>
                         )}
+                        data-oid="om-0wqx"
                       />
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div
+                      className="flex items-center space-x-2"
+                      data-oid="mggb16j"
+                    >
                       <FormField
                         control={form.control}
                         name="secondary_gradient"
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-center space-x-2">
-                            <FormControl>
+                          <FormItem
+                            className="flex flex-row items-center space-x-2"
+                            data-oid="hwg:-1s"
+                          >
+                            <FormControl data-oid="m64a:8-">
                               <Switch
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                data-oid="-7igt7v"
                               />
                             </FormControl>
-                            <FormLabel>
+                            <FormLabel data-oid="g4iifkd">
                               Use gradient for secondary color
                             </FormLabel>
                           </FormItem>
                         )}
+                        data-oid="ntz3z.i"
                       />
                     </div>
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="typography">
-                  <AccordionTrigger>Typography</AccordionTrigger>
-                  <AccordionContent className="space-y-6">
+                <AccordionItem value="typography" data-oid="l_x01ae">
+                  <AccordionTrigger data-oid="qg:5dw4">
+                    Typography
+                  </AccordionTrigger>
+                  <AccordionContent className="space-y-6" data-oid="9km5xrq">
                     <FormField
                       control={form.control}
                       name="font_family"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Font Family</FormLabel>
+                        <FormItem data-oid="-kt5zg_">
+                          <FormLabel data-oid="mtu_0uq">Font Family</FormLabel>
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
+                            data-oid="fcssr6h"
                           >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select a font" />
+                            <FormControl data-oid="ez7-uuc">
+                              <SelectTrigger data-oid="kyalb6:">
+                                <SelectValue
+                                  placeholder="Select a font"
+                                  data-oid=".q9lkc7"
+                                />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent className="bg-white">
+                            <SelectContent
+                              className="bg-white"
+                              data-oid="3d6j4cr"
+                            >
                               {webSafeFonts.map((font) => (
                                 <SelectItem
                                   key={font}
                                   value={font}
                                   style={{ fontFamily: font }}
+                                  data-oid="v6hpv_g"
                                 >
                                   {font}
                                 </SelectItem>
                               ))}
                             </SelectContent>
                           </Select>
-                          <FormMessage className="text-red-500" />
+                          <FormMessage
+                            className="text-red-500"
+                            data-oid="jpt6clz"
+                          />
                         </FormItem>
                       )}
+                      data-oid=":ba4z-2"
                     />
 
                     <FormField
                       control={form.control}
                       name="italicize"
                       render={({ field }) => (
-                        <FormItem className="flex flex-row items-center space-x-2">
-                          <FormControl>
+                        <FormItem
+                          className="flex flex-row items-center space-x-2"
+                          data-oid=".2vtu1c"
+                        >
+                          <FormControl data-oid="qlce0f4">
                             <Switch
                               checked={field.value}
                               onCheckedChange={field.onChange}
+                              data-oid="ba9p47:"
                             />
                           </FormControl>
-                          <FormLabel>Italicize text</FormLabel>
+                          <FormLabel data-oid="0i6zmxb">
+                            Italicize text
+                          </FormLabel>
                         </FormItem>
                       )}
+                      data-oid="oow5-5_"
                     />
                   </AccordionContent>
                 </AccordionItem>
@@ -579,13 +703,14 @@ export const InvitationForm = () => {
             </CardContent>
 
             {/*Preview Card*/}
-            <InvitationCard {...invitationCardProps} />
+            <InvitationCard {...invitationCardProps} data-oid="oqaya2z" />
 
-            <div className="flex justify-end w-full">
+            <div className="flex justify-end w-full" data-oid="nhyba0d">
               <Button
                 type="submit"
                 disabled={isDisabled}
                 className="bg-amber-600 w-full hover:bg-amber-700 text-white"
+                data-oid="rz0dxbj"
               >
                 Create Invitation
               </Button>

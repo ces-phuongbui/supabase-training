@@ -26,12 +26,7 @@ import { supabaseClient } from "../../utility";
 import dayjs from "../../utility/dayjs";
 import fonts from "../../utility/fonts";
 import Map from "./map";
-import { LatLngExpression } from "leaflet";
-
-type Address = {
-  label: string;
-  position: LatLngExpression;
-};
+import { Address } from "@/utility/types";
 
 export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
   const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
@@ -564,7 +559,12 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
         </Grid>
       </Grid>
       <Grid sx={{ marginTop: "20px" }} data-oid="pjb--_b">
-        <Map position={position} address={address} data-oid="8cfwep9" />
+        <Map
+          position={position}
+          address={address}
+          data-oid="8cfwep9"
+          height="30vh"
+        />
       </Grid>
     </Create>
   );

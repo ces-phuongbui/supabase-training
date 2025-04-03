@@ -56,4 +56,13 @@ export const invitationSchema = z.object({
       z.string().url(), // For existing URLs
     ])
     .optional(),
+  position: z
+    .object({
+      lat: z.string(),
+      lng: z.string(),
+    })
+    .default({
+      lat: "0",
+      lng: "0",
+    }),
 });

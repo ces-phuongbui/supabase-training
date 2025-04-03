@@ -86,7 +86,6 @@ export const CreateInvitation = () => {
 
       imageUrl = publicUrl;
     }
-    console.log("value: ", values);
     mutate(
       {
         resource: "requests",
@@ -94,7 +93,6 @@ export const CreateInvitation = () => {
           ...values,
           id,
           user_id: userId,
-          position: [0, 0],
           background_image: imageUrl,
         },
       },

@@ -374,7 +374,12 @@ export const RequestShow: React.FC<IResourceComponentsProps> = () => {
             </Stack>
           </Grid>
           <Grid item xs={12} lg={6} data-oid="s2c3aq-">
-            <Map position={position} address={address} data-oid="5bfc436" />
+            <Map
+              position={position}
+              address={address}
+              data-oid="5bfc436"
+              height="30vh"
+            />
           </Grid>
         </Grid>
       </CustomTabPanel>

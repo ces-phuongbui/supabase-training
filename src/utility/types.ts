@@ -1,3 +1,5 @@
+import { LatLngExpression } from "leaflet";
+
 export interface IQuestion {
   id: string;
   question_text: string;
@@ -19,4 +21,9 @@ export interface IAnswer {
 
 export type Nullable<T> = {
   [P in keyof T]: T[P] | null;
+};
+
+export type Address = {
+  label: string;
+  position: LatLngExpression;
 };

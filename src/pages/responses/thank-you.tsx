@@ -17,8 +17,9 @@ export default function ThankYouPage() {
     address = "",
     position = DEFAULT_POSITION,
     activity_date,
+    activity_time,
   } = event || {};
-  const { day, monthYear, time } = formatEventDate(activity_date);
+  const { day, monthYear } = formatEventDate(activity_date);
 
   return (
     <div
@@ -54,7 +55,7 @@ export default function ThankYouPage() {
             className="text-3xl md:text-4xl font-bold mb-1"
             data-oid="31gnbrd"
           >
-            {time}
+            {activity_time}
           </div>
           <div
             className="flex items-center text-gray-600 mb-6"

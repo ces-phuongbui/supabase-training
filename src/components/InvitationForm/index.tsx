@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { ReactNode } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
@@ -41,6 +41,9 @@ import {
   AccordionTrigger,
 } from "../ui/accordion";
 import { CardContent } from "../ui/card";
+import { Address } from "@/utility/types";
+import { debounce } from "@mui/material";
+import { AutoComplete } from "../ui/autocomplete";
 
 interface InvitationFormProps {
   children?: ReactNode;
@@ -55,6 +58,58 @@ export const InvitationForm = ({
   onSubmit,
   form,
 }: InvitationFormProps) => {
+  const [addressOptions, setAddressOptions] = useState<Address[]>([]);
+  const [addressLoading, setAddressLoading] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  let controller: AbortController | null = null;
+  const handleSearch = useCallback(
+    debounce(async (query: string) => {
+      if (!query.trim()) return setAddressLoading(false);
+
+      if (controller) {
+        controller.abort();
+      }
+
+      try {
+        controller = new AbortController();
+        const { signal } = controller;
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+            query,
+          )}&limit=5&format=json&addressdetails=1`,
+          { signal },
+        );
+        const data = await response.json();
+
+        setAddressOptions(
+          data.map(
+            ({
+              display_name,
+              lat,
+              lon,
+            }: {
+              display_name: string;
+              lat: string;
+              lon: string;
+            }) => ({
+              label: display_name,
+              position: { lat, lng: lon },
+            }),
+          ),
+        );
+        setAddressLoading(false);
+      } catch (error) {
+        console.error(error);
+        setAddressLoading(false);
+      }
+    }, 500),
+    [],
+  );
+  useEffect(() => {
+    handleSearch(searchValue);
+  }, [handleSearch, searchValue]);
+
   const handleSubmit = async (values: z.infer<typeof invitationSchema>) => {
     // Combine date and time before submitting
     if (values.activity_date && values.activity_time) {
@@ -99,10 +154,36 @@ export const InvitationForm = ({
               <FormItem>
                 <FormLabel>Event Location</FormLabel>
                 <FormControl>
-                  <Textarea
+                  <AutoComplete
+                    selectedValue={field.value}
+                    onSelectedValueChange={(value) => {
+                      field.onChange(value);
+                      setSearchValue(value);
+                      const selectedAddress = addressOptions.find(
+                        (option) => option.label === value,
+                      );
+
+                      if (selectedAddress) {
+                        form.setValue(
+                          "position",
+                          selectedAddress.position as any,
+                        );
+                      }
+                    }}
+                    searchValue={searchValue}
+                    onSearchValueChange={(value) => {
+                      setSearchValue(value);
+                      if (!value) {
+                        setAddressOptions([]);
+                      }
+                    }}
+                    items={addressOptions.map(({ label }) => ({
+                      value: label,
+                      label,
+                    }))}
+                    isLoading={addressLoading}
                     placeholder="Enter the address or location"
-                    {...field}
-                    className="placeholder:text-gray-300"
+                    emptyMessage="No Address found"
                   />
                 </FormControl>
                 <FormMessage className="text-red-500" />

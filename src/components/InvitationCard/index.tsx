@@ -1,6 +1,35 @@
+import { IResponse } from "@/pages/requests/list";
+import { IChoice, IQuestion } from "@/utility/types";
+import { useCreate, useNotification } from "@refinedev/core";
 import { format } from "date-fns";
+import dayjs from "dayjs";
+import { useMemo } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import * as z from "zod";
+import { v4 as uuidv4 } from "uuid";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "../ui/button";
 
 interface InvitationCardProps {
+  event_id?: string;
   title: string;
   address: string;
   activityDate: Date;
@@ -15,9 +44,20 @@ interface InvitationCardProps {
   acceptanceLabel: string;
   rejectionLabel: string;
   isEdit: boolean;
+  closeDate: Date;
 }
 
+const ATTENDEE_COUNT_OPTIONS = [1, 2, 3, 4, 5] as const;
+const DEFAULT_ATTENDEE_COUNT = ATTENDEE_COUNT_OPTIONS[0];
+
+const formSchema = z.object({
+  responder_name: z.string().min(1, "Name is required"),
+  num_attendees: z.number().min(0),
+  accept: z.string(),
+});
+
 export const InvitationCard = ({
+  event_id,
   title,
   address,
   activityDate,
@@ -32,7 +72,52 @@ export const InvitationCard = ({
   acceptanceLabel,
   rejectionLabel,
   isEdit = true,
+  closeDate,
 }: InvitationCardProps) => {
+  const navigate = useNavigate();
+  const { open } = useNotification();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      responder_name: "",
+      num_attendees: 0,
+      accept: "",
+    },
+  });
+
+  const { mutate } = useCreate<IResponse>();
+
+  const responseAnswer: any = form.watch("accept");
+  const accept = responseAnswer === "true";
+
+  useMemo(() => {
+    form.setValue("num_attendees", accept ? DEFAULT_ATTENDEE_COUNT : 0);
+  }, [accept, form]);
+
+  const onSubmit = async (data: FieldValues) => {
+    if (event_id) {
+      const responseId = uuidv4();
+
+      mutate(
+        {
+          resource: "responses",
+          values: {
+            ...data,
+            id: responseId,
+            request_id: event_id,
+          },
+        },
+        {
+          onSuccess: () => {
+            navigate(`/${event_id}/thank-you`);
+          },
+        },
+      );
+    }
+  };
+
+  const closed = useMemo(() => dayjs().isAfter(dayjs(closeDate)), [closeDate]);
+
   const getBackgroundStyle = () => {
     if (backgroundImage) {
       if (typeof backgroundImage === "string") {
@@ -60,49 +145,43 @@ export const InvitationCard = ({
 
   return (
     <div
-      className="border rounded-lg h-[40rem] w-full overflow-hidden"
-      data-oid="kh-o2ep"
+      className={`border rounded-lg ${
+        !isEdit ? "h-[40rem]" : "h-[100vh]"
+      } w-full overflow-hidden`}
+      data-oid="mihzskl"
     >
       <div
         className="h-full relative flex flex-col items-center justify-between"
         style={styleBackgroundCard}
-        data-oid="y1s01y2"
+        data-oid="by5_629"
       >
         <div
-          className="absolute h-3/4 w-4/5 m-auto inset-0 bg-white/60 rounded-sm"
-          data-oid="ztlql2i"
+          className={`${
+            isEdit ? "min-h-[55%] w-[50%]" : "min-h-[75%] w-[80%]"
+          } m-auto inset-0 bg-white/60 rounded-sm`}
+          data-oid="gl6ty4e"
         >
           <div
             className="relative z-10 flex flex-col items-center justify-between h-full py-8 px-6 text-center"
-            data-oid="ehcwuna"
+            data-oid="m64.p-u"
           >
-            <div className="mt-4" data-oid=".y_j73p">
-              <h3
-                style={{
-                  color: primaryColor,
-                  fontFamily,
-                  fontStyle: italicize ? "italic" : "normal",
-                  fontSize: "2rem",
-                  fontWeight: "500",
-                }}
-                data-oid="jbw5gpo"
+            <div className="mt-4" data-oid="ts66:rm">
+              <h1
+                className="text-5xl text-center capitalize font-bold"
+                style={{ color: primaryColor }}
+                data-oid="f8t4o3c"
               >
-                {title || "Event Title"}
-              </h3>
+                {title || "Please Join Us!"}
+              </h1>
             </div>
 
-            <div className="my-4" data-oid="l81er9q">
+            <div className="mt-3" data-oid="r_-1orx">
               <p
-                style={{
-                  color: primaryColor,
-                  fontFamily,
-                  fontStyle: italicize ? "italic" : "normal",
-                  fontSize: "1rem",
-                  marginBottom: "8px",
-                }}
-                data-oid="jrgh-11"
+                className="text-center"
+                style={{ color: primaryColor }}
+                data-oid="0xixjev"
               >
-                {address || "Event Address"}
+                {address}
               </p>
 
               <h2
@@ -112,97 +191,197 @@ export const InvitationCard = ({
                   fontStyle: italicize ? "italic" : "normal",
                   fontSize: "3rem",
                   fontWeight: "bold",
-                  marginTop: "16px",
-                  marginBottom: "16px",
+                  marginTop: "10px",
                 }}
-                data-oid="m739uj1"
+                data-oid="8ckqzb8"
               >
-                {format(activityDate, "dd MMM, yyyy")}
+                {format(activityDate, "dd MMM, yyyy")}{" "}
+                {closed ? " (CLOSED)" : ""}
               </h2>
+
+              <p
+                className="text-1xl text-center mb-2"
+                style={{ color: primaryColor }}
+                data-oid="3777f67"
+              >
+                Kindly Reply Before {dayjs(closeDate).format("DD MMMM YYYY")}
+              </p>
             </div>
 
-            <div className="mb-4 w-[50%]" data-oid="v--s55i">
-              <div className="mb-4" data-oid="xyeoi7k">
-                <p
-                  style={{
-                    color: primaryColor,
-                    fontFamily,
-                    marginBottom: "4px",
-                    fontSize: "14px",
-                    textAlign: "start",
-                  }}
-                  data-oid="ir8t4c8"
-                >
-                  Your name
-                </p>
+            <Form {...form} data-oid="9vni6hv">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="px-4 pb-4"
+                data-oid="8a01msz"
+              >
                 <div
-                  className="w-full border-b-2 mx-auto"
-                  style={{
-                    borderColor: primaryColor,
-                    width: "100%",
-                  }}
-                  data-oid="h:rqv88"
-                ></div>
-              </div>
+                  className="flex flex-col items-center space-y-6"
+                  data-oid="tbok50o"
+                >
+                  <FormField
+                    control={form.control}
+                    name="responder_name"
+                    render={({ field }) => (
+                      <FormItem data-oid="xxceq6y">
+                        <FormLabel
+                          style={{
+                            color: primaryColor ?? "black",
+                          }}
+                          data-oid="_f51teg"
+                        >
+                          Your Name
+                        </FormLabel>
+                        <FormControl data-oid="ymp7av0">
+                          <Input {...field} data-oid="p9x1c-e" />
+                        </FormControl>
+                        <FormMessage
+                          className="text-[11px] text-red-500"
+                          data-oid="6-ih5cm"
+                        />
+                      </FormItem>
+                    )}
+                    data-oid="-ct5mvr"
+                  />
 
-              <div
-                className="flex justify-center gap-60 mt-6"
-                data-oid="4.4c-41"
-              >
-                <div className="flex items-center gap-2" data-oid="8-96rok">
-                  <div
-                    className="w-4 h-4 rounded-full border-2"
-                    style={{ borderColor: primaryColor }}
-                    data-oid="mu72aty"
-                  ></div>
-                  <span
+                  <FormField
+                    control={form.control}
+                    name="accept"
+                    render={({ field }) => (
+                      <FormItem data-oid="d4b1pdc">
+                        <FormLabel
+                          style={{ color: primaryColor }}
+                          data-oid="q9z19ic"
+                        >
+                          Are you going?
+                        </FormLabel>
+                        <FormControl data-oid="7529jak">
+                          <RadioGroup
+                            onValueChange={field.onChange}
+                            value={field.value}
+                            className="flex justify-between gap-4"
+                            data-oid="vu0.02v"
+                          >
+                            <div
+                              className="flex items-center space-x-2"
+                              data-oid="5fvrzct"
+                            >
+                              <RadioGroupItem
+                                value="false"
+                                id="decline"
+                                data-oid="1x4nsc4"
+                              />
+
+                              <label
+                                htmlFor="decline"
+                                style={{ color: primaryColor ?? "black" }}
+                                data-oid="wzxwtvn"
+                              >
+                                {rejectionLabel}
+                              </label>
+                            </div>
+                            <div
+                              className="flex items-center space-x-2"
+                              data-oid="l:5t:ro"
+                            >
+                              <RadioGroupItem
+                                value="true"
+                                id="accept"
+                                data-oid="8yr.9qu"
+                              />
+
+                              <label
+                                htmlFor="accept"
+                                style={{ color: primaryColor ?? "black" }}
+                                data-oid="cfkcp-q"
+                              >
+                                {acceptanceLabel}
+                              </label>
+                            </div>
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage data-oid="mwziy79" />
+                      </FormItem>
+                    )}
+                    data-oid="dsd6dw9"
+                  />
+
+                  {accept && (
+                    <div className="space-y-4 w-full" data-oid="0x_v6il">
+                      <div
+                        className="bg-white/5 backdrop-blur-sm border rounded-xl p-6 shadow-lg"
+                        style={{
+                          borderColor: `${primaryColor}40`, // Adding transparency to border
+                          background: `linear-gradient(145deg, ${primaryColor}05, ${primaryColor}10)`,
+                        }}
+                        data-oid="xfhy7h0"
+                      >
+                        <FormField
+                          control={form.control}
+                          name="num_attendees"
+                          render={({ field }) => (
+                            <FormItem data-oid="ojfhv6x">
+                              <FormLabel
+                                style={{ color: primaryColor }}
+                                data-oid="9fek5g-"
+                              >
+                                How many people will join with you?
+                              </FormLabel>
+                              <Select
+                                onValueChange={(value) =>
+                                  field.onChange(Number(value))
+                                }
+                                value={String(field.value)}
+                                data-oid="jgztob9"
+                              >
+                                <SelectTrigger data-oid="gbfthbh">
+                                  <SelectValue
+                                    placeholder="Select number of attendees"
+                                    data-oid="53os.nz"
+                                  />
+                                </SelectTrigger>
+                                <SelectContent
+                                  className="bg-white "
+                                  data-oid="03q43z1"
+                                >
+                                  {ATTENDEE_COUNT_OPTIONS.map((value) => (
+                                    <SelectItem
+                                      key={value}
+                                      value={String(value)}
+                                      className="cursor-pointer hover:bg-gray-300"
+                                      data-oid="jwtqjnk"
+                                    >
+                                      {value}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage data-oid="nqtp:f." />
+                            </FormItem>
+                          )}
+                          data-oid=":jstdyh"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <Button
+                    disabled={closed || !isEdit}
+                    className="mt-6 px-6 py-2 rounded mx-auto block"
                     style={{
-                      color: primaryColor,
+                      backgroundColor: secondaryColor,
+                      background: secondaryGradient
+                        ? `linear-gradient(135deg, ${secondaryColor}, ${primaryColor})`
+                        : secondaryColor,
+                      color: "#FFFFFF",
                       fontFamily,
                       fontStyle: italicize ? "italic" : "normal",
                     }}
-                    data-oid="9.qmft6"
+                    data-oid="qagfg7n"
                   >
-                    {acceptanceLabel}
-                  </span>
+                    Submit Response
+                  </Button>
                 </div>
-
-                <div className="flex items-center gap-2" data-oid="e4zi1uw">
-                  <div
-                    className="w-4 h-4 rounded-full border-2"
-                    style={{ borderColor: primaryColor }}
-                    data-oid="_5-te4j"
-                  ></div>
-                  <span
-                    style={{
-                      color: primaryColor,
-                      fontFamily,
-                      fontStyle: italicize ? "italic" : "normal",
-                    }}
-                    data-oid=":m7s4ns"
-                  >
-                    {rejectionLabel}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                disabled={!isEdit}
-                className="mt-6 px-6 py-2 rounded cursor-pointer mx-auto block"
-                style={{
-                  backgroundColor: secondaryColor,
-                  background: secondaryGradient
-                    ? `linear-gradient(135deg, ${secondaryColor}, ${primaryColor})`
-                    : secondaryColor,
-                  color: "#FFFFFF",
-                  fontFamily,
-                  fontStyle: italicize ? "italic" : "normal",
-                }}
-                data-oid="aw1kmjd"
-              >
-                Submit Response
-              </button>
-            </div>
+              </form>
+            </Form>
           </div>
         </div>
       </div>

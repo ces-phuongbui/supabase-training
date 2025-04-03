@@ -24,7 +24,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
     <div
       className={`${
         sticky ? "sticky top-0" : "relative"
-      } bg-lightMain dark:bg-background-dark z-10 shadow-sm`}
+      } light:bg-white dark:bg-background-dark z-10 shadow-sm`}
       data-oid="28p5nrb"
     >
       <div className="flex h-16 items-center px-6" data-oid="ex76u_z">

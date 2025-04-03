@@ -99,12 +99,6 @@ export const CreateInvitation = () => {
       },
       {
         onSuccess: () => {
-          open?.({
-            type: "success",
-            message: "Invitation created successfully",
-            description:
-              "Your invitation has been created and is ready to share.",
-          });
           setIsDisabled(false);
           navigate(`/requests`);
         },

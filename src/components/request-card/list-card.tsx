@@ -13,7 +13,7 @@ import { supabaseClient } from "@/utility";
 
 interface RequestListCardProps {
   request: IRequest;
-  onDelete?: (id: string | number) => Promise<void>;
+  onDelete: (id: string) => void;
 }
 
 const RequestListCard = ({ request, onDelete }: RequestListCardProps) => {
@@ -94,7 +94,7 @@ const RequestListCard = ({ request, onDelete }: RequestListCardProps) => {
       <CardFooter className="p-4 pt-0 flex gap-2" data-oid="2:dtg:h">
         <Button
           variant="outline"
-          className="w-full border-amber-600 text-amber-600 bg-amber-50 rounded-sm"
+          className="w-1/2 border-amber-600 text-amber-600 bg-amber-50 rounded-sm"
           asChild
           data-oid="s9lo7._"
         >
@@ -109,8 +109,8 @@ const RequestListCard = ({ request, onDelete }: RequestListCardProps) => {
 
         <Button
           variant="outline"
-          className="border-red-600 text-red-600 bg-red-50 rounded-sm"
-          onClick={handleDelete}
+          className="border-red-600 text-red-600 bg-red-50 rounded-sm w-1/2"
+          onClick={() => onDelete(request.id)}
         >
           Delete Event
         </Button>

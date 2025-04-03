@@ -16,6 +16,8 @@ export interface IRequest {
   title: string;
   address: string;
   acceptance_label: string;
+  activity_date: string;
+  activity_time: string;
   rejection_label: string;
   close_date: string;
   secondary_color: string;
@@ -27,7 +29,6 @@ export interface IRequest {
   secondary_gradient: boolean;
   style: string;
   position: LatLngExpression;
-  activity_date: string;
 }
 
 export interface IResponse {
@@ -93,7 +94,7 @@ export const RequestList: React.FC<IResourceComponentsProps> = () => {
       {requests ? (
         <RequestGrid requests={requests} data-oid="cir:o8p" />
       ) : (
-        <div data-oid="ea4iw-3">
+        <div data-oid="ea4iw-3" className="flex justify-center mt-[25%]">
           <CircularProgress data-oid="t1551-k" />
         </div>
       )}

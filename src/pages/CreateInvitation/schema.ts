@@ -20,6 +20,9 @@ export const invitationSchema = z.object({
   activity_date: z.date({
     required_error: "Activity date is required",
   }),
+  activity_time: z.string({
+    required_error: "Activity time is required",
+  }),
   acceptance_label: z
     .string()
     .min(2, {
@@ -47,5 +50,10 @@ export const invitationSchema = z.object({
   background_gradient: z.boolean().default(false),
   secondary_gradient: z.boolean().default(false),
   style: z.string().default("DEFAULT"),
-  background_image: z.instanceof(File).optional(),
+  background_image: z
+    .union([
+      z.instanceof(File), // For new file uploads
+      z.string().url(), // For existing URLs
+    ])
+    .optional(),
 });

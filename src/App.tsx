@@ -4,15 +4,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Authenticated, Refine } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
+import GoogleIcon from "@mui/icons-material/Google";
+import CssBaseline from "@mui/material/CssBaseline";
+import GlobalStyles from "@mui/material/GlobalStyles";
 import {
   ErrorComponent,
   notificationProvider,
   RefineSnackbarProvider,
   ThemedLayoutV2,
 } from "@refinedev/mui";
-import GoogleIcon from "@mui/icons-material/Google";
-import CssBaseline from "@mui/material/CssBaseline";
-import GlobalStyles from "@mui/material/GlobalStyles";
 import routerBindings, {
   CatchAllNavigate,
   DocumentTitleHandler,
@@ -25,18 +25,17 @@ import authProvider from "./authProvider";
 import { AppIcon } from "./components/app-icon";
 import { Header } from "./components/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
-import { RequestCreate } from "./pages/requests/create";
+import CreateInvitation from "./pages/CreateInvitation";
+import { ForgotPasswordPage } from "./pages/forgot-password";
+import LandingPage from "./pages/landing";
+import { LoginPage } from "./pages/login";
+import { RegisterPage } from "./pages/register";
 import { RequestList } from "./pages/requests/list";
 import { ResponseCreate } from "./pages/responses/create";
 import ThankYouPage from "./pages/responses/thank-you";
+import ViewInvitationDetail from "./pages/ViewInvitationDetail";
 import { supabaseClient } from "./utility";
 import customTitleHandler from "./utility/customTitleHandler";
-import { LoginPage } from "./pages/login";
-import { RegisterPage } from "./pages/register";
-import { ForgotPasswordPage } from "./pages/forgot-password";
-import InvitationForm from "./pages/InvitationForm";
-import LandingPage from "./pages/landing";
-import { RequestShow } from "./pages/requests/show";
 
 function App() {
   return (
@@ -128,13 +127,13 @@ function App() {
 
                       <Route
                         path="create"
-                        element={<InvitationForm data-oid="56apve." />}
+                        element={<CreateInvitation data-oid="56apve." />}
                         data-oid="s5bkuas"
                       />
 
                       <Route
                         path="show/:id"
-                        element={<RequestShow data-oid="gd:c7_4" />}
+                        element={<ViewInvitationDetail data-oid="gd:c7_4" />}
                         data-oid=".23250c"
                       />
                     </Route>

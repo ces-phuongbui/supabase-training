@@ -17,13 +17,13 @@ interface RequestListCardProps {
 const RequestListCard = ({ request }: RequestListCardProps) => {
   return (
     <Card
-      className="overflow-hidden border border-gray-400 shadow-[0px_0px_1px_#171a1f12,0px_0px_2px_#171a1f1F]"
+      className="overflow-hidden min-h-96 border border-gray-400 shadow-[0px_0px_1px_#171a1f12,0px_0px_2px_#171a1f1F]"
       data-oid="n26a-s_"
     >
       {/* Image at the top */}
-      <div className="w-full pt-4 px-4 overflow-hidden" data-oid=":ivuccs">
+      <div className="w-full h-52 pt-4 px-4 overflow-hidden" data-oid=":ivuccs">
         <div
-          className="h-[150px] overflow-hidden rounded-[0.25rem] border border-gray-200"
+          className="h-full overflow-hidden rounded-[0.25rem] border border-gray-200"
           data-oid="5b-wvqj"
         >
           {request.background_image ? (

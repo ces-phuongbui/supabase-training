@@ -11,7 +11,7 @@ interface InvitationCardProps {
   italicize: boolean;
   backgroundGradient: boolean;
   secondaryGradient: boolean;
-  backgroundImage?: File;
+  backgroundImage?: File | string;
   acceptanceLabel: string;
   rejectionLabel: string;
   isEdit: boolean;
@@ -35,9 +35,15 @@ export const InvitationCard = ({
 }: InvitationCardProps) => {
   const getBackgroundStyle = () => {
     if (backgroundImage) {
-      return `url(${URL.createObjectURL(
-        backgroundImage,
-      )}) center/cover no-repeat`;
+      if (typeof backgroundImage === "string") {
+        // Handle URL string case
+        return `url(${backgroundImage}) center/cover no-repeat`;
+      } else if (backgroundImage instanceof File) {
+        // Handle File object case
+        return `url(${URL.createObjectURL(
+          backgroundImage,
+        )}) center/cover no-repeat`;
+      }
     }
     if (backgroundGradient) {
       return `linear-gradient(135deg, ${backgroundColor}, ${secondaryColor})`;

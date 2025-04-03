@@ -92,7 +92,7 @@ function App() {
                     />
                   </Route>
                   <Route
-                    path="/thank-you"
+                    path=":id/thank-you"
                     element={<ThankYouPage data-oid="inhozwk" />}
                     data-oid="488gaav"
                   />

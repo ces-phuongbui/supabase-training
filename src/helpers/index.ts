@@ -1,3 +1,5 @@
+import { format, parseISO } from "date-fns";
+
 export const formatDate = (inputDate: string) => {
   const date = new Date(inputDate);
 
@@ -22,3 +24,13 @@ export const formatDate = (inputDate: string) => {
 
   return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
 };
+
+export function formatEventDate(date?: string) {
+  const parsedDate = date ? parseISO(date) : new Date();
+
+  return {
+    day: format(parsedDate, "d"),
+    monthYear: format(parsedDate, "MMMM yyyy"),
+    time: format(parsedDate, "h:mm a"),
+  };
+}

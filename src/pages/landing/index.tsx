@@ -297,7 +297,7 @@ export default function LandingPage() {
               className="flex flex-col md:flex-row justify-between items-start"
               data-oid="itzo_4u"
             >
-              <div className="mb-8 md:mb-0 md:max-w-md" data-oid="e1i:tk9">
+              <div className="mb-8 md:mb-0 md:w-1/3" data-oid="e1i:tk9">
                 <div className="flex items-center mb-4" data-oid="45szef_">
                   <div
                     className="text-2xl font-semibold text-amber-400 flex items-center"
@@ -355,7 +355,7 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="space-y-6" data-oid="av.-l0k">
+              <div className="space-y-6 md:w-1/2" data-oid="av.-l0k">
                 <div data-oid="xa-d.4q">
                   <h3
                     className="text-white font-medium mb-2"

@@ -8,14 +8,15 @@ export const DEFAULT_POSITION = { lat: 16.068, lng: 108.212 };
 const RequestCreate: React.FC<{
   position: LatLngExpression;
   address: string;
-}> = ({ position, address }) => {
+  height: string;
+}> = ({ position, address, height }) => {
   const currentPosition = position || DEFAULT_POSITION;
 
   return (
     <MapContainer
       center={currentPosition}
       zoom={15}
-      style={{ height: "30vh", width: "100%" }}
+      style={{ height: height || "30vh", width: "100%" }}
       data-oid="_4r_70s"
     >
       <TileLayer

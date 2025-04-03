@@ -150,7 +150,7 @@ export const RequestCard = ({
                 (error) => console.log(error, "ERROR"),
               )();
             }
-            navigate("/thank-you");
+            navigate(`/${requestId}/thank-you`);
           },
         },
       );

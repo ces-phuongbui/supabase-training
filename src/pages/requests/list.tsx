@@ -27,6 +27,7 @@ export interface IRequest {
   secondary_gradient: boolean;
   style: string;
   position: LatLngExpression;
+  activity_date: string;
 }
 
 export interface IResponse {

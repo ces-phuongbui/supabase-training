@@ -9,12 +9,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { IRequest } from "../../pages/requests/list";
+import { supabaseClient } from "@/utility";
 
 interface RequestListCardProps {
   request: IRequest;
+  onDelete?: (id: string | number) => Promise<void>;
 }
 
-const RequestListCard = ({ request }: RequestListCardProps) => {
+const RequestListCard = ({ request, onDelete }: RequestListCardProps) => {
+  async function handleDelete() {
+    try {
+      const { error } = await supabaseClient
+        .from("requests") // Replace with your actual table name
+        .delete()
+        .eq("id", request.id);
+
+      if (error) {
+        throw error;
+      }
+
+      return { success: true };
+    } catch (error) {
+      console.error("Error deleting request card:", error);
+      return { success: false, error };
+    }
+  }
+
   return (
     <Card
       className="overflow-hidden min-h-96 border border-gray-400 shadow-[0px_0px_1px_#171a1f12,0px_0px_2px_#171a1f1F]"
@@ -70,8 +90,8 @@ const RequestListCard = ({ request }: RequestListCardProps) => {
         </div>
       </CardContent>
 
-      {/* Footer with View Details button */}
-      <CardFooter className="p-4 pt-0" data-oid="2:dtg:h">
+      {/* Footer with View Details button and Delete button */}
+      <CardFooter className="p-4 pt-0 flex gap-2" data-oid="2:dtg:h">
         <Button
           variant="outline"
           className="w-full border-amber-600 text-amber-600 bg-amber-50 rounded-sm"
@@ -85,6 +105,14 @@ const RequestListCard = ({ request }: RequestListCardProps) => {
           >
             View Details
           </Link>
+        </Button>
+
+        <Button
+          variant="outline"
+          className="border-red-600 text-red-600 bg-red-50 rounded-sm"
+          onClick={handleDelete}
+        >
+          Delete Event
         </Button>
       </CardFooter>
     </Card>

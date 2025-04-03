@@ -1,14 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Box, CircularProgress } from "@mui/material";
-import {
-  IResourceComponentsProps,
-  useGetIdentity,
-  useList,
-} from "@refinedev/core";
+import { Spinner } from "@/components/ui/spinner";
+import { useEffect, useState } from "react";
 import { LatLngExpression } from "leaflet";
-import React from "react";
-import { IUser } from "../../components/header";
 import RequestListCard from "../../components/request-card/list-card";
+import { supabaseClient } from "@/utility";
 
 export interface IRequest {
   id: string;
@@ -41,63 +36,101 @@ export interface IResponse {
 
 const RequestGrid: React.FC<{
   requests: IRequest[];
-}> = ({ requests }) => (
-  <Box
-    display="grid"
-    gridTemplateColumns="repeat(2, 1fr)"
-    gap={4}
-    width="100%"
-    data-oid="8h1dbe6"
-  >
+  onDelete: (id: string) => void;
+}> = ({ requests, onDelete }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
     {requests.map((req) => (
-      <RequestListCard key={req.id} request={req} data-oid="jm793kw" />
+      <RequestListCard key={req.id} request={req} onDelete={onDelete} />
     ))}
-  </Box>
+  </div>
 );
 
-export const RequestList: React.FC<IResourceComponentsProps> = () => {
-  const { data: user } = useGetIdentity<IUser>();
-  const { data } = useList<IRequest>({
-    resource: "requests",
-    queryOptions: {
-      enabled: !!user,
-    },
-    filters: [
-      {
-        field: "user_id",
-        operator: "eq",
-        value: user?.id,
-      },
-    ],
-  });
+export const RequestList = () => {
+  const [requests, setRequests] = useState<IRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<{ id: string } | null>(null);
 
-  const requests = data?.data;
+  useEffect(() => {
+    // Get current user
+    const getCurrentUser = async () => {
+      const { data } = await supabaseClient.auth.getSession();
+      if (data?.session?.user) {
+        setUser({ id: data.session.user.id });
+      }
+    };
+
+    getCurrentUser();
+  }, []);
+
+  // Fetch initial requests
+  const fetchRequests = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabaseClient
+        .from("requests")
+        .select("*")
+        .eq("user_id", user?.id);
+
+      if (error) {
+        console.error("Error fetching requests:", error);
+      } else {
+        setRequests(data || []);
+      }
+    } catch (error) {
+      console.error("Error fetching requests:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
+  }, []);
+
+  async function handleDelete(id: string) {
+    try {
+      const { error } = await supabaseClient
+        .from("requests") // Replace with your actual table name
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        throw error;
+      }
+
+      return { success: true };
+    } catch (error) {
+      console.error("Error deleting request card:", error);
+      return { success: false, error };
+    }
+  }
+
+  const onDelete = async (id: string) => {
+    await handleDelete(id);
+    await fetchRequests();
+  };
 
   return (
-    <div data-oid="_k-dpa5">
-      <div
-        className="flex justify-between items-center mb-6"
-        data-oid="6u7dgr4"
-      >
-        <h1 className="text-2xl font-semibold" data-oid="5s4gpem">
-          Your Events
-        </h1>
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold">Your Events</h1>
         <Button
           variant="default"
           className="bg-amber-600 hover:bg-amber-700 text-white"
           onClick={() => (window.location.href = "/requests/create")}
-          data-oid="bpbqu6m"
         >
           Add New Event
         </Button>
       </div>
-      {requests ? (
-        <RequestGrid requests={requests} data-oid="cir:o8p" />
-      ) : (
-        <div data-oid="ea4iw-3" className="flex justify-center mt-[25%]">
-          <CircularProgress data-oid="t1551-k" />
+      {loading ? (
+        <div className="flex justify-center mt-[25%]">
+          <Spinner className="h-8 w-8" />
         </div>
+      ) : (
+        <RequestGrid requests={requests} onDelete={onDelete} />
       )}
     </div>
   );
 };
+
+export default RequestList;

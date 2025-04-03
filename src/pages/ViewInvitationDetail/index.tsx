@@ -7,11 +7,21 @@ import {
   useUpdate,
 } from "@refinedev/core";
 import html2canvas from "html2canvas";
-import { ArrowLeft, Share } from "lucide-react";
+import { ArrowLeft, Share, ArrowDown } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "react-qr-code";
 import { useNavigate, useParams } from "react-router-dom";
 import { z } from "zod";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  TelegramShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  TelegramIcon,
+} from "react-share";
 
 // ShadcN UI components
 import { IUser } from "@/components/header";
@@ -278,7 +288,7 @@ export const ViewInvitationDetail = () => {
         className="absolute top-4 left-4 flex items-center justify-center z-10"
         onClick={() => navigate("/requests")}
       >
-        <ArrowLeft size={20} />
+        <ArrowLeft size={40} />
         Back
       </Button>
 
@@ -349,27 +359,61 @@ export const ViewInvitationDetail = () => {
 
               <div className="space-y-6">
                 <div className="bg-white p-6 rounded-lg shadow-md">
-                  <h2 className="text-xl font-bold mb-4">Share Invitation</h2>
-                  <div className="flex items-center justify-between">
-                    <div ref={qrCodeRef} className="bg-white p-4 rounded-lg">
-                      <QRCode value={qrValue} size={180} />
-                    </div>
-                    <div className="space-y-4">
-                      <Button
+                  <h2 className="text-xl text-center font-bold mb-4">
+                    Share Invitation
+                  </h2>
+                  <div className="flex flex-col items-center gap-4">
+                    {/* QR Code with hover overlay */}
+                    <div className="relative group">
+                      <div ref={qrCodeRef} className="bg-white p-4 rounded-lg">
+                        <QRCode value={qrValue} size={180} />
+                      </div>
+                      {/* Overlay on hover */}
+                      <div
                         onClick={downloadQRCode}
-                        variant="outline"
-                        className="w-full"
+                        className="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center cursor-pointer rounded-lg"
                       >
-                        Download QR Code
-                      </Button>
+                        <Button variant="ghost" className="text-white">
+                          <ArrowDown className="h-8 w-8" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Share buttons in a grid */}
+                    <div className="flex justify-center gap-3">
                       <Button
                         onClick={copyLinkToClipboard}
                         variant="default"
-                        className="w-full bg-amber-600 hover:bg-amber-700 text-white"
+                        className="rounded-full w-10 h-10 p-0"
+                        title="Copy Link"
                       >
-                        <Share className="mr-2 h-4 w-4" />
-                        Share RSVP Link
+                        <Share className="h-5 w-5" />
                       </Button>
+
+                      <FacebookShareButton url={qrValue}>
+                        <FacebookIcon size={40} round />
+                      </FacebookShareButton>
+
+                      <TwitterShareButton
+                        url={qrValue}
+                        title={`Join us at ${request.title}`}
+                      >
+                        <TwitterIcon size={40} round />
+                      </TwitterShareButton>
+
+                      <WhatsappShareButton
+                        url={qrValue}
+                        title={`Join us at ${request.title}`}
+                      >
+                        <WhatsappIcon size={40} round />
+                      </WhatsappShareButton>
+
+                      <TelegramShareButton
+                        url={qrValue}
+                        title={`Join us at ${request.title}`}
+                      >
+                        <TelegramIcon size={40} round />
+                      </TelegramShareButton>
                     </div>
                   </div>
                 </div>

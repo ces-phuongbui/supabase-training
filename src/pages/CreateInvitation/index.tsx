@@ -133,36 +133,49 @@ export const CreateInvitation = () => {
     backgroundImage: form.watch("background_image"),
     acceptanceLabel: form.watch("acceptance_label"),
     rejectionLabel: form.watch("rejection_label"),
+    closeDate: form.watch("close_date"),
     isEdit: false,
   };
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full relative" data-oid="_cdgc4_">
       <Button
         variant="ghost"
         className="absolute top-4 left-4 flex items-center justify-center z-10"
         onClick={() => navigate("/requests")}
+        data-oid="_c9ntln"
       >
-        <ArrowLeft size={40} />
+        <ArrowLeft size={40} data-oid="27suo:8" />
         Back
       </Button>
 
-      <div className="container max-w-6xl mx-auto py-8">
-        <h1 className="text-4xl font-bold mb-6 text-center pt-8">
+      <div className="container max-w-6xl mx-auto py-8" data-oid="97wb-to">
+        <h1
+          className="text-4xl font-bold mb-6 text-center pt-8"
+          data-oid="6ki17b9"
+        >
           Create New Event
         </h1>
 
-        <h4 className="text-lg font-bold mb-2">Event Details</h4>
-        <h5 className="text-sm text-gray-400">
+        <h4 className="text-lg font-bold mb-2" data-oid=":1tq2bu">
+          Event Details
+        </h4>
+        <h5 className="text-sm text-gray-400" data-oid="t7kipl:">
           Provide the details of the event to create an invitation
         </h5>
-        <InvitationForm form={form} onSubmit={onSubmit} isEditing={true}>
-          <InvitationCard {...invitationCardProps} />
-          <div className="flex justify-end w-full">
+        <InvitationForm
+          form={form}
+          onSubmit={onSubmit}
+          isEditing={true}
+          data-oid="s:.55f7"
+        >
+          <InvitationCard {...invitationCardProps} data-oid="1od:iuh" />
+          <div className="flex justify-end w-full" data-oid="8i:x_46">
             <Button
               type="submit"
               disabled={isDisabled}
               className="bg-amber-600 w-full hover:bg-amber-700 text-white"
+              data-oid="_i1_0vb"
             >
               Create Invitation
             </Button>

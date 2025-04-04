@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LatLngExpression } from "leaflet";
 import RequestListCard from "../../components/request-card/list-card";
 import { supabaseClient } from "@/utility";
@@ -63,14 +63,13 @@ export const RequestList = () => {
   }, []);
 
   // Fetch initial requests
-  const fetchRequests = async () => {
+  const fetchRequests = useCallback(async () => {
     setLoading(true);
     try {
       const { data, error } = await supabaseClient
         .from("requests")
         .select("*")
         .eq("user_id", user?.id);
-
       if (error) {
         console.error("Error fetching requests:", error);
       } else {
@@ -81,11 +80,11 @@ export const RequestList = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]);
 
   useEffect(() => {
     fetchRequests();
-  }, []);
+  }, [fetchRequests]);
 
   async function handleDelete(id: string) {
     try {

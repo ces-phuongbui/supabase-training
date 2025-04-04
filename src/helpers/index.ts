@@ -41,12 +41,10 @@ export const formatDateTime = ({
 }: {
   date: string | Date;
   formatDate: string;
-}) => {
-  const newDate = new Date(date);
+}): string => {
+  const parsedDate = typeof date === "string" ? new Date(date) : (date as Date);
 
-  if (isNaN(newDate.getTime())) {
-    return "Invalid Date Time";
-  }
+  if (isNaN(parsedDate.getTime())) return "";
 
-  return format(newDate, formatDate);
+  return format(parsedDate, formatDate);
 };

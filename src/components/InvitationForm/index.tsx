@@ -1,3 +1,5 @@
+import { debounce } from "@mui/material";
+import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -32,16 +34,16 @@ import { cn } from "@/lib/utils";
 import { invitationSchema } from "@/pages/CreateInvitation/schema";
 import { STYLE_OPTIONS } from "@/utility/constant";
 import webSafeFonts from "@/utility/fonts";
+import { Address } from "@/utility/types";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { CardContent } from "../ui/card";
-import { Address } from "@/utility/types";
-import { debounce } from "@mui/material";
 import { AutoComplete } from "../ui/autocomplete";
+import { CardContent } from "../ui/card";
+import { ScrollArea } from "../ui/scroll-area";
 import { formatDateTime } from "@/helpers";
 
 interface InvitationFormProps {
@@ -62,6 +64,7 @@ export const InvitationForm = ({
   const [searchValue, setSearchValue] = useState("");
 
   let controller: AbortController | null = null;
+
   const handleSearch = useCallback(
     debounce(async (query: string) => {
       if (!query.trim()) return setAddressLoading(false);
@@ -265,20 +268,46 @@ export const InvitationForm = ({
               name="activity_time"
               disabled={!isEditing}
               render={({ field }) => (
-                <FormItem className="w-full sm:w-1/3" data-oid="jy92:zi">
-                  <FormLabel data-oid="74f::vv">Event Time</FormLabel>
-                  <FormControl data-oid="on_fjzr">
-                    <Input
-                      type="time"
-                      {...field}
-                      className="w-full mt-0"
-                      data-oid="pp-lhp1"
-                    />
+                <FormItem className="w-full sm:w-1/3">
+                  <FormLabel>Event Time</FormLabel>
+                  <FormControl>
+                    <Select
+                      value={field.value}
+                      onValueChange={(e) => {
+                        field.onChange(e);
+                      }}
+                      disabled={!isEditing}
+                    >
+                      <SelectTrigger className="font-normal focus:ring-0 focus:ring-offset-0">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <ScrollArea className="h-[15rem] bg-white">
+                          {Array.from({ length: 96 }).map((_, i) => {
+                            const hour = Math.floor(i / 4)
+                              .toString()
+                              .padStart(2, "0");
+                            const minute = ((i % 4) * 15)
+                              .toString()
+                              .padStart(2, "0");
+                            const timeValue = `${hour}:${minute}`;
+                            return (
+                              <SelectItem
+                                key={i}
+                                value={timeValue}
+                                className="cursor-pointer"
+                              >
+                                {timeValue}
+                              </SelectItem>
+                            );
+                          })}
+                        </ScrollArea>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
-                  <FormMessage className="text-red-500" data-oid="ccwbag1" />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
-              data-oid="8gms2:f"
             />
           </div>
 

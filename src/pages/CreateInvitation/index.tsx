@@ -13,10 +13,10 @@ import { z } from "zod";
 import { InvitationCard } from "@/components/InvitationCard";
 import { InvitationForm } from "@/components/InvitationForm";
 import { Button } from "@/components/ui/button";
+import { formatDateTime } from "@/helpers";
 import { supabaseClient } from "@/utility";
 import { IRequest } from "../requests/list";
 import { invitationSchema } from "./schema";
-import { formatDateTime } from "@/helpers";
 
 export const CreateInvitation = () => {
   const navigate = useNavigate();
@@ -182,11 +182,27 @@ export const CreateInvitation = () => {
 
 export default CreateInvitation;
 
+const getRoundedTime = (date: Date): string => {
+  const minutes = date.getMinutes();
+  const roundedMinutes = Math.round(minutes / 15) * 15;
+  const hours = date.getHours();
+
+  // Handle overflow when rounding up to 60 minutes
+  const newDate = new Date(date);
+  if (roundedMinutes === 60) {
+    newDate.setHours(hours + 1, 0);
+  } else {
+    newDate.setHours(hours, roundedMinutes);
+  }
+
+  return formatDateTime({ date: newDate, formatDate: "HH:mm" });
+};
+
 const DEFAULT_INVITATION_VALUES = {
   title: "",
   address: "",
   activity_date: new Date(),
-  activity_time: formatDateTime({ date: new Date(), formatDate: "HH:mm" }),
+  activity_time: getRoundedTime(new Date()), // This will give you rounded time
   acceptance_label: "Accept",
   rejection_label: "Decline",
   close_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now

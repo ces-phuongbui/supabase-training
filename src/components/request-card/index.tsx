@@ -279,7 +279,7 @@ export const RequestCard = ({
               color={primaryColor}
               data-oid="uibh53j"
             >
-              Kindly Reply Before {dayjs(closeDate).format("Do MMMM YYYY")}
+              Kindly Reply Before {dayjs(closeDate).format("Do MMMM yyyy")}
             </Typography>
           </Box>
         </Box>

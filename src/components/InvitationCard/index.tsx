@@ -1,7 +1,5 @@
 import { IResponse } from "@/pages/requests/list";
-import { IChoice, IQuestion } from "@/utility/types";
 import { useCreate, useNotification } from "@refinedev/core";
-import { format } from "date-fns";
 import dayjs from "dayjs";
 import { useMemo } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -27,6 +25,7 @@ import {
 } from "../ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
+import { formatDateTime } from "@/helpers";
 
 interface InvitationCardProps {
   event_id?: string;
@@ -195,7 +194,10 @@ export const InvitationCard = ({
                 }}
                 data-oid="8ckqzb8"
               >
-                {format(activityDate, "dd MMM, yyyy")}{" "}
+                {formatDateTime({
+                  date: activityDate,
+                  formatDate: "dd MMM, yyyy",
+                })}
                 {closed ? " (CLOSED)" : ""}
               </h2>
 
@@ -204,7 +206,11 @@ export const InvitationCard = ({
                 style={{ color: primaryColor }}
                 data-oid="3777f67"
               >
-                Kindly Reply Before {dayjs(closeDate).format("DD MMMM YYYY")}
+                Kindly Reply Before{" "}
+                {formatDateTime({
+                  date: closeDate,
+                  formatDate: "dd MMMM yyyy",
+                })}
               </p>
             </div>
 

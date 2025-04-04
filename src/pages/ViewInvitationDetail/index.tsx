@@ -50,10 +50,10 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabaseClient } from "@/utility";
-import { format } from "date-fns";
 import { invitationSchema } from "../CreateInvitation/schema";
 import { IRequest, IResponse } from "../requests/list";
 import { TabDetailContent } from "./TabDetailContent";
+import { formatDateTime } from "@/helpers";
 
 export const ViewInvitationDetail = () => {
   const navigate = useNavigate();
@@ -458,7 +458,10 @@ export const ViewInvitationDetail = () => {
                               )}
                             </TableCell>
                             <TableCell className="text-right">
-                              {format(response.accepted_at, "dd/MM/yyyy")}
+                              {formatDateTime({
+                                date: response.accepted_at,
+                                formatDate: "dd/MM/yyyy",
+                              })}
                             </TableCell>
                           </TableRow>
                         ))}

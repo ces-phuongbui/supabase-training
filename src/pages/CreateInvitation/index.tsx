@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { supabaseClient } from "@/utility";
 import { IRequest } from "../requests/list";
 import { invitationSchema } from "./schema";
-import { format } from "date-fns";
+import { formatDateTime } from "@/helpers";
 
 export const CreateInvitation = () => {
   const navigate = useNavigate();
@@ -186,7 +186,7 @@ const DEFAULT_INVITATION_VALUES = {
   title: "",
   address: "",
   activity_date: new Date(),
-  activity_time: format(new Date(), "HH:mm"),
+  activity_time: formatDateTime({ date: new Date(), formatDate: "HH:mm" }),
   acceptance_label: "Accept",
   rejection_label: "Decline",
   close_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now

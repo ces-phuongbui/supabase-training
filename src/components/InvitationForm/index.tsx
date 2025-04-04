@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -29,7 +28,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { invitationSchema } from "@/pages/CreateInvitation/schema";
 import { STYLE_OPTIONS } from "@/utility/constant";
@@ -44,6 +42,7 @@ import { CardContent } from "../ui/card";
 import { Address } from "@/utility/types";
 import { debounce } from "@mui/material";
 import { AutoComplete } from "../ui/autocomplete";
+import { formatDateTime } from "@/helpers";
 
 interface InvitationFormProps {
   children?: ReactNode;
@@ -227,7 +226,10 @@ export const InvitationForm = ({
                           data-oid="k.7u3il"
                         >
                           {field.value ? (
-                            format(field.value, "PPP")
+                            formatDateTime({
+                              date: field.value,
+                              formatDate: "PPP",
+                            })
                           ) : (
                             <span data-oid="x_fx6qr">Pick a date</span>
                           )}
@@ -346,7 +348,10 @@ export const InvitationForm = ({
                         data-oid="jw27:-j"
                       >
                         {field.value ? (
-                          format(field.value, "PPP")
+                          formatDateTime({
+                            date: field.value,
+                            formatDate: "PPP",
+                          })
                         ) : (
                           <span data-oid="s0p180y">Pick a date</span>
                         )}
@@ -684,22 +689,3 @@ export const InvitationForm = ({
     </Form>
   );
 };
-
-// export const DEFAULT_INVITATION_VALUES = {
-//   title: "",
-//   address: "",
-//   activity_date: new Date(),
-//   activity_time: format(new Date(), "HH:mm"),
-//   acceptance_label: "Accept",
-//   rejection_label: "Decline",
-//   close_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
-//   background_color: "#ffdbbb",
-//   primary_color: "#000000",
-//   secondary_color: "#e57a05",
-//   font_family: "Roboto",
-//   italicize: false,
-//   background_gradient: false,
-//   secondary_gradient: false,
-//   style: "DEFAULT",
-//   background_image: undefined,
-// };

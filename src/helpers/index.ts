@@ -34,3 +34,19 @@ export function formatEventDate(date?: string) {
     time: format(parsedDate, "h:mm a"),
   };
 }
+
+export const formatDateTime = ({
+  date,
+  formatDate,
+}: {
+  date: string | Date;
+  formatDate: string;
+}) => {
+  const newDate = new Date(date);
+
+  if (isNaN(newDate.getTime())) {
+    return "Invalid Date Time";
+  }
+
+  return format(newDate, formatDate);
+};

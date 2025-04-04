@@ -86,7 +86,7 @@ export const RequestCreate: React.FC<IResourceComponentsProps> = () => {
     setValue("acceptance_label", "Politely Accepts");
     setValue("rejection_label", "Respectfully Declines");
     setValue("font_family", fonts[0]);
-    setValue("close_date", dayjs().add(7, "day").format("YYYY-MM-DD"));
+    setValue("close_date", dayjs().add(7, "day").format("yyyy-MM-dd"));
     setValue("background_color", "#EEE6B4");
     setValue("italicize", false);
     setValue("secondary_gradient", false);

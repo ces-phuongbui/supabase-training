@@ -144,7 +144,7 @@ export const InvitationCard = ({
 
   return (
     <div
-      className={`border rounded-lg ${
+      className={`${
         !isEdit ? "h-[40rem]" : "h-[100vh]"
       } w-full overflow-hidden`}
       data-oid="mihzskl"
@@ -167,7 +167,11 @@ export const InvitationCard = ({
             <div className="mt-4" data-oid="ts66:rm">
               <h1
                 className="text-5xl text-center capitalize font-bold"
-                style={{ color: primaryColor }}
+                style={{
+                  color: primaryColor,
+                  fontStyle: italicize ? "italic" : "normal",
+                  fontFamily,
+                }}
                 data-oid="f8t4o3c"
               >
                 {title || "Please Join Us!"}
@@ -177,7 +181,11 @@ export const InvitationCard = ({
             <div className="mt-3" data-oid="r_-1orx">
               <p
                 className="text-center"
-                style={{ color: primaryColor }}
+                style={{
+                  color: primaryColor,
+                  fontStyle: italicize ? "italic" : "normal",
+                  fontFamily,
+                }}
                 data-oid="0xixjev"
               >
                 {address}
@@ -203,7 +211,11 @@ export const InvitationCard = ({
 
               <p
                 className="text-1xl text-center mb-2"
-                style={{ color: primaryColor }}
+                style={{
+                  color: primaryColor,
+                  fontStyle: italicize ? "italic" : "normal",
+                  fontFamily,
+                }}
                 data-oid="3777f67"
               >
                 Kindly Reply Before{" "}
@@ -232,6 +244,8 @@ export const InvitationCard = ({
                         <FormLabel
                           style={{
                             color: primaryColor ?? "black",
+                            fontStyle: italicize ? "italic" : "normal",
+                            fontFamily,
                           }}
                           data-oid="_f51teg"
                         >
@@ -255,7 +269,11 @@ export const InvitationCard = ({
                     render={({ field }) => (
                       <FormItem data-oid="d4b1pdc">
                         <FormLabel
-                          style={{ color: primaryColor }}
+                          style={{
+                            color: primaryColor,
+                            fontStyle: italicize ? "italic" : "normal",
+                            fontFamily,
+                          }}
                           data-oid="q9z19ic"
                         >
                           Are you going?
@@ -279,7 +297,11 @@ export const InvitationCard = ({
 
                               <label
                                 htmlFor="decline"
-                                style={{ color: primaryColor ?? "black" }}
+                                style={{
+                                  color: primaryColor ?? "black",
+                                  fontStyle: italicize ? "italic" : "normal",
+                                  fontFamily,
+                                }}
                                 data-oid="wzxwtvn"
                               >
                                 {rejectionLabel}
@@ -297,7 +319,11 @@ export const InvitationCard = ({
 
                               <label
                                 htmlFor="accept"
-                                style={{ color: primaryColor ?? "black" }}
+                                style={{
+                                  color: primaryColor ?? "black",
+                                  fontStyle: italicize ? "italic" : "normal",
+                                  fontFamily,
+                                }}
                                 data-oid="cfkcp-q"
                               >
                                 {acceptanceLabel}

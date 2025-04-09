@@ -163,6 +163,7 @@ export const InvitationForm = ({
                 <FormLabel>Event Location</FormLabel>
                 <FormControl>
                   <AutoComplete
+                    disabled={!isEditing}
                     selectedValue={field.value}
                     onSelectedValueChange={(value) => {
                       field.onChange(value);
@@ -437,7 +438,7 @@ export const InvitationForm = ({
                       <SelectItem
                         key={style.value}
                         value={style.value}
-                        className="cursor-pointer"
+                        className="cursor-pointer text-black  hover:bg-gray-300"
                         data-oid=":gp7ivv"
                       >
                         {style.label}
@@ -508,6 +509,7 @@ export const InvitationForm = ({
                           />
 
                           <Input
+                            {...field}
                             className="mt-2"
                             value={field.value}
                             onChange={field.onChange}
@@ -540,6 +542,7 @@ export const InvitationForm = ({
                           />
 
                           <Input
+                            {...field}
                             className="mt-2"
                             value={field.value}
                             onChange={field.onChange}
@@ -572,6 +575,7 @@ export const InvitationForm = ({
                           />
 
                           <Input
+                            {...field}
                             className="mt-2"
                             value={field.value}
                             onChange={field.onChange}
@@ -603,6 +607,8 @@ export const InvitationForm = ({
                             checked={field.value}
                             onCheckedChange={field.onChange}
                             data-oid="7ugjo6z"
+                            className="border-gray-400"
+                            disabled={field.disabled}
                           />
                         </FormControl>
                         <FormLabel data-oid="yest.y2">
@@ -629,6 +635,8 @@ export const InvitationForm = ({
                             checked={field.value}
                             onCheckedChange={field.onChange}
                             data-oid="akkr-0."
+                            className="border-gray-400"
+                            disabled={field.disabled}
                           />
                         </FormControl>
                         <FormLabel data-oid="4q0f8-k">
@@ -656,6 +664,7 @@ export const InvitationForm = ({
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                         data-oid="usko7r1"
+                        disabled={field.disabled}
                       >
                         <FormControl data-oid="mjb9pdr">
                           <SelectTrigger data-oid="5sngvfj">
@@ -672,6 +681,7 @@ export const InvitationForm = ({
                               value={font}
                               style={{ fontFamily: font }}
                               data-oid="ozjkkk1"
+                              className="text-black cursor-pointer hover:bg-gray-300"
                             >
                               {font}
                             </SelectItem>
@@ -698,9 +708,11 @@ export const InvitationForm = ({
                     >
                       <FormControl data-oid="lvn_yz4">
                         <Switch
+                          disabled={field.disabled}
                           checked={field.value}
                           onCheckedChange={field.onChange}
                           data-oid="c5fdi2r"
+                          className="border-gray-400"
                         />
                       </FormControl>
                       <FormLabel data-oid=".u60vyx">Italicize text</FormLabel>

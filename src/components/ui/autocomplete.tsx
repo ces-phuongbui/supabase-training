@@ -1,6 +1,4 @@
-import { cn } from "@/lib/utils";
 import { Command as CommandPrimitive } from "cmdk";
-import { Check } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   Command,
@@ -12,7 +10,6 @@ import {
 import { Popover, PopoverAnchor, PopoverContent } from "./popover";
 import { Input } from "./input";
 import { Skeleton } from "./skeleton";
-import { LatLngExpression } from "leaflet";
 
 type Props<T extends string> = {
   selectedValue: T;
@@ -23,6 +20,7 @@ type Props<T extends string> = {
   isLoading?: boolean;
   emptyMessage?: string;
   placeholder?: string;
+  disabled?: boolean;
 };
 
 export function AutoComplete<T extends string>({
@@ -34,6 +32,7 @@ export function AutoComplete<T extends string>({
   isLoading,
   emptyMessage = "No items.",
   placeholder = "Search...",
+  disabled,
 }: Props<T>) {
   const [open, setOpen] = useState(false);
 
@@ -69,7 +68,7 @@ export function AutoComplete<T extends string>({
     }
     setOpen(false);
   };
-
+  const displayValue = searchValue !== "" ? searchValue : selectedValue ?? "";
   return (
     <div className="flex items-center">
       <Popover open={open} onOpenChange={setOpen}>
@@ -77,14 +76,14 @@ export function AutoComplete<T extends string>({
           <PopoverAnchor asChild>
             <CommandPrimitive.Input
               asChild
-              value={searchValue}
+              value={displayValue}
               onValueChange={onSearchValueChange}
               onKeyDown={(e) => setOpen(e.key !== "Escape")}
               onMouseDown={() => setOpen((open) => !!searchValue || !open)}
               onFocus={() => setOpen(true)}
               onBlur={onInputBlur}
             >
-              <Input placeholder={placeholder} />
+              <Input placeholder={placeholder} disabled={disabled} />
             </CommandPrimitive.Input>
           </PopoverAnchor>
           {!open && <CommandList aria-hidden="true" className="hidden" />}
@@ -117,23 +116,15 @@ export function AutoComplete<T extends string>({
                       value={option.value}
                       onMouseDown={(e) => e.preventDefault()}
                       onSelect={onSelectItem}
-                      className="cursor-pointer hover:bg-gray-300"
+                      className="cursor-pointer text-black hover:bg-gray-300"
                     >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4 ",
-                          selectedValue === option.value
-                            ? "opacity-100"
-                            : "opacity-0",
-                        )}
-                      />
                       {option.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>
               ) : null}
               {!isLoading ? (
-                <CommandEmpty className="bg-white py-6 text-center text-sm">
+                <CommandEmpty className="bg-white py-6 text-center text-sm text-black">
                   {emptyMessage ?? "No items."}
                 </CommandEmpty>
               ) : null}

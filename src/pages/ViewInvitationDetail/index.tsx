@@ -325,22 +325,22 @@ export const ViewInvitationDetail = () => {
           <TabsContent value="responses" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-6 ">
-                <div className="bg-white h-full p-6 rounded-lg shadow-md">
+                <div className="h-full p-6 rounded-lg shadow-md">
                   <h2 className="text-xl font-bold mb-4">Event Statistics</h2>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="p-4 rounded-lg">
                       <p className="text-sm text-gray-500">Total Invitations</p>
                       <p className="text-2xl font-bold">{responses.length}</p>
                     </div>
-                    <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="p-4 rounded-lg">
                       <p className="text-sm text-gray-500">Total Accepted</p>
                       <p className="text-2xl font-bold">{totalAccepted}</p>
                     </div>
-                    <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="p-4 rounded-lg">
                       <p className="text-sm text-gray-500">Total Guests</p>
                       <p className="text-2xl font-bold">{totalGuests}</p>
                     </div>
-                    <div className="p-4 bg-gray-50 rounded-lg">
+                    <div className="p-4 rounded-lg">
                       <p className="text-sm text-gray-500">Days Left</p>
                       <p className="text-2xl font-bold">
                         {Math.max(
@@ -358,7 +358,7 @@ export const ViewInvitationDetail = () => {
               </div>
 
               <div className="space-y-6">
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className=" p-6 rounded-lg shadow-md">
                   <h2 className="text-xl text-center font-bold mb-4">
                     Share Invitation
                   </h2>
@@ -421,7 +421,7 @@ export const ViewInvitationDetail = () => {
             </div>
 
             {/* New Guest List Table - Full Width */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="p-6 rounded-lg shadow-md">
               <h2 className="text-xl font-bold mb-4">Guest List</h2>
               {getPaginatedResponses().length ? (
                 <>

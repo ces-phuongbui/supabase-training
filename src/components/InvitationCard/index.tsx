@@ -252,7 +252,15 @@ export const InvitationCard = ({
                           Your Name
                         </FormLabel>
                         <FormControl data-oid="ymp7av0">
-                          <Input {...field} data-oid="p9x1c-e" />
+                          <Input
+                            {...field}
+                            data-oid="p9x1c-e"
+                            style={{
+                              color: primaryColor ?? "black",
+                              fontStyle: italicize ? "italic" : "normal",
+                              fontFamily,
+                            }}
+                          />
                         </FormControl>
                         <FormMessage
                           className="text-[11px] text-red-500"
@@ -293,6 +301,11 @@ export const InvitationCard = ({
                                 value="false"
                                 id="decline"
                                 data-oid="1x4nsc4"
+                                style={{
+                                  color: primaryColor ?? "black",
+                                  fontStyle: italicize ? "italic" : "normal",
+                                  fontFamily,
+                                }}
                               />
 
                               <label
@@ -315,6 +328,11 @@ export const InvitationCard = ({
                                 value="true"
                                 id="accept"
                                 data-oid="8yr.9qu"
+                                style={{
+                                  color: primaryColor ?? "black",
+                                  fontStyle: italicize ? "italic" : "normal",
+                                  fontFamily,
+                                }}
                               />
 
                               <label
@@ -353,7 +371,11 @@ export const InvitationCard = ({
                           render={({ field }) => (
                             <FormItem data-oid="ojfhv6x">
                               <FormLabel
-                                style={{ color: primaryColor }}
+                                style={{
+                                  color: primaryColor ?? "red",
+                                  fontStyle: italicize ? "italic" : "normal",
+                                  fontFamily,
+                                }}
                                 data-oid="9fek5g-"
                               >
                                 How many people will join with you?
@@ -365,21 +387,29 @@ export const InvitationCard = ({
                                 value={String(field.value)}
                                 data-oid="jgztob9"
                               >
-                                <SelectTrigger data-oid="gbfthbh">
+                                <SelectTrigger
+                                  data-oid="gbfthbh"
+                                  style={{
+                                    color: primaryColor ?? "black",
+                                    fontStyle: italicize ? "italic" : "normal",
+                                    fontFamily,
+                                    borderColor: primaryColor ?? "black",
+                                  }}
+                                >
                                   <SelectValue
                                     placeholder="Select number of attendees"
                                     data-oid="53os.nz"
                                   />
                                 </SelectTrigger>
                                 <SelectContent
-                                  className="bg-white "
                                   data-oid="03q43z1"
+                                  className="bg-white"
                                 >
                                   {ATTENDEE_COUNT_OPTIONS.map((value) => (
                                     <SelectItem
                                       key={value}
                                       value={String(value)}
-                                      className="cursor-pointer hover:bg-gray-300"
+                                      className="text-black cursor-pointer hover:bg-gray-300 "
                                       data-oid="jwtqjnk"
                                     >
                                       {value}

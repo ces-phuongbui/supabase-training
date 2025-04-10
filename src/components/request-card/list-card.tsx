@@ -9,7 +9,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { IRequest } from "../../pages/requests/list";
-import { supabaseClient } from "@/utility";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface RequestListCardProps {
   request: IRequest;
@@ -17,24 +22,6 @@ interface RequestListCardProps {
 }
 
 const RequestListCard = ({ request, onDelete }: RequestListCardProps) => {
-  async function handleDelete() {
-    try {
-      const { error } = await supabaseClient
-        .from("requests") // Replace with your actual table name
-        .delete()
-        .eq("id", request.id);
-
-      if (error) {
-        throw error;
-      }
-
-      return { success: true };
-    } catch (error) {
-      console.error("Error deleting request card:", error);
-      return { success: false, error };
-    }
-  }
-
   return (
     <Card
       className="overflow-hidden min-h-96 border border-gray-400 shadow-[0px_0px_1px_#171a1f12,0px_0px_2px_#171a1f1F]"
@@ -74,11 +61,24 @@ const RequestListCard = ({ request, onDelete }: RequestListCardProps) => {
       {/* Content section with name and description */}
       <CardContent className="p-4" data-oid="ez1-d4_">
         <CardTitle className="text-lg font-semibold" data-oid="lxgnz0h">
-          {request.title}
+          {request.title} - {request.style.toLocaleLowerCase()}
         </CardTitle>
-        <CardDescription className="mt-1 text-gray-500" data-oid="q1gkq6a">
-          {request.address}
-        </CardDescription>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <CardDescription
+                className="mt-1 text-gray-500 truncate block text-left w-[44rem] overflow-hidden text-ellipsis whitespace-nowrap"
+                data-oid="q1gkq6a"
+              >
+                {request.address}
+              </CardDescription>
+            </TooltipTrigger>
+            <TooltipContent className="bg-gray-300 rounded-sm border border-gray-100">
+              <p> {request.address}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <div className="mt-3" data-oid="0-2yho_">
           <p

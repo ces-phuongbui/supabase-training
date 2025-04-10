@@ -42,26 +42,6 @@ export const TabDetailContent = ({
     style,
   } = request;
 
-  const invitationCardProps = {
-    backgroundColor: request.background_color,
-    backgroundGradient: request.background_gradient,
-    backgroundImage: request.background_image,
-    title: request.title,
-    address: request.address,
-    acceptanceLabel: request.acceptance_label,
-    rejectionLabel: request.rejection_label,
-    activityDate: new Date(request.activity_date),
-    closeDate: new Date(request.close_date),
-    secondaryColor: request.secondary_color,
-    secondaryGradient: request.secondary_gradient,
-    primaryColor: request.primary_color,
-    fontFamily: request.font_family,
-    italicize: request.italicize,
-    style: request.style,
-    isEdit: false,
-    activityTime: request.activity_time,
-  };
-
   const form = useForm<z.infer<typeof invitationSchema>>({
     resolver: zodResolver(invitationSchema),
     defaultValues: {
@@ -84,13 +64,31 @@ export const TabDetailContent = ({
     },
   });
 
+  const invitationCardProps = {
+    title: form.watch("title"),
+    address: form.watch("address"),
+    activityDate: form.watch("activity_date"),
+    primaryColor: form.watch("primary_color"),
+    backgroundColor: form.watch("background_color"),
+    secondaryColor: form.watch("secondary_color"),
+    fontFamily: form.watch("font_family"),
+    italicize: form.watch("italicize"),
+    backgroundGradient: form.watch("background_gradient"),
+    secondaryGradient: form.watch("secondary_gradient"),
+    backgroundImage: form.watch("background_image"),
+    acceptanceLabel: form.watch("acceptance_label"),
+    rejectionLabel: form.watch("rejection_label"),
+    closeDate: form.watch("close_date"),
+    activityTime: form.watch('activity_time'),
+    isEdit: false,
+  };
+
   return (
     <div className="p-6 rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Event details</h2>
         {!isEditing ? (
           <Button
-            disabled={true}
             onClick={() => setIsEditing(true)}
             className="bg-amber-600 hover:bg-amber-700 text-white"
           >
@@ -98,7 +96,7 @@ export const TabDetailContent = ({
           </Button>
         ) : (
           <div className="flex gap-2">
-            <Button onClick={() => setIsEditing(false)} variant="outline">
+            <Button onClick={() => setIsEditing(false)} variant="default">
               Cancel
             </Button>
             <Button

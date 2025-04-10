@@ -54,6 +54,7 @@ export const invitationSchema = z.object({
     .union([
       z.instanceof(File), // For new file uploads
       z.string().url(), // For existing URLs
+      z.string(), // Allow empty string
     ])
     .optional(),
   position: z

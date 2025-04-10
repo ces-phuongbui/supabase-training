@@ -1,11 +1,7 @@
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetIdentity } from "@refinedev/core";
 import { HamburgerMenu, RefineThemedLayoutV2HeaderProps } from "@refinedev/mui";
-import React, { useContext } from "react";
-import { useTheme } from "next-themes";
-import { ColorModeContext } from "@/contexts/color-mode";
+import React from "react";
 
 export type IUser = {
   id: number;
@@ -17,14 +13,12 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   sticky = true,
 }) => {
   const { data: user } = useGetIdentity<IUser>();
-  const { mode, setMode } = useContext(ColorModeContext);
-  const { theme, setTheme } = useTheme();
 
   return (
     <div
       className={`${
         sticky ? "sticky top-0" : "relative"
-      } light:bg-white dark:bg-background-dark z-10 shadow-sm`}
+      } bg-white dark:bg-background-dark z-10 shadow-sm`}
       data-oid="28p5nrb"
     >
       <div className="flex h-16 items-center px-6" data-oid="ex76u_z">
@@ -35,21 +29,6 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
           <div className="mr-auto" data-oid="3a8ezn2">
             <HamburgerMenu data-oid="bwd1o-k" />
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => {
-              setTheme(theme === "dark" ? "light" : "dark");
-              setMode();
-            }}
-            data-oid=":d9f4g:"
-          >
-            {theme === "light" ? (
-              <Moon className="h-5 w-5" data-oid="pfe7x8h" />
-            ) : (
-              <Sun className="h-5 w-5" data-oid="t0_.ql2" />
-            )}
-          </Button>
 
           {(user?.avatar || user?.name) && (
             <div className="flex items-center gap-3" data-oid="vqqmdy2">

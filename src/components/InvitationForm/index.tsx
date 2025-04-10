@@ -164,9 +164,9 @@ export const InvitationForm = ({
                   <AutoComplete
                     disabled={!isEditing}
                     selectedValue={field.value}
+                    initialValue={field.value}
                     onSelectedValueChange={(value) => {
                       field.onChange(value);
-                      setSearchValue(value);
                       const selectedAddress = addressOptions.find(
                         (option) => option.label === value,
                       );
@@ -181,6 +181,7 @@ export const InvitationForm = ({
                     searchValue={searchValue}
                     onSearchValueChange={(value) => {
                       setSearchValue(value);
+                      field.onChange(value);
                       if (!value) {
                         setAddressOptions([]);
                       }
@@ -191,10 +192,15 @@ export const InvitationForm = ({
                     }))}
                     isLoading={addressLoading}
                     placeholder="Enter the address or location"
-                    emptyMessage="No Address found"
+                    emptyMessage={
+                      searchValue
+                        ? "Press enter to use this address"
+                        : "Start typing to search for addresses"
+                    }
                   />
                 </FormControl>
-                <FormMessage className="text-red-500" data-oid="d:mu5qi" />
+
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
             data-oid="lc:ri4u"

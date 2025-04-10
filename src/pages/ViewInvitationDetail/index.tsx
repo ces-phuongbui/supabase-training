@@ -285,7 +285,7 @@ export const ViewInvitationDetail = () => {
     <div className="w-full h-full relative">
       <Button
         variant="ghost"
-        className="absolute top-4 left-4 flex items-center justify-center z-10"
+        className="absolute top-4 left-4 flex items-center justify-center z-1"
         onClick={() => navigate("/requests")}
       >
         <ArrowLeft size={40} />

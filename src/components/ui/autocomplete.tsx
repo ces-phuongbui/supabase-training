@@ -1,5 +1,5 @@
 import { Command as CommandPrimitive } from "cmdk";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   Command,
   CommandEmpty,
@@ -21,6 +21,7 @@ type Props<T extends string> = {
   emptyMessage?: string;
   placeholder?: string;
   disabled?: boolean;
+  initialValue?: string;
 };
 
 export function AutoComplete<T extends string>({
@@ -33,8 +34,22 @@ export function AutoComplete<T extends string>({
   emptyMessage = "No items.",
   placeholder = "Search...",
   disabled,
+  initialValue,
 }: Props<T>) {
   const [open, setOpen] = useState(false);
+  const [localValue, setLocalValue] = useState(initialValue || "");
+
+  useEffect(() => {
+    if (initialValue) {
+      setLocalValue(initialValue);
+      onSearchValueChange(initialValue);
+    }
+  }, [initialValue]);
+
+  const onInputChange = (value: string) => {
+    setLocalValue(value);
+    onSearchValueChange(value);
+  };
 
   const labels = useMemo(
     () =>
@@ -59,16 +74,6 @@ export function AutoComplete<T extends string>({
     }
   };
 
-  const onSelectItem = (inputValue: string) => {
-    if (inputValue === selectedValue) {
-      reset();
-    } else {
-      onSelectedValueChange(inputValue as T);
-      onSearchValueChange(labels[inputValue] ?? "");
-    }
-    setOpen(false);
-  };
-  const displayValue = searchValue !== "" ? searchValue : selectedValue ?? "";
   return (
     <div className="flex items-center">
       <Popover open={open} onOpenChange={setOpen}>
@@ -76,14 +81,18 @@ export function AutoComplete<T extends string>({
           <PopoverAnchor asChild>
             <CommandPrimitive.Input
               asChild
-              value={displayValue}
-              onValueChange={onSearchValueChange}
+              value={localValue}
+              onValueChange={onInputChange}
               onKeyDown={(e) => setOpen(e.key !== "Escape")}
-              onMouseDown={() => setOpen((open) => !!searchValue || !open)}
+              onMouseDown={() => setOpen((open) => !!localValue || !open)}
               onFocus={() => setOpen(true)}
               onBlur={onInputBlur}
             >
-              <Input placeholder={placeholder} disabled={disabled} />
+              <Input
+                placeholder={placeholder}
+                disabled={disabled}
+                className="w-full"
+              />
             </CommandPrimitive.Input>
           </PopoverAnchor>
           {!open && <CommandList aria-hidden="true" className="hidden" />}
@@ -115,7 +124,12 @@ export function AutoComplete<T extends string>({
                       key={option.value}
                       value={option.value}
                       onMouseDown={(e) => e.preventDefault()}
-                      onSelect={onSelectItem}
+                      onSelect={(value) => {
+                        setLocalValue(option.label);
+                        onSelectedValueChange(value as T);
+                        onSearchValueChange(option.label);
+                        setOpen(false);
+                      }}
                       className="cursor-pointer text-black hover:bg-gray-300"
                     >
                       {option.label}

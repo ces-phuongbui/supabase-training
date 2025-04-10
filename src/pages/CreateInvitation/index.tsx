@@ -136,7 +136,7 @@ export const CreateInvitation = () => {
     <div className="w-full h-full relative" data-oid="_cdgc4_">
       <Button
         variant="ghost"
-        className="absolute top-4 left-4 flex items-center justify-center z-10"
+        className="absolute top-4 left-4 flex items-center justify-center z-1"
         onClick={() => navigate("/requests")}
         data-oid="_c9ntln"
       >

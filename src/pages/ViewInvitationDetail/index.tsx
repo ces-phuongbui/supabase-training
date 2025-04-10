@@ -198,11 +198,16 @@ export const ViewInvitationDetail = () => {
 
     // Upload Image if it's a File
     let imageUrl = request?.background_image ?? "";
-    if (values.background_image instanceof File) {
+    if (values.background_image) {
       // Upload to Supabase storage
+      const date = new Date();
+
       const { data, error } = await supabaseClient.storage
         .from("training")
-        .upload(`${user?.id}/` + id, values.background_image);
+        .upload(
+          `${user?.id}/` + id + `${date.getTime()}`,
+          values.background_image,
+        );
 
       if (error) {
         console.error("Error uploading image:", error);
@@ -221,7 +226,7 @@ export const ViewInvitationDetail = () => {
     mutate(
       {
         resource: "requests",
-        id: id as string,
+        id: id,
         values: {
           ...values,
           background_image: imageUrl,
@@ -229,11 +234,6 @@ export const ViewInvitationDetail = () => {
       },
       {
         onSuccess: () => {
-          open?.({
-            type: "success",
-            message: "Invitation updated successfully",
-            description: "Your invitation has been updated.",
-          });
           setIsEditing(false);
           setIsDisabled(false);
         },
@@ -328,19 +328,19 @@ export const ViewInvitationDetail = () => {
                 <div className="h-full p-6 rounded-lg shadow-md">
                   <h2 className="text-xl font-bold mb-4">Event Statistics</h2>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-lg">
+                    <div className="p-4 rounded-lg bg-gray-100">
                       <p className="text-sm text-gray-500">Total Invitations</p>
                       <p className="text-2xl font-bold">{responses.length}</p>
                     </div>
-                    <div className="p-4 rounded-lg">
+                    <div className="p-4 rounded-lg bg-gray-100">
                       <p className="text-sm text-gray-500">Total Accepted</p>
                       <p className="text-2xl font-bold">{totalAccepted}</p>
                     </div>
-                    <div className="p-4 rounded-lg">
+                    <div className="p-4 rounded-lg bg-gray-100">
                       <p className="text-sm text-gray-500">Total Guests</p>
                       <p className="text-2xl font-bold">{totalGuests}</p>
                     </div>
-                    <div className="p-4 rounded-lg">
+                    <div className="p-4 rounded-lg bg-gray-100">
                       <p className="text-sm text-gray-500">Days Left</p>
                       <p className="text-2xl font-bold">
                         {Math.max(

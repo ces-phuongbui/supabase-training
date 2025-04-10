@@ -1,5 +1,4 @@
 import { debounce } from "@mui/material";
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { ReactNode, useCallback, useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -30,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { formatDateTime } from "@/helpers";
 import { cn } from "@/lib/utils";
 import { invitationSchema } from "@/pages/CreateInvitation/schema";
 import { STYLE_OPTIONS } from "@/utility/constant";
@@ -44,7 +44,6 @@ import {
 import { AutoComplete } from "../ui/autocomplete";
 import { CardContent } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
-import { formatDateTime } from "@/helpers";
 
 interface InvitationFormProps {
   children?: ReactNode;
@@ -296,7 +295,7 @@ export const InvitationForm = ({
                               <SelectItem
                                 key={i}
                                 value={timeValue}
-                                className="cursor-pointer"
+                                className="cursor-pointer bg-white border border-gray-100 p-3"
                               >
                                 {timeValue}
                               </SelectItem>
@@ -438,7 +437,7 @@ export const InvitationForm = ({
                       <SelectItem
                         key={style.value}
                         value={style.value}
-                        className="cursor-pointer text-black  hover:bg-gray-300"
+                        className="cursor-pointer text-black p-3 border border-gray-100"
                         data-oid=":gp7ivv"
                       >
                         {style.label}

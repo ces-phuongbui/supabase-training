@@ -32,6 +32,7 @@ interface InvitationCardProps {
   title: string;
   address: string;
   activityDate: Date;
+  activityTime: string;
   primaryColor: string;
   backgroundColor: string;
   secondaryColor: string;
@@ -72,6 +73,7 @@ export const InvitationCard = ({
   rejectionLabel,
   isEdit = true,
   closeDate,
+  activityTime,
 }: InvitationCardProps) => {
   const navigate = useNavigate();
   const { open } = useNotification();
@@ -143,30 +145,19 @@ export const InvitationCard = ({
   };
 
   return (
-    <div
-      className={`${
-        !isEdit ? "h-[40rem]" : "h-[100vh]"
-      } w-full overflow-hidden`}
-      data-oid="mihzskl"
-    >
+    <div className="min-h-screen w-full overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100">
       <div
-        className="h-full relative flex flex-col items-center justify-between"
+        className="min-h-screen relative flex flex-col items-center justify-center p-4 md:p-8"
         style={styleBackgroundCard}
-        data-oid="by5_629"
       >
         <div
-          className={`${
-            isEdit ? "min-h-[55%] w-[50%]" : "min-h-[75%] w-[80%]"
-          } m-auto inset-0 bg-white/60 rounded-sm`}
-          data-oid="gl6ty4e"
+          className={`w-full max-w-md md:max-w-2xl lg:max-w-4xl mx-auto bg-white/60 backdrop-blur-md rounded-xl shadow-lg overflow-hidden`}
         >
-          <div
-            className="relative z-10 flex flex-col items-center justify-between h-full py-8 px-6 text-center"
-            data-oid="m64.p-u"
-          >
-            <div className="mt-4" data-oid="ts66:rm">
+          <div className="relative z-10 flex flex-col items-center justify-between h-full py-6 md:py-8 px-4 md:px-12 text-center">
+            {/* Header Section */}
+            <div className="space-y-4 mb-6" data-oid="ts66:rm">
               <h1
-                className="text-5xl text-center capitalize font-bold"
+                className="text-3xl md:text-5xl text-center capitalize font-bold leading-tight"
                 style={{
                   color: primaryColor,
                   fontStyle: italicize ? "italic" : "normal",
@@ -176,11 +167,9 @@ export const InvitationCard = ({
               >
                 {title || "Please Join Us!"}
               </h1>
-            </div>
 
-            <div className="mt-3" data-oid="r_-1orx">
               <p
-                className="text-center"
+                className="text-sm md:text-base"
                 style={{
                   color: primaryColor,
                   fontStyle: italicize ? "italic" : "normal",
@@ -191,243 +180,228 @@ export const InvitationCard = ({
                 {address}
               </p>
 
-              <h2
-                style={{
-                  color: primaryColor,
-                  fontFamily,
-                  fontStyle: italicize ? "italic" : "normal",
-                  fontSize: "3rem",
-                  fontWeight: "bold",
-                  marginTop: "10px",
-                }}
-                data-oid="8ckqzb8"
-              >
-                {formatDateTime({
-                  date: activityDate,
-                  formatDate: "dd MMM, yyyy",
-                })}
-                {closed ? " (CLOSED)" : ""}
-              </h2>
+              {/* Date and Time Section */}
+              <div className="flex flex-col items-center gap-2">
+                <h2
+                  className="text-2xl md:text-4xl font-bold"
+                  style={{
+                    color: primaryColor,
+                    fontFamily,
+                    fontStyle: italicize ? "italic" : "normal",
+                  }}
+                  data-oid="8ckqzb8"
+                >
+                  {formatDateTime({
+                    date: activityDate,
+                    formatDate: "dd MMM, yyyy",
+                  })}{" "}
+                  at {activityTime}
+                  {closed && (
+                    <span className="block text-sm md:text-base text-red-500 mt-1">
+                      (CLOSED)
+                    </span>
+                  )}
+                </h2>
 
-              <p
-                className="text-1xl text-center mb-2"
-                style={{
-                  color: primaryColor,
-                  fontStyle: italicize ? "italic" : "normal",
-                  fontFamily,
-                }}
-                data-oid="3777f67"
-              >
-                Kindly Reply Before{" "}
-                {formatDateTime({
-                  date: closeDate,
-                  formatDate: "dd MMMM yyyy",
-                })}
-              </p>
+                <p
+                  className="text-xs md:text-sm"
+                  style={{
+                    color: primaryColor,
+                    fontStyle: italicize ? "italic" : "normal",
+                    fontFamily,
+                  }}
+                  data-oid="3777f67"
+                >
+                  Kindly Reply Before{" "}
+                  {formatDateTime({
+                    date: closeDate,
+                    formatDate: "dd MMMM yyyy",
+                  })}
+                </p>
+              </div>
             </div>
 
-            <Form {...form} data-oid="9vni6hv">
+            {/* Form Section */}
+            <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="px-4 pb-4"
-                data-oid="8a01msz"
+                className="w-full max-w-sm mx-auto space-y-6"
               >
-                <div
-                  className="flex flex-col items-center space-y-6"
-                  data-oid="tbok50o"
-                >
+                <div className="space-y-6">
+                  {/* Name Field */}
                   <FormField
                     control={form.control}
                     name="responder_name"
                     render={({ field }) => (
-                      <FormItem data-oid="xxceq6y">
+                      <FormItem className="w-full">
                         <FormLabel
-                          style={{
-                            color: primaryColor ?? "black",
-                            fontStyle: italicize ? "italic" : "normal",
-                            fontFamily,
-                          }}
-                          data-oid="_f51teg"
-                        >
-                          Your Name
-                        </FormLabel>
-                        <FormControl data-oid="ymp7av0">
-                          <Input
-                            {...field}
-                            data-oid="p9x1c-e"
-                            style={{
-                              color: primaryColor ?? "black",
-                              fontStyle: italicize ? "italic" : "normal",
-                              fontFamily,
-                            }}
-                          />
-                        </FormControl>
-                        <FormMessage
-                          className="text-[11px] text-red-500"
-                          data-oid="6-ih5cm"
-                        />
-                      </FormItem>
-                    )}
-                    data-oid="-ct5mvr"
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="accept"
-                    render={({ field }) => (
-                      <FormItem data-oid="d4b1pdc">
-                        <FormLabel
+                          className="text-sm md:text-base mb-2 block"
                           style={{
                             color: primaryColor,
                             fontStyle: italicize ? "italic" : "normal",
                             fontFamily,
                           }}
-                          data-oid="q9z19ic"
+                        >
+                          Your Name
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="w-full h-12 text-base rounded-lg border-2 transition-colors focus:ring-2 focus:ring-offset-1"
+                            style={{
+                              color: primaryColor,
+                              borderColor: `${primaryColor}40`,
+                              fontStyle: italicize ? "italic" : "normal",
+                              fontFamily,
+                            }}
+                          />
+                        </FormControl>
+                        <FormMessage className="text-xs text-red-500" />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Radio Group */}
+                  <FormField
+                    control={form.control}
+                    name="accept"
+                    render={({ field }) => (
+                      <FormItem className="w-full" data-oid="d4b1pdc">
+                        <FormLabel
+                          className="text-sm md:text-base"
+                          style={{
+                            color: primaryColor,
+                            fontStyle: italicize ? "italic" : "normal",
+                            fontFamily,
+                          }}
                         >
                           Are you going?
                         </FormLabel>
-                        <FormControl data-oid="7529jak">
+                        <FormControl>
                           <RadioGroup
                             onValueChange={field.onChange}
                             value={field.value}
-                            className="flex justify-between gap-4"
-                            data-oid="vu0.02v"
+                            className="flex flex-col sm:flex-row justify-center gap-4 md:gap-8"
                           >
-                            <div
-                              className="flex items-center space-x-2"
-                              data-oid="5fvrzct"
-                            >
+                            {/* Decline Option */}
+                            <div className="flex items-center gap-3">
                               <RadioGroupItem
                                 value="false"
                                 id="decline"
-                                data-oid="1x4nsc4"
-                                style={{
-                                  color: primaryColor ?? "black",
-                                  fontStyle: italicize ? "italic" : "normal",
-                                  fontFamily,
-                                }}
+                                className="h-5 w-5 md:h-6 md:w-6"
+                                style={{ borderColor: primaryColor }}
                               />
-
                               <label
                                 htmlFor="decline"
+                                className="text-sm md:text-base"
                                 style={{
-                                  color: primaryColor ?? "black",
+                                  color: primaryColor,
                                   fontStyle: italicize ? "italic" : "normal",
                                   fontFamily,
                                 }}
-                                data-oid="wzxwtvn"
                               >
                                 {rejectionLabel}
                               </label>
                             </div>
-                            <div
-                              className="flex items-center space-x-2"
-                              data-oid="l:5t:ro"
-                            >
+                            {/* Accept Option */}
+                            <div className="flex items-center gap-3">
                               <RadioGroupItem
                                 value="true"
                                 id="accept"
-                                data-oid="8yr.9qu"
-                                style={{
-                                  color: primaryColor ?? "black",
-                                  fontStyle: italicize ? "italic" : "normal",
-                                  fontFamily,
-                                }}
+                                className="h-5 w-5 md:h-6 md:w-6"
+                                style={{ borderColor: primaryColor }}
                               />
-
                               <label
                                 htmlFor="accept"
+                                className="text-sm md:text-base"
                                 style={{
-                                  color: primaryColor ?? "black",
+                                  color: primaryColor,
                                   fontStyle: italicize ? "italic" : "normal",
                                   fontFamily,
                                 }}
-                                data-oid="cfkcp-q"
                               >
                                 {acceptanceLabel}
                               </label>
                             </div>
                           </RadioGroup>
                         </FormControl>
-                        <FormMessage data-oid="mwziy79" />
+                        <FormMessage className="text-xs text-red-500" />
                       </FormItem>
                     )}
-                    data-oid="dsd6dw9"
                   />
 
+                  {/* Attendees Selection */}
                   {accept && (
-                    <div className="space-y-4 w-full" data-oid="0x_v6il">
+                    <div className="w-full">
                       <div
-                        className="bg-white/5 backdrop-blur-sm border rounded-xl p-6 shadow-lg"
+                        className="rounded-lg p-4 md:p-5"
                         style={{
-                          borderColor: `${primaryColor}40`, // Adding transparency to border
-                          background: `linear-gradient(145deg, ${primaryColor}05, ${primaryColor}10)`,
+                          background: `linear-gradient(145deg, ${primaryColor}03, ${primaryColor}08)`,
                         }}
-                        data-oid="xfhy7h0"
                       >
                         <FormField
                           control={form.control}
                           name="num_attendees"
                           render={({ field }) => (
-                            <FormItem data-oid="ojfhv6x">
+                            <FormItem>
                               <FormLabel
+                                className="text-sm md:text-base block mb-3"
                                 style={{
-                                  color: primaryColor ?? "red",
+                                  color: primaryColor,
                                   fontStyle: italicize ? "italic" : "normal",
                                   fontFamily,
                                 }}
-                                data-oid="9fek5g-"
                               >
-                                How many people will join with you?
+                                Number of Attendees
                               </FormLabel>
                               <Select
                                 onValueChange={(value) =>
                                   field.onChange(Number(value))
                                 }
                                 value={String(field.value)}
-                                data-oid="jgztob9"
                               >
                                 <SelectTrigger
-                                  data-oid="gbfthbh"
+                                  className="w-full h-12 rounded-lg border-2 transition-colors focus:ring-2 focus:ring-offset-1"
                                   style={{
-                                    color: primaryColor ?? "black",
+                                    color: primaryColor,
+                                    borderColor: `${primaryColor}40`,
                                     fontStyle: italicize ? "italic" : "normal",
                                     fontFamily,
-                                    borderColor: primaryColor ?? "black",
                                   }}
                                 >
-                                  <SelectValue
-                                    placeholder="Select number of attendees"
-                                    data-oid="53os.nz"
-                                  />
+                                  <SelectValue placeholder="Select number" />
                                 </SelectTrigger>
-                                <SelectContent
-                                  data-oid="03q43z1"
-                                  className="bg-white"
-                                >
-                                  {ATTENDEE_COUNT_OPTIONS.map((value) => (
-                                    <SelectItem
-                                      key={value}
-                                      value={String(value)}
-                                      className="text-black cursor-pointer hover:bg-gray-300 "
-                                      data-oid="jwtqjnk"
-                                    >
-                                      {value}
-                                    </SelectItem>
-                                  ))}
+                                <SelectContent className="bg-white">
+                                  <div className="grid grid-cols-5 gap-1 p-1">
+                                    {ATTENDEE_COUNT_OPTIONS.map((value) => (
+                                      <SelectItem
+                                        key={value}
+                                        value={String(value)}
+                                        className="cursor-pointer text-center rounded-md hover:bg-gray-100 transition-colors"
+                                      >
+                                        <span
+                                          className="text-base font-medium"
+                                          style={{ color: primaryColor }}
+                                        >
+                                          {value}
+                                        </span>
+                                      </SelectItem>
+                                    ))}
+                                  </div>
                                 </SelectContent>
                               </Select>
-                              <FormMessage data-oid="nqtp:f." />
+                              <FormMessage className="text-xs text-red-500" />
                             </FormItem>
                           )}
-                          data-oid=":jstdyh"
                         />
                       </div>
                     </div>
                   )}
+
+                  {/* Submit Button */}
                   <Button
                     disabled={closed || !isEdit}
-                    className="mt-6 px-6 py-2 rounded mx-auto block"
+                    className="w-full mt-6 h-12 text-base font-medium transition-transform active:scale-95"
                     style={{
                       backgroundColor: secondaryColor,
                       background: secondaryGradient
@@ -437,7 +411,6 @@ export const InvitationCard = ({
                       fontFamily,
                       fontStyle: italicize ? "italic" : "normal",
                     }}
-                    data-oid="qagfg7n"
                   >
                     Submit Response
                   </Button>

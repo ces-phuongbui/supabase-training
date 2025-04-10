@@ -129,6 +129,7 @@ export const CreateInvitation = () => {
     rejectionLabel: form.watch("rejection_label"),
     closeDate: form.watch("close_date"),
     isEdit: false,
+    activityTime: form.watch("activity_time"),
   };
 
   return (

@@ -59,6 +59,7 @@ export const TabDetailContent = ({
     italicize: request.italicize,
     style: request.style,
     isEdit: false,
+    activityTime: request.activity_time,
   };
 
   const form = useForm<z.infer<typeof invitationSchema>>({

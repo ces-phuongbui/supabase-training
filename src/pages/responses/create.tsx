@@ -35,6 +35,7 @@ export const ResponseCreate: React.FC = () => {
     style,
     position = DEFAULT_POSITION,
     activity_date: activityDate,
+    activity_time: activityTime,
   } = request || {};
 
   useDocumentTitle(`${title} | RSVQuick`);
@@ -67,6 +68,7 @@ export const ResponseCreate: React.FC = () => {
         data-oid="1zhmshc"
       >
         <InvitationCard
+          activityTime={activityTime ?? ""}
           closeDate={new Date(closeDate ?? "")}
           event_id={id}
           backgroundImage={backgroundImage}

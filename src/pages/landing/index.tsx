@@ -308,7 +308,7 @@ export default function LandingPage() {
                 </div>
                 <p className="text-white mb-6" data-oid="ret7r6z">
                   Easily create invitations and track guest attendance with
-                  InviteMe. Our platform simplifies event planning, ensuring you
+                  RSVQuick. Our platform simplifies event planning, ensuring you
                   stay organized and informed about who’s attending. Start your
                   event with a conversation, and let us handle the rest!
                 </p>

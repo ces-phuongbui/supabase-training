@@ -259,6 +259,19 @@ export const InvitationForm = ({
                         selected={field.value}
                         onSelect={field.onChange}
                         initialFocus
+                        disabled={(date) => date < new Date()}
+                        modifiers={{
+                          selected: (date) =>
+                            date.toDateString() === field.value?.toDateString(),
+                        }}
+                        modifiersStyles={{
+                          selected: {
+                            backgroundColor: "#f97316",
+                            color: "white",
+                            pointerEvents: "none",
+                          },
+                        }}
+                        className="rounded-md"
                         data-oid="jtdx56i"
                       />
                     </PopoverContent>

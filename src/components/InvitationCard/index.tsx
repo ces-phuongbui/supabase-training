@@ -284,16 +284,16 @@ export const InvitationCard = ({
                             className="flex flex-col sm:flex-row justify-center gap-4 md:gap-8"
                           >
                             {/* Decline Option */}
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center">
                               <RadioGroupItem
                                 value="false"
                                 id="decline"
-                                className="h-5 w-5 md:h-6 md:w-6"
+                                className="h-5 w-5 md:h-6 md:w-6 m-2"
                                 style={{ borderColor: primaryColor }}
                               />
                               <label
                                 htmlFor="decline"
-                                className="text-sm md:text-base"
+                                className="text-sm md:text-base ml-3"
                                 style={{
                                   color: primaryColor,
                                   fontStyle: italicize ? "italic" : "normal",
@@ -304,16 +304,16 @@ export const InvitationCard = ({
                               </label>
                             </div>
                             {/* Accept Option */}
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center">
                               <RadioGroupItem
                                 value="true"
                                 id="accept"
-                                className="h-5 w-5 md:h-6 md:w-6"
+                                className="h-5 w-5 md:h-6 md:w-6 m-2"
                                 style={{ borderColor: primaryColor }}
                               />
                               <label
                                 htmlFor="accept"
-                                className="text-sm md:text-base"
+                                className="text-sm md:text-base ml-3"
                                 style={{
                                   color: primaryColor,
                                   fontStyle: italicize ? "italic" : "normal",

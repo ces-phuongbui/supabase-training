@@ -60,7 +60,7 @@ export const ViewInvitationDetail = () => {
   const { open } = useNotification();
   const { id } = useParams();
   const qrCodeRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState("details");
+  const [activeTab, setActiveTab] = useState("responses");
   const [isEditing, setIsEditing] = useState(false);
   const [responses, setResponses] = useState<IResponse[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -304,23 +304,14 @@ export const ViewInvitationDetail = () => {
           className="w-full"
         >
           <TabsList className="grid w-full grid-cols-2 mb-6 space-x-2">
-            <TabsTrigger value="details" className="border border-orange-400">
-              Details
-            </TabsTrigger>
             <TabsTrigger value="responses" className="border border-orange-400">
               Responses
             </TabsTrigger>
-          </TabsList>
 
-          <TabsContent value="details" className="space-y-6">
-            <TabDetailContent
-              request={request}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              isDisabled={isDisabled}
-              onSubmit={onSubmit}
-            />
-          </TabsContent>
+            <TabsTrigger value="details" className="border border-orange-400">
+              Details
+            </TabsTrigger>
+          </TabsList>
 
           <TabsContent value="responses" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -541,6 +532,16 @@ export const ViewInvitationDetail = () => {
                 <>You have no response</>
               )}
             </div>
+          </TabsContent>
+
+          <TabsContent value="details" className="space-y-6">
+            <TabDetailContent
+              request={request}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              isDisabled={isDisabled}
+              onSubmit={onSubmit}
+            />
           </TabsContent>
         </Tabs>
       </div>

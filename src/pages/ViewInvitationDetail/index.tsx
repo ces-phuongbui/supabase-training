@@ -62,6 +62,7 @@ import autoTable from "jspdf-autotable";
 import { invitationSchema } from "../CreateInvitation/schema";
 import { IRequest, IResponse } from "../requests/list";
 import { TabDetailContent } from "./TabDetailContent";
+import "../../assets/font/NotoSans-normal";
 
 export const ViewInvitationDetail = () => {
   const navigate = useNavigate();
@@ -271,16 +272,12 @@ export const ViewInvitationDetail = () => {
   const exportToPDF = () => {
     const doc = new jsPDF();
 
+    doc.addFont("NotoSans-normal.ttf", "NotoSans", "normal");
+    doc.setFont("NotoSans");
+
     // Add title
     doc.setFontSize(16);
-    doc.text(
-      `Guest List - ${request?.title} - ${formatDateTime({
-        date: request?.activity_date ?? "",
-        formatDate: "dd MMM,yyyy",
-      })}`,
-      14,
-      15,
-    );
+    doc.text(`Guest List - ${request?.title}`, 14, 15);
 
     // Create table data
     const tableData = responses.map((response) => [
@@ -298,6 +295,11 @@ export const ViewInvitationDetail = () => {
       head: [["Guest Name", "Number Attendees", "Accept", "Response Date"]],
       body: tableData,
       startY: 25,
+      styles: {
+        font: "NotoSans",
+        fontStyle: "normal",
+        // cellPadding: 3
+      },
     });
 
     // Save PDF

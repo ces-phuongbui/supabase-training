@@ -314,7 +314,7 @@ export const InvitationForm = ({
                               <SelectItem
                                 key={i}
                                 value={timeValue}
-                                className="cursor-pointer bg-white border border-gray-100 p-3"
+                                className="cursor-pointer hover:bg-orange-400 hover:text-white focus:bg-orange-400 focus:text-white"
                               >
                                 {timeValue}
                               </SelectItem>
@@ -469,7 +469,7 @@ export const InvitationForm = ({
                       <SelectItem
                         key={style.value}
                         value={style.value}
-                        className="cursor-pointer text-black p-3 border border-gray-100"
+                        className="cursor-pointer hover:bg-orange-400 hover:text-white focus:bg-orange-400 focus:text-white"
                         data-oid=":gp7ivv"
                       >
                         {style.label}
@@ -712,7 +712,7 @@ export const InvitationForm = ({
                               value={font}
                               style={{ fontFamily: font }}
                               data-oid="ozjkkk1"
-                              className="text-black cursor-pointer hover:bg-gray-300"
+                              className="cursor-pointer hover:bg-orange-400 hover:text-white focus:bg-orange-400 focus:text-white"
                             >
                               {font}
                             </SelectItem>

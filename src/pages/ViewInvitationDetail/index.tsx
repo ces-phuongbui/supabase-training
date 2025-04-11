@@ -1,27 +1,34 @@
 "use client";
 
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   useGetIdentity,
   useNotification,
   useShow,
   useUpdate,
 } from "@refinedev/core";
 import html2canvas from "html2canvas";
-import { ArrowLeft, Share, ArrowDown } from "lucide-react";
+import { jsPDF } from "jspdf";
+import { ArrowDown, ArrowLeft, FileDown, Share } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "react-qr-code";
 import { useNavigate, useParams } from "react-router-dom";
-import { z } from "zod";
 import {
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  TelegramShareButton,
   FacebookIcon,
-  TwitterIcon,
-  WhatsappIcon,
+  FacebookShareButton,
   TelegramIcon,
+  TelegramShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
 } from "react-share";
+import { z } from "zod";
 
 // ShadcN UI components
 import { IUser } from "@/components/header";
@@ -49,11 +56,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { formatDateTime } from "@/helpers";
 import { supabaseClient } from "@/utility";
+import autoTable from "jspdf-autotable";
 import { invitationSchema } from "../CreateInvitation/schema";
 import { IRequest, IResponse } from "../requests/list";
 import { TabDetailContent } from "./TabDetailContent";
-import { formatDateTime } from "@/helpers";
 
 export const ViewInvitationDetail = () => {
   const navigate = useNavigate();
@@ -259,6 +267,69 @@ export const ViewInvitationDetail = () => {
   // Add this to get the total pages
   const totalPages = Math.ceil(responses.length / rowsPerPage);
 
+  // Add these new functions
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+
+    // Add title
+    doc.setFontSize(16);
+    doc.text(
+      `Guest List - ${request?.title} - ${formatDateTime({
+        date: request?.activity_date ?? "",
+        formatDate: "dd MMM,yyyy",
+      })}`,
+      14,
+      15,
+    );
+
+    // Create table data
+    const tableData = responses.map((response) => [
+      response.responder_name,
+      response.num_attendees.toString(),
+      response.accept ? "Yes" : "No",
+      formatDateTime({
+        date: response.accepted_at,
+        formatDate: "dd/MM/yyyy",
+      }),
+    ]);
+
+    // Add table
+    autoTable(doc, {
+      head: [["Guest Name", "Number Attendees", "Accept", "Response Date"]],
+      body: tableData,
+      startY: 25,
+    });
+
+    // Save PDF
+    doc.save(`guest-list-${request?.title}.pdf`);
+  };
+
+  const exportToCSV = () => {
+    // Create CSV content
+    const headers = ["Guest Name,Number Attendees,Accept,Response Date\n"];
+    const csvData = responses.map(
+      (response) =>
+        `${response.responder_name},${response.num_attendees},${
+          response.accept ? "Yes" : "No"
+        },${formatDateTime({
+          date: response.accepted_at,
+          formatDate: "dd/MM/yyyy",
+        })}\n`,
+    );
+
+    const csvContent =
+      "data:text/csv;charset=utf-8," + headers.concat(csvData).join("");
+
+    // Create download link
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `guest-list-${request?.title}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -303,18 +374,24 @@ export const ViewInvitationDetail = () => {
           onValueChange={setActiveTab}
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-2 mb-6 space-x-2">
-            <TabsTrigger value="responses" className="border border-orange-400">
+          <TabsList className="grid w-full grid-cols-2 mb-6 gap-4">
+            <TabsTrigger
+              value="responses"
+              className="border border-orange-400 data-[state=active]:bg-orange-400 data-[state=active]:text-white"
+            >
               Responses
             </TabsTrigger>
 
-            <TabsTrigger value="details" className="border border-orange-400">
+            <TabsTrigger
+              value="details"
+              className="border border-orange-400 data-[state=active]:bg-orange-400 data-[state=active]:text-white"
+            >
               Details
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="responses" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-6 ">
                 <div className="h-full p-6 rounded-lg shadow-md">
                   <h2 className="text-xl font-bold mb-4">Event Statistics</h2>
@@ -350,7 +427,7 @@ export const ViewInvitationDetail = () => {
 
               <div className="space-y-6">
                 <div className=" p-6 rounded-lg shadow-md">
-                  <h2 className="text-xl text-center font-bold mb-4">
+                  <h2 className="text-xl text-left font-bold mb-4">
                     Share Invitation
                   </h2>
                   <div className="flex flex-col items-center gap-4">
@@ -413,7 +490,34 @@ export const ViewInvitationDetail = () => {
 
             {/* New Guest List Table - Full Width */}
             <div className="p-6 rounded-lg shadow-md">
-              <h2 className="text-xl font-bold mb-4">Guest List</h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Guest List</h2>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="default"
+                      className="flex items-center gap-2 border border-orange-400 hover:bg-orange-400 hover:text-white data-[state=open]:bg-orange-400 data-[state=open]:text-white"
+                    >
+                      <FileDown className="h-4 w-4" />
+                      Export
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-white">
+                    <DropdownMenuItem
+                      className="cursor-pointer hover:bg-orange-400 hover:text-white focus:bg-orange-400 focus:text-white"
+                      onClick={exportToPDF}
+                    >
+                      Export as PDF
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer hover:bg-orange-400 hover:text-white focus:bg-orange-400 focus:text-white"
+                      onClick={exportToCSV}
+                    >
+                      Export as CSV
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
               {getPaginatedResponses().length ? (
                 <>
                   <div className="rounded-sm border">
@@ -476,10 +580,15 @@ export const ViewInvitationDetail = () => {
                             <SelectValue placeholder={rowsPerPage} />
                           </SelectTrigger>
                           <SelectContent className="bg-white">
-                            <SelectItem value="10">10</SelectItem>
-                            <SelectItem value="20">20</SelectItem>
-                            <SelectItem value="50">50</SelectItem>
-                            <SelectItem value="100">100</SelectItem>
+                            {[10, 20, 50, 100].map((value) => (
+                              <SelectItem
+                                key={value}
+                                className="cursor-pointer hover:bg-orange-400 hover:text-white focus:bg-orange-400 focus:text-white"
+                                value={value.toString()}
+                              >
+                                {value}
+                              </SelectItem>
+                            ))}
                           </SelectContent>
                         </Select>
                       </div>
